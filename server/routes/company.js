@@ -75,7 +75,7 @@ router.post("/company-login", async function(req, res){
 // GET COMPANIES
 router.get("/company", verifyToken, async function (req, res){
     try{
-        let company = await Company.find()
+        let company = await Company.find().populate("job_id")
         if(!company){
             return res.status(404).send({message: "company does not exist"})
         }
@@ -94,7 +94,7 @@ router.get("/company", verifyToken, async function (req, res){
 router.get("/company/:id", verifyToken, async function (req, res){
     try{
         let { id } = req.params  
-        let company = await Company.findById(id)
+        let company = await Company.findById(id).populate("job_id")
         if(!company){
             return res.status(404).send({message: "company does not exist"})
         }

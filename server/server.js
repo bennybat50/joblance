@@ -7,6 +7,7 @@ const company  = require("./routes/company")
 const jobCategory  = require("./routes/job-category")
 const job  = require("./routes/job")
 const user = require("./routes/user")
+const apply = require("./routes/apply")
 
 const cors = require("cors");
 const PORT = process.env.PORT || 7300;
@@ -24,6 +25,7 @@ app.use("/", company)
 app.use("/", jobCategory)
 app.use("/", job)
 app.use("/", user)
+app.use("/", apply)
 
 const URI = process.env.MONGO_URL;
 

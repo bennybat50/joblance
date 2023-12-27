@@ -82,7 +82,10 @@ const companySchema = new mongoose.Schema({
         type:String,
         required: true 
     },
-    job_id:{type:mongoose.Schema.Types.ObjectId, ref:"job"},
+    job_id:[{type:mongoose.Schema.Types.ObjectId, ref:"job"}],
+
+
+
 })
 
 const companyModel = mongoose.model("company", companySchema)

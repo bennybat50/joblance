@@ -25,8 +25,8 @@ router.post("/post-job", verifyToken, async function (req, res) {
         company.job_id.push(newJob._id);
         await company.save();
 
-        category.job_id.push(newJob._id);
-        await category.save();  
+        // category.job_id.push(newJob._id);
+        // await category.save();  
 
         res.status(200).send({ message: "Job created successfully", data: newJob });
     } catch (err) {
@@ -38,7 +38,7 @@ router.post("/post-job", verifyToken, async function (req, res) {
 //GET  ALL JOBS 
 router.get("/jobs", verifyToken, async function (req, res){
     try{
-        let job = await Job.find().populate("jobCategory_id company_id")
+        let job = await Job.find().populate("jobCategory_id company_id application_id")
 
         if(!job){
             return handleError(res, 404, "No job")
@@ -60,7 +60,7 @@ router.get("/jobs", verifyToken, async function (req, res){
 router.get("/job/:id", verifyToken, async function (req, res){
     try{
         let { id } = req.params;
-        let job = await Job.findById(id).populate("jobCategory_id company_id")
+        let job = await Job.findById(id).populate("jobCategory_id company_id application_id")
 
         if(!job){
             return handleError(res, 404, "Job does not exist ")
