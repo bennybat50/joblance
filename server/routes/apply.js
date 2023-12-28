@@ -29,8 +29,7 @@ router.post("/apply", verifyToken, async function (req, res){
         await newApplication.save();
 
 
-           job.application_id.push(newApplication._id)
-
+        job.application_id.push(newApplication._id)
         await job.save()
 
         res.status(200).send({
@@ -45,6 +44,23 @@ router.post("/apply", verifyToken, async function (req, res){
 router.get("/applications", verifyToken, async function (req, res){
     try{
         let application = await Apply.find().populate("user_id job_id")
+        if(!application){
+            return handleError(res, 500, "No appliation")
+        }
+
+        return res.status(200).send({
+            status: "Success",
+            length: application.length,
+            data: application 
+        })
+    }catch(err){
+        return handleError(res, 500, "Internal server error")
+    }
+})
+
+router.get("/applications/:id", verifyToken, async function (req, res){
+    try{
+        let application = await Apply.findOne().populate("user_id job_id")
         if(!application){
             return handleError(res, 500, "No appliation")
         }

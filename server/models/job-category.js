@@ -5,7 +5,8 @@ const jobCategorychema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    job_id:{type:mongoose.Schema.Types.ObjectId, ref:"job"},
+    job_id:[{type:mongoose.Schema.Types.ObjectId, ref:"job"}],
+    application_id:[{type:mongoose.Schema.Types.ObjectId, ref:"apply"}],
 
 },
 

@@ -83,7 +83,9 @@ const companySchema = new mongoose.Schema({
         required: true 
     },
     job_id:[{type:mongoose.Schema.Types.ObjectId, ref:"job"}],
+    message_id:[{type:mongoose.Schema.Types.ObjectId, ref:"message"}],
 
+    
 
 
 })

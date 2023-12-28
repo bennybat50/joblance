@@ -14,6 +14,7 @@ router.post("/post-job", verifyToken, async function (req, res) {
 
         let category = await JobCategory.findById(jobCategory_id);
         let company = await Company.findById(company_id);
+        
 
         if (!category || !company) {
             return handleError(res, 404, "Job category and company required");
@@ -25,8 +26,8 @@ router.post("/post-job", verifyToken, async function (req, res) {
         company.job_id.push(newJob._id);
         await company.save();
 
-        // category.job_id.push(newJob._id);
-        // await category.save();  
+        category.job_id.push(newJob._id);
+        await category.save();  
 
         res.status(200).send({ message: "Job created successfully", data: newJob });
     } catch (err) {

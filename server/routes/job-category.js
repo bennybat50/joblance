@@ -24,7 +24,7 @@ router.post("/job-category", verifyToken, async function (req, res){
 
 router.get("/job-categories", verifyToken, async function (req, res){
     try{
-        let jobCategory = await Category.find()
+        let jobCategory = await Category.find().populate("job_id application_id")
 
         if(!jobCategory){
             return handleError(res, 404, "No job category")

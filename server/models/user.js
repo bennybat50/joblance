@@ -101,6 +101,8 @@ const userSchema = new mongoose.Schema({
         type:String,
         required: true 
     },
+    message_id:[{type:mongoose.Schema.Types.ObjectId, ref:"message"}],
+
 
 })
 

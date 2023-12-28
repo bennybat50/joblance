@@ -29,7 +29,7 @@ router.post("/create-user", async function(req, res) {
 
 router.get("/users", verifyToken, async function(req, res){
     try{
-        let user = await User.find()
+        let user = await User.find().populate("message_id")
         res.status(200).send({
             message: "All users",
             length: user.length,
@@ -39,6 +39,25 @@ router.get("/users", verifyToken, async function(req, res){
         res.status(500).send(e.message)
     }
 })
+
+router.get("/user/:id", verifyToken, async function(req, res){
+    try{
+        let { id } = req.params
+        let user = await User.findById(id).populate("message_id")
+
+        if(!user){
+            return handleError(res, 404, "No user")
+        }
+        return  res.status(200).send({
+            message: "user",
+            length: user.length,
+            data: user 
+        })
+    }catch(e){
+        res.status(500).send(e.message)
+    }
+})
+
 
 
 router.put("/user/update/:id", verifyToken, async function ( req, res){
