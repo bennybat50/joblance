@@ -4,134 +4,43 @@ import logo from "../assets/images/images/logo-dark.png"
 import logo_white from "../assets/images/images/logo-white.png"
 import Dash_Header from "../components/Dashheader"
 
-export default function DashChangePassword(){
-    return(
+export default function DashChangePassword() {
+    return (
         <div>
 
-   
 
-        <div className="page-wraper">
-        
-        <Dash_Header />             
-            
-            {/* <!-- Sidebar Holder --> */}
-            <nav id="sidebar-admin-wraper">
-          <div className="page-logo">
-            <Link to="/">
-              <img src={logo} alt="" />
-            </Link>
-          </div>
 
-          <div className="admin-nav scrollbar-macosx">
-            <ul>
-              <li className="active">
-                <Link to="/dashboard">
-                  <i className="fa fa-home"></i>
-                  <span className="admin-nav-text">Dashboard</span>
-                </Link>
-              </li>
+            <div className="page-wraper">
 
-              <li>
-                <Link to="/dash-company-profile">
-                  <i className="fa fa-user-tie"></i>
-                  <span className="admin-nav-text">Company Profile</span>
-                </Link>
-              </li>
-              <li>
-                <Link to="/dash-manage-job">
-                  <i className="fa fa-suitcase"></i>
-                  <span className="admin-nav-text">Manage Jobs</span>
-                </Link>
-              </li>
-              <li>
-                <Link to="/dash-post-job">
-                  <i className="fa fa-suitcase"></i>
-                  <span className="admin-nav-text">Jobs</span>
-                </Link>
-              </li>
-              <li>
-                <Link to="/dash-candidates">
-                  <i className="fa fa-user-friends"></i>
-                  <span className="admin-nav-text">Candidates</span>
-                </Link>
-              </li>
+                <Dash_Header />
 
-              <li>
-                <Link to="/dash-package">
-                  <i className="fa fa-money-bill-alt"></i>
-                  <span className="admin-nav-text">Packages</span>
-                </Link>
-              </li>
+              
 
-              <li>
-                <Link to="/dash-messages">
-                  <i className="fa fa-envelope"></i>
-                  <span className="admin-nav-text">Messages</span>
-                </Link>
-              </li>
+                {/* <!-- Page Content Holder --> */}
+                <div id="content">
 
-              <li>
-                <Link to="/dash-my-profile">
-                  <i className="fa fa-user"></i>
-                  <span className="admin-nav-text">My Profile</span>
-                </Link>
-              </li>
+                    <div className="content-admin-main">
 
-              <li>
-                <Link to="/dash-change-password">
-                  <i className="fa fa-fingerprint"></i>
-                  <span className="admin-nav-text">Change Password</span>
-                </Link>
-              </li>
-
-              <li>
-                <Link to="/javascript:;"
-                  data-bs-toggle="modal"
-                  data-bs-target="#delete-dash-profile"
-                >
-                  <i className="fa fa-trash-alt"></i>
-                  <span className="admin-nav-text">Delete Profile</span>
-                </Link>
-              </li>
-
-              <li>
-                <Link to="/javascript:;"
-                  data-bs-toggle="modal"
-                  data-bs-target="#logout-dash-profile"
-                >
-                  <i className="fa fa-share-square"></i>
-                  <span className="admin-nav-text">Logout</span>
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </nav>
-    
-            {/* <!-- Page Content Holder --> */}
-            <div id="content">
-    
-                <div className="content-admin-main">
-    
-                    <div className="wt-admin-right-page-header clearfix">
-                        <h2>Change Password!</h2>
-                        <div className="breadcrumbs">
-                            <Link to="#">Home</Link> <Link to="#">Dasboard</Link><span>Change Password</span></div>
-                    </div>
-    
-                    {/* <!--Change Pawssword--> */}
-                   
-                    <div className="panel panel-default">
-                        <div className="panel-heading wt-panel-heading p-a20">
-                            <h4 className="panel-tittle m-a0">Change Password</h4>
+                        <div className="wt-admin-right-page-header clearfix">
+                            <h2>Change Password!</h2>
+                            <div className="breadcrumbs">
+                                <Link to="#">Home</Link> <Link to="#">Dasboard</Link><span>Change Password</span></div>
                         </div>
-                        <div className="panel-body wt-panel-body p-a20 ">
-                            <form>
-                                <div className="row">
+
+                        {/* <!--Change Pawssword--> */}
+
+                        <div className="panel panel-default">
+                            <div className="panel-heading wt-panel-heading p-a20">
+                                <h4 className="panel-tittle m-a0">Change Password</h4>
+                            </div>
+                            <div className="panel-body wt-panel-body p-a20 ">
+                                <form>
+                                    <div className="row">
                                         <div className="col-lg-6 col-md-6">
                                             <div className="form-group">
                                                 <label>Old Password</label>
-                                                <div className="ls-inputicon-box"> 
-                                                    <input className="form-control wt-form-control" name="company_name" type="password" placeholder=""/>
+                                                <div className="ls-inputicon-box">
+                                                    <input className="form-control wt-form-control" name="company_name" type="password" placeholder="" />
                                                     <i className="fs-input-icon fas fa-asterisk "></i>
                                                 </div>
                                             </div>
@@ -139,81 +48,81 @@ export default function DashChangePassword(){
                                         <div className="col-lg-6 col-md-6">
                                             <div className="form-group">
                                                 <label>New Password</label>
-                                                <div className="ls-inputicon-box"> 
-                                                    <input className="form-control wt-form-control" name="company_name" type="password" placeholder=""/>
+                                                <div className="ls-inputicon-box">
+                                                    <input className="form-control wt-form-control" name="company_name" type="password" placeholder="" />
                                                     <i className="fs-input-icon fas fa-asterisk"></i>
                                                 </div>
                                             </div>
                                         </div>
-                                        
+
                                         <div className="col-lg-12 col-md-12">
                                             <div className="form-group">
                                                 <label>Confirm New Password</label>
-                                                <div className="ls-inputicon-box"> 
-                                                    <input className="form-control wt-form-control" name="company_name" type="password" placeholder=""/>
+                                                <div className="ls-inputicon-box">
+                                                    <input className="form-control wt-form-control" name="company_name" type="password" placeholder="" />
                                                     <i className="fs-input-icon fas fa-asterisk"></i>
                                                 </div>
                                             </div>
                                         </div>
-                                                        
-                                        <div className="col-xl-12 col-lg-12 col-md-12">                                  
+
+                                        <div className="col-xl-12 col-lg-12 col-md-12">
                                             <div className="text-left">
                                                 <button type="submit" className="site-button">Save Changes</button>
                                             </div>
-                                        </div>                                         
-                                    
-                                </div>
-                            </form>              
+                                        </div>
+
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+                {/* <!--Delete Profile Popup-->/ */}
+                <div className="modal fade twm-model-popup" id="delete-dash-profile" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div className="modal-body">
+                                <h4 className="modal-title">Do you want to delete your profile?</h4>
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="site-button" data-bs-dismiss="modal">No</button>
+                                <button type="button" className="site-button outline-primary">Yes</button>
+                            </div>
                         </div>
                     </div>
-    
-                                                         
                 </div>
-    
+
+
+                {/* <!--Logout Profile Popup--> */}
+                <div className="modal fade twm-model-popup" id="logout-dash-profile" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div className="modal-body">
+                                <h4 className="modal-title">Do you want to Logout your profile?</h4>
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="site-button" data-bs-dismiss="modal">No</button>
+                                <button type="button" className="site-button outline-primary">Yes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-    
-            {/* <!--Delete Profile Popup-->/ */}
-            <div className="modal fade twm-model-popup" id="delete-dash-profile" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
-                <div className="modal-dialog">
-                <div className="modal-content">
-                    <div className="modal-header">
-                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div className="modal-body">
-                        <h4 className="modal-title">Do you want to delete your profile?</h4>
-                    </div>
-                    <div className="modal-footer">
-                        <button type="button" className="site-button" data-bs-dismiss="modal">No</button>
-                        <button type="button" className="site-button outline-primary">Yes</button>
-                    </div>
-                </div>
-                </div>
-            </div>
-    
-    
-            {/* <!--Logout Profile Popup--> */}
-            <div className="modal fade twm-model-popup" id="logout-dash-profile" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
-                <div className="modal-dialog">
-                <div className="modal-content">
-                    <div className="modal-header">
-                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div className="modal-body">
-                        <h4 className="modal-title">Do you want to Logout your profile?</h4>
-                    </div>
-                    <div className="modal-footer">
-                        <button type="button" className="site-button" data-bs-dismiss="modal">No</button>
-                        <button type="button" className="site-button outline-primary">Yes</button>
-                    </div>
-                </div>
-                </div>
-            </div>
-    
-        </div>
-    
-    
-    
-    {/* <!-- STYLE SWITCHER  ======= --> 
+
+
+
+            {/* <!-- STYLE SWITCHER  ======= --> 
     <div className="styleswitcher">
     
         <div className="switcher-btn-bx">
@@ -241,8 +150,8 @@ export default function DashChangePassword(){
             
         </div>    
     </div> */}
-    {/* <!-- STYLE SWITCHER END ==== --> */}
-    
-    </div>  
+            {/* <!-- STYLE SWITCHER END ==== --> */}
+
+        </div>
     )
 }

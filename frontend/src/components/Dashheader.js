@@ -230,12 +230,7 @@ export default function Dash_Header() {
                                     <span className="admin-nav-text">Manage Jobs</span>
                                 </Link>
                             </li>
-                            <li>
-                                <Link to="/dash-post-job">
-                                    <i className="fa fa-suitcase"></i>
-                                    <span className="admin-nav-text">Jobs</span>
-                                </Link>
-                            </li>
+                             
                             <li>
                                 <Link to="/dash-candidate">
                                     <i className="fa fa-user-friends"></i>
@@ -243,12 +238,7 @@ export default function Dash_Header() {
                                 </Link>
                             </li>
 
-                            <li>
-                                <Link to="/dash-package">
-                                    <i className="fa fa-money-bill-alt"></i>
-                                    <span className="admin-nav-text">Packages</span>
-                                </Link>
-                            </li>
+                           
 
                             <li>
                                 <Link to="/dash-messages">
@@ -293,6 +283,98 @@ export default function Dash_Header() {
                         </ul>
                     </div>
                 </nav>
+                  {/* <!-- Sidebar Holder --> */}
+        <nav id="sidebar-admin-wraper">
+          <div className="page-logo">
+            <Link to="/">
+              <img src={logo} alt="" />
+            </Link>
+          </div>
+
+          <div className="admin-nav scrollbar-macosx">
+            <ul>
+              <li className="active">
+                <Link to="/dashboard">
+                  <i className="fa fa-home"></i>
+                  <span className="admin-nav-text">Dashboard</span>
+                </Link>
+              </li>
+
+              <li>
+                <Link to="/dash-company-profile">
+                  <i className="fa fa-user-tie"></i>
+                  <span className="admin-nav-text">Company Profile</span>
+                </Link>
+              </li>
+              <li>
+                <Link to="/dash-manage-job">
+                  <i className="fa fa-suitcase"></i>
+                  <span className="admin-nav-text">Manage Jobs</span>
+                </Link>
+              </li>
+              <li>
+                <Link to="/dash-post-job">
+                  <i className="fa fa-suitcase"></i>
+                  <span className="admin-nav-text">Jobs</span>
+                </Link>
+              </li>
+              <li>
+                <Link to="/dash-candidate">
+                  <i className="fa fa-user-friends"></i>
+                  <span className="admin-nav-text">Candidates</span>
+                </Link>
+              </li>
+
+              <li>
+                <Link to="/dash-package">
+                  <i className="fa fa-money-bill-alt"></i>
+                  <span className="admin-nav-text">Packages</span>
+                </Link>
+              </li>
+
+              <li>
+                <Link to="/dash-messages">
+                  <i className="fa fa-envelope"></i>
+                  <span className="admin-nav-text">Messages</span>
+                </Link>
+              </li>
+
+              <li>
+                <Link to="/dash-my-profile">
+                  <i className="fa fa-user"></i>
+                  <span className="admin-nav-text">My Profile</span>
+                </Link>
+              </li>
+
+              <li>
+                <Link to="/dash-change-password">
+                  <i className="fa fa-fingerprint"></i>
+                  <span className="admin-nav-text">Change Password</span>
+                </Link>
+              </li>
+
+              <li>
+                <Link to="/javascript:;"
+                  data-bs-toggle="modal"
+                  data-bs-target="#delete-dash-profile"
+                >
+                  <i className="fa fa-trash-alt"></i>
+                  <span className="admin-nav-text">Delete Profile</span>
+                </Link>
+              </li>
+
+              <li>
+                <Link to="/javascript:;"
+                  data-bs-toggle="modal"
+                  data-bs-target="#logout-dash-profile"
+                >
+                  <i className="fa fa-share-square"></i>
+                  <span className="admin-nav-text">Logout</span>
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </nav>
 
              
         </div>

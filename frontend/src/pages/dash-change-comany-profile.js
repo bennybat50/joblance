@@ -12,59 +12,7 @@ export default function ChanageCompanyProfilr(){
     
         <Dash_Header />             
     	
-        {/* <!-- Sidebar Holder --> */}
-        <nav id="sidebar-admin-wraper">
-            <div className="page-logo">
-                <Link to="/"><img src={logo} alt=""/></Link>
-            </div>
-            
-            <div className="admin-nav scrollbar-macosx">
-                <ul>
-                    <li className="active">
-                        <a href="dashboard.html"><i className="fa fa-home"></i><span className="admin-nav-text">Dashboard</span></a>
-                    </li>
-
-                    <li>
-                        <a href="dash-company-profile.html"><i className="fa fa-user-tie"></i><span className="admin-nav-text">Company Profile</span></a>
-                    </li>
-                    <li>
-                    	<a href="dash-manage-job.html"><i className="fa fa-suitcase"></i><span className="admin-nav-text">Manage Jobs</span></a>
-                    </li>
-                    <li>
-                    	<a href="dash-post-job.html"><i className="fa fa-suitcase"></i><span className="admin-nav-text">Jobs</span></a>
-                    </li>
-                    <li>
-                        <a href="dash-candidates.html"><i className="fa fa-user-friends"></i><span className="admin-nav-text">Candidates</span></a>
-                    </li> 
-
-                    <li>
-                        <a href="dash-package.html"><i className="fa fa-money-bill-alt"></i><span className="admin-nav-text">Packages</span></a>
-                    </li>
-                      
-                    <li>
-                    	<a href="dash-messages.html"><i className="fa fa-envelope"></i><span className="admin-nav-text">Messages</span></a>
-                       
-                    </li>
-                   
-                    <li>
-                        <a href="dash-my-profile.html"><i className="fa fa-user"></i><span className="admin-nav-text">My Profile</span></a>
-                    </li>
-
-                    <li>
-                        <a href="dash-change-password.html"><i className="fa fa-fingerprint"></i><span className="admin-nav-text">Change Password</span></a>
-                    </li>
-                    
-                    <li>
-                        <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#delete-dash-profile"><i className="fa fa-trash-alt"></i><span className="admin-nav-text">Delete Profile</span></a>
-                    </li>  
-                                       
-                    <li>
-                        <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#logout-dash-profile"><i className="fa fa-share-square"></i><span className="admin-nav-text">Logout</span></a>
-                    </li>                    
-                    
-                </ul>
-            </div>   
-        </nav>
+    
 
         {/* <!-- Page Content Holder --> */}
         <div id="content">
