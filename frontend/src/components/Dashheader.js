@@ -237,7 +237,7 @@ export default function Dash_Header() {
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/dash-candidates">
+                                <Link to="/dash-candidate">
                                     <i className="fa fa-user-friends"></i>
                                     <span className="admin-nav-text">Candidates</span>
                                 </Link>
