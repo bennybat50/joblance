@@ -300,10 +300,11 @@ export default function Dash_Header() {
                 </Link>
               </li>
 
+              
               <li>
-                <Link to="/dash-company-profile">
-                  <i className="fa fa-user-tie"></i>
-                  <span className="admin-nav-text">Company Profile</span>
+                <Link to="/dash-manage-company">
+                  <i className="fa fa-building"></i>
+                  <span className="admin-nav-text">Manage Companies</span>
                 </Link>
               </li>
               <li>
@@ -312,12 +313,7 @@ export default function Dash_Header() {
                   <span className="admin-nav-text">Manage Jobs</span>
                 </Link>
               </li>
-              <li>
-                <Link to="/dash-post-job">
-                  <i className="fa fa-suitcase"></i>
-                  <span className="admin-nav-text">Jobs</span>
-                </Link>
-              </li>
+              
               <li>
                 <Link to="/dash-candidate">
                   <i className="fa fa-user-friends"></i>
@@ -325,13 +321,7 @@ export default function Dash_Header() {
                 </Link>
               </li>
 
-              <li>
-                <Link to="/dash-package">
-                  <i className="fa fa-money-bill-alt"></i>
-                  <span className="admin-nav-text">Packages</span>
-                </Link>
-              </li>
-
+             
               <li>
                 <Link to="/dash-messages">
                   <i className="fa fa-envelope"></i>

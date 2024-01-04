@@ -10,7 +10,9 @@ import DashBookmark from './pages/dash-bookmark';
 import DashCandidates from './pages/dash-candidates';
 import DashChangePassword from './pages/dash-chnage-password';
 import DashCompanyProfile from './pages/dash-company-profile';
-import DashManageJob from './pages/dash-manage-profile';
+import DashCreateCompany from './pages/dash-create-company';
+import DashManageJob from './pages/dash-manage-job';
+import DashManageCompany from './pages/dash-manage-company';
 import DashMessages from './pages/dash-messages';
 import DashMyProfile from './pages/dash-my-profile';
 import DashPostJob from './pages/dash-post-job';
@@ -31,8 +33,10 @@ function App() {
           <Route path='/dash-bookmark' element={<DashBookmark/>}/>
           <Route path='/dash-candidate' element={<DashCandidates/>}/>
           <Route path='/dash-change-password' element={<DashChangePassword/>}/>
+          <Route path='/dash-create-company' element={<DashCreateCompany/>}/>
           <Route path='/dash-company-profile' element={<DashCompanyProfile/>}/>
           <Route path='/dash-manage-job' element={<DashManageJob/>}/>
+          <Route path='/dash-manage-company' element={<DashManageCompany/>}/>
           <Route path='/dash-messages' element={<DashMessages/>}/>
           <Route path='/dash-my-profile' element={<DashMyProfile/>}/>
           <Route path='/dash-post-job' element={<DashPostJob/>}/>
