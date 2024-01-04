@@ -1,5 +1,5 @@
 import React from "react";
-import { Link  } from "react-router-dom";
+import { Link } from "react-router-dom";
 import logo_11 from "../assets/images/images/logo-11.png";
 import "../styles/datepicker.css";
 import "../styles/dropzone.css";
@@ -31,6 +31,9 @@ import logo_white from "../assets/images/images/logo-white.png"
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Signup_Pop from "../components/Signup_Pop";
+import LoginPop from "../components/LoginPop";
+import PublicHeader from "../components/PublicHeader";
 export default function Index() {
   const NextArrow = (props) => <div {...props} className="slick-next"></div>;
   const PrevArrow = (props) => <div {...props} className="slick-prev"></div>;
@@ -98,114 +101,7 @@ export default function Index() {
 
   return (
     <div>
-      <header className="site-header header-style-3 h-page-11-hdr mobile-sider-drawer-menu">
-        <div className="sticky-header main-bar-wraper  navbar-expand-lg">
-          <div className="main-bar">
-            <div className="container-fluid clearfix">
-              <div className="logo-header">
-                <div className="logo-header-inner logo-header-one">
-                  <Link  to="/">
-                    <img src={logo_11} alt="" />
-                  </Link >
-                </div>
-              </div>
-
-              {/* NAV Toggle Button */}
-              <button
-                id="mobile-side-drawer"
-                data-target=".header-nav"
-                data-toggle="collapse"
-                type="button"
-                className="navbar-toggler collapsed"
-              >
-                <span className="sr-only">Toggle navigation</span>
-                <span className="icon-bar icon-bar-first"></span>
-                <span className="icon-bar icon-bar-two"></span>
-                <span className="icon-bar icon-bar-three"></span>
-              </button>
-
-              {/* MAIN Nav */}
-              <div className="nav-animation header-nav navbar-collapse collapse d-flex justify-content-center">
-                <ul className="nav navbar-nav">
-                  <li>
-                    <Link  to="/">Home</Link >
-                  </li>
-                  <li>
-                    <Link  to="/job-list">Jobs</Link >
-                  </li>
-                  <li>
-                    <Link  to="/employer-list">Employers</Link >
-                  </li>
-                  <li>
-                    <Link  to="/about">About Us</Link >
-                  </li>
-                  <li>
-                    <Link  to="/contact">Contact</Link >
-                  </li>
-                </ul>
-              </div>
-
-              {/* Header Right Section */}
-              <div className="extra-nav header-2-nav">
-                <div className="extra-cell">
-                  <div className="header-search">
-                    <Link  to="/#search" className="header-search-icon">
-                      <i className="feather-search"></i>
-                    </Link >
-                  </div>
-                </div>
-                <div className="extra-cell">
-                  <div className="header-nav-btn-section">
-                    <div className="twm-nav-btn-left">
-                      <Link 
-                        className="twm-nav-sign-up"
-                        data-bs-toggle="modal"
-                        to="//sign_up_popup"
-                        role="button"
-                      >
-                        <i className="feather-log-in"></i> Sign Up
-                      </Link >
-                    </div>
-                    <div className="twm-nav-btn-right">
-                      <Link 
-                        to="/dash-post-job"
-                        className="twm-nav-post-a-job"
-                      >
-                        <i className="feather-briefcase"></i> Post a job
-                      </Link >
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* SITE Search */}
-          <div id="search">
-            <span className="close"></span>
-            <form
-              role="search"
-              id="searchform"
-              action="https://thewebmax.org/search"
-              method="get"
-              className="radius-xl"
-            >
-              <input
-                className="form-control"
-                value=""
-                name="q"
-                type="search"
-                placeholder="Type to search"
-              />
-              <span className="input-group-append">
-                <button type="button" className="search-btn">
-                  <i className="fa fa-paper-plane"></i>
-                </button>
-              </span>
-            </form>
-          </div>
-        </div>
-      </header>
+     <PublicHeader/>
 
       {/* CONTENT START */}
       <div className="page-content">
@@ -447,7 +343,7 @@ export default function Index() {
                       </p>
                     </div>
                     <div className="twm-how-t-get-bottom">
-                      <Link  to="/about-1" className="site-button">
+                      <Link to="/about-1" className="site-button">
                         Edit Profile
                       </Link >
                       <div className="twm-left-icon-bx">
@@ -521,7 +417,7 @@ export default function Index() {
                     <div className="flaticon-deal"></div>
                   </div>
                   <div className="twm-content">
-                    <Link  to="/job-detail">Marketing & Sale</Link >
+                    <Link to="/job-detail">Marketing & Sale</Link >
                     <div className="twm-jobs-available">
                       1526 Jobs Available
                     </div>
@@ -533,7 +429,7 @@ export default function Index() {
                     <div className="flaticon-deal"></div>
                   </div>
                   <div className="twm-content">
-                    <Link  to="/job-detail">Marketing & Sale</Link >
+                    <Link to="/job-detail">Marketing & Sale</Link >
                     <div className="twm-jobs-available">
                       1526 Jobs Available
                     </div>
@@ -545,7 +441,7 @@ export default function Index() {
                     <div className="flaticon-deal"></div>
                   </div>
                   <div className="twm-content">
-                    <Link  to="/job-detail">Marketing & Sale</Link >
+                    <Link to="/job-detail">Marketing & Sale</Link >
                     <div className="twm-jobs-available">
                       1526 Jobs Available
                     </div>
@@ -557,7 +453,7 @@ export default function Index() {
                     <div className="flaticon-deal"></div>
                   </div>
                   <div className="twm-content">
-                    <Link  to="/job-detail">Marketing & Sale</Link >
+                    <Link to="/job-detail">Marketing & Sale</Link >
                     <div className="twm-jobs-available">
                       1526 Jobs Available
                     </div>
@@ -569,7 +465,7 @@ export default function Index() {
                     <div className="flaticon-deal"></div>
                   </div>
                   <div className="twm-content">
-                    <Link  to="/job-detail">Marketing & Sale</Link >
+                    <Link to="/job-detail">Marketing & Sale</Link >
                     <div className="twm-jobs-available">
                       1526 Jobs Available
                     </div>
@@ -581,81 +477,7 @@ export default function Index() {
                     <div className="flaticon-deal"></div>
                   </div>
                   <div className="twm-content">
-                    <Link  to="/job-detail">Marketing & Sale</Link >
-                    <div className="twm-jobs-available">
-                      1526 Jobs Available
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className=" row d-flex align-items-center justify-content-center gap-2">
-                <div className="job-categories-home-5 col-lg-3">
-                  <div className="twm-media cat-bg-clr-1">
-                    <div className="flaticon-deal"></div>
-                  </div>
-                  <div className="twm-content">
-                    <Link  to="/job-detail">Marketing & Sale</Link >
-                    <div className="twm-jobs-available">
-                      1526 Jobs Available
-                    </div>
-                  </div>
-                </div>
-
-                <div className="job-categories-home-5 col-lg-3">
-                  <div className="twm-media cat-bg-clr-1">
-                    <div className="flaticon-deal"></div>
-                  </div>
-                  <div className="twm-content">
-                    <Link  to="/job-detail">Marketing & Sale</Link >
-                    <div className="twm-jobs-available">
-                      1526 Jobs Available
-                    </div>
-                  </div>
-                </div>
-
-                <div className="job-categories-home-5 col-lg-3">
-                  <div className="twm-media cat-bg-clr-1">
-                    <div className="flaticon-deal"></div>
-                  </div>
-                  <div className="twm-content">
-                    <Link  to="/job-detail">Marketing & Sale</Link >
-                    <div className="twm-jobs-available">
-                      1526 Jobs Available
-                    </div>
-                  </div>
-                </div>
-
-                <div className="job-categories-home-5 col-lg-3">
-                  <div className="twm-media cat-bg-clr-1">
-                    <div className="flaticon-deal"></div>
-                  </div>
-                  <div className="twm-content">
-                    <Link  to="/job-detail">Marketing & Sale</Link >
-                    <div className="twm-jobs-available">
-                      1526 Jobs Available
-                    </div>
-                  </div>
-                </div>
-
-                <div className="job-categories-home-5 col-lg-3">
-                  <div className="twm-media cat-bg-clr-1">
-                    <div className="flaticon-deal"></div>
-                  </div>
-                  <div className="twm-content">
-                    <Link  to="/job-detail">Marketing & Sale</Link >
-                    <div className="twm-jobs-available">
-                      1526 Jobs Available
-                    </div>
-                  </div>
-                </div>
-
-                <div className="job-categories-home-5 col-lg-3">
-                  <div className="twm-media cat-bg-clr-1">
-                    <div className="flaticon-deal"></div>
-                  </div>
-                  <div className="twm-content">
-                    <Link  to="/job-detail">Marketing & Sale</Link >
+                    <Link to="/job-detail">Marketing & Sale</Link >
                     <div className="twm-jobs-available">
                       1526 Jobs Available
                     </div>
@@ -669,7 +491,7 @@ export default function Index() {
                     <div className="flaticon-deal"></div>
                   </div>
                   <div className="twm-content">
-                    <Link  to="/job-detail">Marketing & Sale</Link >
+                    <Link to="/job-detail">Marketing & Sale</Link >
                     <div className="twm-jobs-available">
                       1526 Jobs Available
                     </div>
@@ -681,7 +503,7 @@ export default function Index() {
                     <div className="flaticon-deal"></div>
                   </div>
                   <div className="twm-content">
-                    <Link  to="/job-detail">Marketing & Sale</Link >
+                    <Link to="/job-detail">Marketing & Sale</Link >
                     <div className="twm-jobs-available">
                       1526 Jobs Available
                     </div>
@@ -693,7 +515,7 @@ export default function Index() {
                     <div className="flaticon-deal"></div>
                   </div>
                   <div className="twm-content">
-                    <Link  to="/job-detail">Marketing & Sale</Link >
+                    <Link to="/job-detail">Marketing & Sale</Link >
                     <div className="twm-jobs-available">
                       1526 Jobs Available
                     </div>
@@ -705,7 +527,7 @@ export default function Index() {
                     <div className="flaticon-deal"></div>
                   </div>
                   <div className="twm-content">
-                    <Link  to="/job-detail">Marketing & Sale</Link >
+                    <Link to="/job-detail">Marketing & Sale</Link >
                     <div className="twm-jobs-available">
                       1526 Jobs Available
                     </div>
@@ -717,7 +539,7 @@ export default function Index() {
                     <div className="flaticon-deal"></div>
                   </div>
                   <div className="twm-content">
-                    <Link  to="/job-detail">Marketing & Sale</Link >
+                    <Link to="/job-detail">Marketing & Sale</Link >
                     <div className="twm-jobs-available">
                       1526 Jobs Available
                     </div>
@@ -729,7 +551,81 @@ export default function Index() {
                     <div className="flaticon-deal"></div>
                   </div>
                   <div className="twm-content">
-                    <Link  to="/job-detail">Marketing & Sale</Link >
+                    <Link to="/job-detail">Marketing & Sale</Link >
+                    <div className="twm-jobs-available">
+                      1526 Jobs Available
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className=" row d-flex align-items-center justify-content-center gap-2">
+                <div className="job-categories-home-5 col-lg-3">
+                  <div className="twm-media cat-bg-clr-1">
+                    <div className="flaticon-deal"></div>
+                  </div>
+                  <div className="twm-content">
+                    <Link to="/job-detail">Marketing & Sale</Link >
+                    <div className="twm-jobs-available">
+                      1526 Jobs Available
+                    </div>
+                  </div>
+                </div>
+
+                <div className="job-categories-home-5 col-lg-3">
+                  <div className="twm-media cat-bg-clr-1">
+                    <div className="flaticon-deal"></div>
+                  </div>
+                  <div className="twm-content">
+                    <Link to="/job-detail">Marketing & Sale</Link >
+                    <div className="twm-jobs-available">
+                      1526 Jobs Available
+                    </div>
+                  </div>
+                </div>
+
+                <div className="job-categories-home-5 col-lg-3">
+                  <div className="twm-media cat-bg-clr-1">
+                    <div className="flaticon-deal"></div>
+                  </div>
+                  <div className="twm-content">
+                    <Link to="/job-detail">Marketing & Sale</Link >
+                    <div className="twm-jobs-available">
+                      1526 Jobs Available
+                    </div>
+                  </div>
+                </div>
+
+                <div className="job-categories-home-5 col-lg-3">
+                  <div className="twm-media cat-bg-clr-1">
+                    <div className="flaticon-deal"></div>
+                  </div>
+                  <div className="twm-content">
+                    <Link to="/job-detail">Marketing & Sale</Link >
+                    <div className="twm-jobs-available">
+                      1526 Jobs Available
+                    </div>
+                  </div>
+                </div>
+
+                <div className="job-categories-home-5 col-lg-3">
+                  <div className="twm-media cat-bg-clr-1">
+                    <div className="flaticon-deal"></div>
+                  </div>
+                  <div className="twm-content">
+                    <Link to="/job-detail">Marketing & Sale</Link >
+                    <div className="twm-jobs-available">
+                      1526 Jobs Available
+                    </div>
+                  </div>
+                </div>
+
+                <div className="job-categories-home-5 col-lg-3">
+                  <div className="twm-media cat-bg-clr-1">
+                    <div className="flaticon-deal"></div>
+                  </div>
+                  <div className="twm-content">
+                    <Link to="/job-detail">Marketing & Sale</Link >
                     <div className="twm-jobs-available">
                       1526 Jobs Available
                     </div>
@@ -762,7 +658,7 @@ export default function Index() {
                   {/* Block one */}
                   <div className="blog-post twm-blog-post-3-outer">
                     <div className="wt-post-media">
-                      <Link  to="/blog-single">
+                      <Link to="/blog-single">
                         <img src={bg10} alt="" />
                       </Link >
                     </div>
@@ -771,13 +667,13 @@ export default function Index() {
                         <ul>
                           <li className="post-date">March 05, 2023</li>
                           <li className="post-author">
-                            By <Link  to="/candidate-detail">Mark Petter</Link >
+                            By <Link to="/candidate-detail">Mark Petter</Link >
                           </li>
                         </ul>
                       </div>
                       <div className="wt-post-title ">
                         <h4 className="post-title">
-                          <Link  to="/blog-single">
+                          <Link to="/blog-single">
                             How to convince recruiters.
                           </Link >
                         </h4>
@@ -790,7 +686,7 @@ export default function Index() {
                   {/* Block two */}
                   <div className="blog-post twm-blog-post-3-outer">
                     <div className="wt-post-media">
-                      <Link  to="/blog-single">
+                      <Link to="/blog-single">
                         <img src={bg11} alt="" />
                       </Link >
                     </div>
@@ -799,13 +695,13 @@ export default function Index() {
                         <ul>
                           <li className="post-date">March 05, 2023</li>
                           <li className="post-author">
-                            By <Link  to="/candidate-detail">David Wish</Link >
+                            By <Link to="/candidate-detail">David Wish</Link >
                           </li>
                         </ul>
                       </div>
                       <div className="wt-post-title ">
                         <h4 className="post-title">
-                          <Link  to="/blog-single">
+                          <Link to="/blog-single">
                             5 things to know about the March.
                           </Link >
                         </h4>
@@ -818,7 +714,7 @@ export default function Index() {
                   {/* Block three */}
                   <div className="blog-post twm-blog-post-3-outer">
                     <div className="wt-post-media">
-                      <Link  to="/blog-single">
+                      <Link to="/blog-single">
                         <img src={bg12} alt="" />
                       </Link >
                     </div>
@@ -827,13 +723,13 @@ export default function Index() {
                         <ul>
                           <li className="post-date">March 05, 2023</li>
                           <li className="post-author">
-                            By <Link  to="/candidate-detail">Mike Doe</Link >
+                            By <Link to="/candidate-detail">Mike Doe</Link >
                           </li>
                         </ul>
                       </div>
                       <div className="wt-post-title ">
                         <h4 className="post-title">
-                          <Link  to="/blog-single">
+                          <Link to="/blog-single">
                             Job Board is the most important
                           </Link >
                         </h4>
@@ -943,183 +839,186 @@ export default function Index() {
       </div>
       {/* Testimonial END */}
 
+      <Signup_Pop />
+      <LoginPop />
+
       {/* FOOTER START */}
       <footer className="footer-dark">
-            <div className="container">
-                {/* NEWS LETTER SECTION START */}
-                <div className="ftr-nw-content">
-                    <div className="row">
-                        <div className="col-md-5">
-                            <div className="ftr-nw-title">
-                                Join our email subscription now to get updates on new jobs and notifications.
-                            </div>
-                        </div>
-                        <div className="col-md-7">
-                            <form>
-                                <div className="ftr-nw-form">
-                                    <input
-                                        name="news-letter"
-                                        className="form-control"
-                                        placeholder="Enter Your Email"
-                                        type="text"
-                                    />
-                                    <button className="ftr-nw-subcribe-btn">Subscribe Now</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+        <div className="container">
+          {/* NEWS LETTER SECTION START */}
+          <div className="ftr-nw-content">
+            <div className="row">
+              <div className="col-md-5">
+                <div className="ftr-nw-title">
+                  Join our email subscription now to get updates on new jobs and notifications.
                 </div>
-                {/* NEWS LETTER SECTION END */}
-                {/* FOOTER BLOCKES START */}
-                <div className="footer-top">
-                    <div className="row">
-                        <div className="col-lg-3 col-md-12">
-                            <div className="widget widget_about">
-                                <div className="logo-footer clearfix">
-                                    <Link  to="/index">
-                                        <img src={logo_white} alt="" />
-                                    </Link >
-                                </div>
-                                <p>Many desktop publishing packages and web page editors now.</p>
-                                <ul className="ftr-list">
-                                    <li>
-                                        <p>
-                                            <span>Address :</span>65 Sunset CA 90026, USA
-                                        </p>
-                                    </li>
-                                    <li>
-                                        <p>
-                                            <span>Email :</span>example@max.com
-                                        </p>
-                                    </li>
-                                    <li>
-                                        <p>
-                                            <span>Call :</span>555-555-1234
-                                        </p>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div className="col-lg-9 col-md-12">
-                            <div className="row">
-                                <div className="col-lg-3 col-md-6 col-sm-6">
-                                    <div className="widget widget_services ftr-list-center">
-                                        <h3 className="widget-title">For Candidate</h3>
-                                        <ul>
-                                            <li>
-                                                <Link  to="/dashboard">User Dashboard</Link >
-                                            </li>
-                                            <li>
-                                                <Link  to="/dash-resume-alert">Alert resume</Link >
-                                            </li>
-                                            <li>
-                                                <Link  to="/candidate-grid">Candidates</Link >
-                                            </li>
-                                            <li>
-                                                <Link  to="/blog-list">Blog List</Link >
-                                            </li>
-                                            <li>
-                                                <Link  to="/blog-single">Blog single</Link >
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div className="col-lg-3 col-md-6 col-sm-6">
-                                    <div className="widget widget_services ftr-list-center">
-                                        <h3 className="widget-title">For Employers</h3>
-                                        <ul>
-                                            <li>
-                                                <Link  to="/dash-post-job">Post Jobs</Link >
-                                            </li>
-                                            <li>
-                                                <Link  to="/blog-grid">Blog Grid</Link >
-                                            </li>
-                                            <li>
-                                                <Link  to="/contact">Contact</Link >
-                                            </li>
-                                            <li>
-                                                <Link  to="/job-list">Jobs Listing</Link >
-                                            </li>
-                                            <li>
-                                                <Link  to="/job-detail">Jobs details</Link >
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div className="col-lg-3 col-md-6 col-sm-6">
-                                    <div className="widget widget_services ftr-list-center">
-                                        <h3 className="widget-title">Helpful Resources</h3>
-                                        <ul>
-                                            <li>
-                                                <Link  to="/faq">FAQs</Link >
-                                            </li>
-                                            <li>
-                                                <Link  to="/employer-detail">Employer detail</Link >
-                                            </li>
-                                            <li>
-                                                <Link  to="/dash-my-profile">Profile</Link >
-                                            </li>
-                                            <li>
-                                                <Link  to="/error-404">404 Page</Link >
-                                            </li>
-                                            <li>
-                                                <Link  to="/pricing">Pricing</Link >
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div className="col-lg-3 col-md-6 col-sm-6">
-                                    <div className="widget widget_services ftr-list-center">
-                                        <h3 className="widget-title">Quick Link s</h3>
-                                        <ul>
-                                            <li>
-                                                <Link  to="/index">Home</Link >
-                                            </li>
-                                            <li>
-                                                <Link  to="/about-1">About us</Link >
-                                            </li>
-                                            <li>
-                                                <Link  to="/dash-bookmark">Bookmark</Link >
-                                            </li>
-                                            <li>
-                                                <Link  to="/job-grid">Jobs</Link >
-                                            </li>
-                                            <li>
-                                                <Link  to="/employer-list">Employer</Link >
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {/* FOOTER COPYRIGHT */}
-                <div className="footer-bottom">
-                    <div className="footer-bottom-info">
-                        <div className="footer-copy-right">
-                            <span className="copyrights-text">
-                                Copyright © 2023 by thewebmax All Rights Reserved.
-                            </span>
-                        </div>
-                        <ul className="social-icons">
-                            <li>
-                                <Link  to="/javascript:void(0);" className="fab fa-facebook-f"></Link >
-                            </li>
-                            <li>
-                                <Link  to="/javascript:void(0);" className="fab fa-twitter"></Link >
-                            </li>
-                            <li>
-                                <Link  to="/javascript:void(0);" className="fab fa-instagram"></Link >
-                            </li>
-                            <li>
-                                <Link  to="/javascript:void(0);" className="fab fa-youtube"></Link >
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+              </div>
+              <div className="col-md-7">
+                <form>
+                  <div className="ftr-nw-form">
+                    <input
+                      name="news-letter"
+                      className="form-control"
+                      placeholder="Enter Your Email"
+                      type="text"
+                    />
+                    <button className="ftr-nw-subcribe-btn">Subscribe Now</button>
+                  </div>
+                </form>
+              </div>
             </div>
-        </footer>
+          </div>
+          {/* NEWS LETTER SECTION END */}
+          {/* FOOTER BLOCKES START */}
+          <div className="footer-top">
+            <div className="row">
+              <div className="col-lg-3 col-md-12">
+                <div className="widget widget_about">
+                  <div className="logo-footer clearfix">
+                    <Link to="/index">
+                      <img src={logo_white} alt="" />
+                    </Link >
+                  </div>
+                  <p>Many desktop publishing packages and web page editors now.</p>
+                  <ul className="ftr-list">
+                    <li>
+                      <p>
+                        <span>Address :</span>65 Sunset CA 90026, USA
+                      </p>
+                    </li>
+                    <li>
+                      <p>
+                        <span>Email :</span>example@max.com
+                      </p>
+                    </li>
+                    <li>
+                      <p>
+                        <span>Call :</span>555-555-1234
+                      </p>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div className="col-lg-9 col-md-12">
+                <div className="row">
+                  <div className="col-lg-3 col-md-6 col-sm-6">
+                    <div className="widget widget_services ftr-list-center">
+                      <h3 className="widget-title">For Candidate</h3>
+                      <ul>
+                        <li>
+                          <Link to="/dashboard">User Dashboard</Link >
+                        </li>
+                        <li>
+                          <Link to="/dash-resume-alert">Alert resume</Link >
+                        </li>
+                        <li>
+                          <Link to="/candidate-grid">Candidates</Link >
+                        </li>
+                        <li>
+                          <Link to="/blog-list">Blog List</Link >
+                        </li>
+                        <li>
+                          <Link to="/blog-single">Blog single</Link >
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div className="col-lg-3 col-md-6 col-sm-6">
+                    <div className="widget widget_services ftr-list-center">
+                      <h3 className="widget-title">For Employers</h3>
+                      <ul>
+                        <li>
+                          <Link to="/dash-post-job">Post Jobs</Link >
+                        </li>
+                        <li>
+                          <Link to="/blog-grid">Blog Grid</Link >
+                        </li>
+                        <li>
+                          <Link to="/contact">Contact</Link >
+                        </li>
+                        <li>
+                          <Link to="/job-list">Jobs Listing</Link >
+                        </li>
+                        <li>
+                          <Link to="/job-detail">Jobs details</Link >
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div className="col-lg-3 col-md-6 col-sm-6">
+                    <div className="widget widget_services ftr-list-center">
+                      <h3 className="widget-title">Helpful Resources</h3>
+                      <ul>
+                        <li>
+                          <Link to="/faq">FAQs</Link >
+                        </li>
+                        <li>
+                          <Link to="/employer-detail">Employer detail</Link >
+                        </li>
+                        <li>
+                          <Link to="/dash-my-profile">Profile</Link >
+                        </li>
+                        <li>
+                          <Link to="/error-404">404 Page</Link >
+                        </li>
+                        <li>
+                          <Link to="/pricing">Pricing</Link >
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div className="col-lg-3 col-md-6 col-sm-6">
+                    <div className="widget widget_services ftr-list-center">
+                      <h3 className="widget-title">Quick Link s</h3>
+                      <ul>
+                        <li>
+                          <Link to="/index">Home</Link >
+                        </li>
+                        <li>
+                          <Link to="/about-1">About us</Link >
+                        </li>
+                        <li>
+                          <Link to="/dash-bookmark">Bookmark</Link >
+                        </li>
+                        <li>
+                          <Link to="/job-grid">Jobs</Link >
+                        </li>
+                        <li>
+                          <Link to="/employer-list">Employer</Link >
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* FOOTER COPYRIGHT */}
+          <div className="footer-bottom">
+            <div className="footer-bottom-info">
+              <div className="footer-copy-right">
+                <span className="copyrights-text">
+                  Copyright © 2023 by thewebmax All Rights Reserved.
+                </span>
+              </div>
+              <ul className="social-icons">
+                <li>
+                  <Link to="/javascript:void(0);" className="fab fa-facebook-f"></Link >
+                </li>
+                <li>
+                  <Link to="/javascript:void(0);" className="fab fa-twitter"></Link >
+                </li>
+                <li>
+                  <Link to="/javascript:void(0);" className="fab fa-instagram"></Link >
+                </li>
+                <li>
+                  <Link to="/javascript:void(0);" className="fab fa-youtube"></Link >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </footer>
       {/* FOOTER END  */}
     </div>
   );
