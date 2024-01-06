@@ -42,7 +42,7 @@ function App() {
           <Route path='/dash-post-job' element={<DashPostJob/>}/>
           <Route path='/dashboard' element={<Dashboard/>}/>
           <Route path='/employer-detail' element={<EmployerDetail/>}/>
-          <Route path='/job-detail' element={<JobDetail/>}/>
+          <Route path='/job-detail/:id' element={<JobDetail/>}/>
         </Routes>
       </BrowserRouter>
     </div>
