@@ -2,7 +2,6 @@ const mongoose = require("mongoose")
 const companySchema = new mongoose.Schema({
     companyLogo: {
         type: String,
-
     },
     image: {
         type: String, 
