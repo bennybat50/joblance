@@ -8,16 +8,16 @@ const handleError = require("../middlewares/error")
 
 
 // POST JOB
-router.post("/post-job", verifyToken, async function (req, res) {
+router.post("/post-job", async function (req, res) {
     try {
-        let { jobCategory_id, company_id } = req.body;
+        let {  company_id } = req.body;
 
-        let category = await JobCategory.findById(jobCategory_id);
+        // let category = await JobCategory.findById(jobCategory_id);
         let company = await Company.findById(company_id);
         
 
-        if (!category || !company) {
-            return handleError(res, 404, "Job category and company required");
+        if (!company) {
+            return handleError(res, 404, "company required");
         }
 
         let newJob = new Job(req.body);
@@ -26,8 +26,8 @@ router.post("/post-job", verifyToken, async function (req, res) {
         company.job_id.push(newJob._id);
         await company.save();
 
-        category.job_id.push(newJob._id);
-        await category.save();  
+        // category.job_id.push(newJob._id);
+        // await category.save();  
 
         res.status(200).send({ message: "Job created successfully", data: newJob });
     } catch (err) {
@@ -37,7 +37,7 @@ router.post("/post-job", verifyToken, async function (req, res) {
 
 
 //GET  ALL JOBS 
-router.get("/jobs", verifyToken, async function (req, res){
+router.get("/jobs", async function (req, res){
     try{
         let job = await Job.find().populate("jobCategory_id company_id application_id")
 
@@ -58,7 +58,7 @@ router.get("/jobs", verifyToken, async function (req, res){
 
 
 // SINGLE JOB
-router.get("/job/:id", verifyToken, async function (req, res){
+router.get("/job/:id", async function (req, res){
     try{
         let { id } = req.params;
         let job = await Job.findById(id).populate("jobCategory_id company_id application_id")
@@ -78,7 +78,7 @@ router.get("/job/:id", verifyToken, async function (req, res){
 })
 
 
-router.put("/job/update/:id", verifyToken, async function (req, res){
+router.put("/job/update/:id", async function (req, res){
     try{
 
         let { id } = req.params;
@@ -99,7 +99,7 @@ router.put("/job/update/:id", verifyToken, async function (req, res){
 })
 
 
-router.delete("/job/delete/:id", verifyToken, async function (req, res) {
+router.delete("/job/delete/:id", async function (req, res) {
     try{
         let { id } = req.params;
         let job = await Job.findByIdAndDelete(id)

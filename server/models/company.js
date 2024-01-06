@@ -80,7 +80,7 @@ const companySchema = new mongoose.Schema({
     },
     password:{
         type:String,
-        required: true 
+        // required: true 
     },
     job_id:[{type:mongoose.Schema.Types.ObjectId, ref:"job"}],
     message_id:[{type:mongoose.Schema.Types.ObjectId, ref:"message"}],

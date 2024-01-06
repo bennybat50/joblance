@@ -19,6 +19,7 @@ import DashPostJob from './pages/dash-post-job';
 import Dashboard from './pages/dashboard';
 import EmployerDetail from './pages/employer-detail';
 import JobDetail from './pages/job-detail';
+import EditCompany from './pages/dash-edit-company';
 
 function App() {
   return (
@@ -43,6 +44,8 @@ function App() {
           <Route path='/dashboard' element={<Dashboard/>}/>
           <Route path='/employer-detail' element={<EmployerDetail/>}/>
           <Route path='/job-detail/:id' element={<JobDetail/>}/>
+          <Route path='/job-detail' element={<JobDetail/>}/>
+          <Route path='/edit-company/:compId' element={<EditCompany/>}/>
         </Routes>
       </BrowserRouter>
     </div>
