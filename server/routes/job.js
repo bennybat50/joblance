@@ -10,9 +10,9 @@ const handleError = require("../middlewares/error")
 // POST JOB
 router.post("/post-job", async function (req, res) {
     try {
-        let {  company_id } = req.body;
+        let {jobCategory_id,  company_id } = req.body;
 
-        // let category = await JobCategory.findById(jobCategory_id);
+        let category = await JobCategory.findById(jobCategory_id);
         let company = await Company.findById(company_id);
         
 
@@ -26,11 +26,12 @@ router.post("/post-job", async function (req, res) {
         company.job_id.push(newJob._id);
         await company.save();
 
-        // category.job_id.push(newJob._id);
-        // await category.save();  
+        category.job_id.push(newJob._id);
+        await category.save();  
 
         res.status(200).send({ message: "Job created successfully", data: newJob });
     } catch (err) {
+        console.log(err)
         return handleError(res, 500, "Internal server error");
     }
 });

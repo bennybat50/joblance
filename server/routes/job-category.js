@@ -5,7 +5,7 @@ const verifyToken  = require("../middlewares/verifyToken")
 const handleError  = require("../middlewares/error")
 const jwt = require("jsonwebtoken")
 
-router.post("/job-category", verifyToken, async function (req, res){
+router.post("/job-category", async function (req, res){
     let existingCategory = await Category.findOne({name: req.body.name})
 
     if(existingCategory){
@@ -17,12 +17,13 @@ router.post("/job-category", verifyToken, async function (req, res){
         await category.save()
         res.status(200).send({message: "Job category created"})
     }catch(err){
+        console.log(err)
         return handleError(res, 500, "Ïnternal server error")
     }
 })
 
 
-router.get("/job-categories", verifyToken, async function (req, res){
+router.get("/job-categories", async function (req, res){
     try{
         let jobCategory = await Category.find().populate("job_id application_id")
 
@@ -42,7 +43,7 @@ router.get("/job-categories", verifyToken, async function (req, res){
     }
 })
 
-router.get("/job-category/:id", verifyToken, async function (req, res){
+router.get("/job-category/:id", async function (req, res){
     try{
         let { id } = req.params;
 
@@ -62,7 +63,7 @@ router.get("/job-category/:id", verifyToken, async function (req, res){
     }
 })
 
-router.put("/job-category/update/:id", verifyToken, async function (req, res){
+router.put("/job-category/update/:id", async function (req, res){
     try{
         let { id } = req.params
 
