@@ -121,16 +121,16 @@ export default function CreateCompany() {
                     </div>
                   </div>
 
-                  <div className="col-lg-12 col-md-12">
+                  <div className="col-lg-12 col-md-12 ">
                     <div className="dashboard-cover-pic">
                       <div
                         action="https://thewebmax.org/jobzilla/upload.php"
-                        className="dropzone"
+                        className="dropzone "
                       >
-                        <div className="row">
+                        <div className="row mb-5">
                           <div className="col-lg-6 ">
                             <label className="mb-3 fw-bolder" htmlFor="">Company logo</label>
-                            <input type="text" placeholder="input company logo" onChange={(e)=> setFormImage(e.target.value)}  className="form-control"/>
+                            <input type="text" placeholder="input company logo" onChange={(e)=> setFormImage(e.target.value)}  className="form-control"  />
 
                           <figure className="h-75 w-100 ">
                             <img src={formImage} alt="" className="h-100 w-100" />
