@@ -331,12 +331,12 @@ export default function JobList() {
                                         </a>
                                         <p class="twm-job-address">{data.city} , {data.country}
                                         </p>
-                                        <a href={`/job-detail/${data._id}`}
-                                            class="twm-job-websites site-text-primary">Company ()</a>
+                                       {data.company_id? <a href={`/job-detail/${data._id}`}
+                                            class="twm-job-websites site-text-primary">Company ({data.company_id.companyName})</a> :<></> } 
                                     </div>
                                     <div class="twm-right-content">
 
-                                        <div class="twm-jobs-amount">{data.offeredSalary} <span>/ Annual Salary</span></div>
+                                        <div class="twm-jobs-amount">${data.offeredSalary} <span>/ Annual Salary</span></div>
                                         <a href={`/job-detail/${data._id}`} class="twm-jobs-browse site-text-primary">Browse
                                             Job</a>
                                     </div>
