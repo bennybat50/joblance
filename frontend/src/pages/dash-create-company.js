@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import logo from "../assets/images/images/logo-dark.png";
 import Dash_Header from "../components/Dashheader";
 import { useState } from "react";
+// import banner from "../assets/images/images/background/bg-3.jpg"
+// import banner2 from "../assets/images/images/background/bg-2.jpg"
 
 export default function CreateCompany() {
   const [compName, SetCompName] = useState();
@@ -12,6 +14,9 @@ export default function CreateCompany() {
   const [teamSize, setTeamSize] = useState();
   const [descript, setDescrip] = useState();
   const [err, setErr] = useState(false);
+
+  const [formImage,setFormImage] = useState("")
+  const [formBanner,setFormBanner] = useState("")
   // const []
   const CreateCompany = (e) => {
     e.preventDefault();
@@ -80,6 +85,8 @@ export default function CreateCompany() {
             </div>
 
             {/* <!--Logo and Cover image--> */}
+            <form onSubmit={CreateCompany}>
+
             <div className="panel panel-default">
               <div className="panel-heading wt-panel-heading p-a20">
                 <h4 className="panel-tittle m-a0">Logo and Cover image</h4>
@@ -89,7 +96,7 @@ export default function CreateCompany() {
                   <div className="col-lg-12 col-md-12">
                     <div className="form-group">
                       <div className="dashboard-profile-pic">
-                        <div className="dashboard-profile-photo">
+                        {/* <div className="dashboard-profile-photo">
                           <img src="images/jobs-company/pic1.jpg" alt="" />
                           <div className="upload-btn-wrapper">
                             <div id="upload-image-grid"></div>
@@ -97,28 +104,47 @@ export default function CreateCompany() {
                               Upload Photo
                             </button>
                             <input
-                              type="file"
+                              type="text"
                               name="myfile"
                               id="file-uploader"
                               accept=".jpg, .jpeg, .png"
                             />
                           </div>
-                        </div>
-                        <p>
+                        </div> */}
+                        
+                        {/* <p>
                           <b>Company Logo :- </b> Max file size is 1MB, Minimum
                           dimension: 136 x 136 And Suitable files are .jpg &
                           .png
-                        </p>
+                        </p> */}
                       </div>
                     </div>
                   </div>
 
                   <div className="col-lg-12 col-md-12">
                     <div className="dashboard-cover-pic">
-                      <form
+                      <div
                         action="https://thewebmax.org/jobzilla/upload.php"
                         className="dropzone"
-                      ></form>
+                      >
+                        <div className="row">
+                          <div className="col-lg-6 ">
+                            <label className="mb-3 fw-bolder" htmlFor="">Company logo</label>
+                            <input type="text" placeholder="input company logo" onChange={(e)=> setFormImage(e.target.value)}  className="form-control"/>
+
+                          <figure className="h-75 w-100 ">
+                            <img src={formImage} alt="" className="h-100 w-100" />
+                          </figure>
+                          </div>
+                          <div className="col-lg-6 ">
+                            <label className="mb-3 fw-bolder" htmlFor="">Company banner</label>
+                            <input type="text" placeholder="input company baner image" onChange={(e)=>setFormBanner(e.target.value)}  className="form-control"/>
+                            <figure className="w-100 h-75">
+                              <img src={formBanner} alt="" className="w-100 h-100"  />
+                            </figure>
+                          </div>
+                        </div>
+                      </div>
                       <p>
                         <b>Background Banner Image :- </b> Max file size is 1MB,
                         Minimum dimension: 770 x 310 And Suitable files are .jpg
@@ -136,7 +162,6 @@ export default function CreateCompany() {
                 <h4 className="panel-tittle m-a0">Basic Informations</h4>
               </div>
               <div className="panel-body wt-panel-body p-a20 m-b30 ">
-                <form onSubmit={CreateCompany}>
                   <div className="row">
                     <div className="col-xl-4 col-lg-12 col-md-12">
                       <div className="form-group">
@@ -325,10 +350,10 @@ export default function CreateCompany() {
                       </div>
                     </div>
                   </div>
-                </form>
               </div>
             </div>
-
+            </form>
+            
           
           </div>
         </div>
