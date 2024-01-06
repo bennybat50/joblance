@@ -40,7 +40,7 @@ router.post("/post-job", async function (req, res) {
 //GET  ALL JOBS 
 router.get("/jobs", async function (req, res){
     try{
-        let job = await Job.find().populate("jobCategory_id company_id application_id")
+        let job = await Job.find().populate("company_id application_id")
 
         if(!job){
             return handleError(res, 404, "No job")
@@ -53,6 +53,7 @@ router.get("/jobs", async function (req, res){
             data: job
         })
     }catch(err){
+        console.log(err);
         return handleError(res, 500, "Internal server error")
     }
 })
