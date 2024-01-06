@@ -1,66 +1,88 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import logo from "../assets/images/images/logo-dark.png";
 import Dash_Header from "../components/Dashheader";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export default function CreateCompany() {
-  const [compName, SetCompName] = useState();
-  const [phone, setPhone] = useState();
-  const [email, setEmail] = useState();
-  const [website, setWebsite] = useState();
-  const [estSince, setEstSince] = useState();
-  const [teamSize, setTeamSize] = useState();
-  const [descript, setDescrip] = useState();
-  const [err, setErr] = useState(false);
-  // const []
-  const CreateCompany = (e) => {
-    e.preventDefault();
-    if (
-      compName === "" ||
-      phone === "" ||
-      email === "" ||
-      website === "" ||
-      estSince === "" ||
-      teamSize === "" ||
-      descript === ""
-    ) {
-      setErr(true);
-      return;
-      
-    }
-
-    const compDetails = {
+export default function EditCompany() {
+    const [compName, setCompName] = useState();
+    const [phone, setPhone] = useState();
+    const [email, setEmail] = useState();
+    const [website, setWebsite] = useState();
+    const [estSince, setEstSince] = useState();
+    const [teamSize, setTeamSize] = useState();
+    const [descript, setDescrip] = useState();
+    const [err, setErr] = useState(false);
+    const { compId } = useParams();
+  
+    useEffect(() => {
+      fetch(`http://localhost:7300/company/${compId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          setCompName(data.data.companyName);
+          setPhone(data.data.phone);
+          setEmail(data.data.email);
+          setWebsite(data.data.website);
+          setEstSince(data.data.estSince);
+          setTeamSize(data.data.teamSize);
+          setDescrip(data.data.Description);
+        })
+        .catch((error) => {
+          console.error("Fetch error:", error.message);
+        });
+    }, [compId]);
+  
+    const updateCompanyProfile = (e) => {
+      e.preventDefault();
+      if (
+        compName === "" ||
+        phone === "" ||
+        email === "" ||
+        website === "" ||
+        estSince === "" ||
+        teamSize === "" ||
+        descript === ""
+      ) {
+        setErr(true);
+        return;
+      }
+  
+      const compDetails = {
         companyName: compName,
-        phone:phone,
-        email:email,
-        website:website,
-        estSince:estSince,
-        teamSize:teamSize,
-        Description: descript
-    }
-    console.log(compDetails)
-
-    
-    fetch("http://localhost:7300/create-company", {
-        method:"POST",
-        headers:{"Content-Type": "Application/json"},
-        body:JSON.stringify(compDetails)
+        phone: phone,
+        email: email,
+        website: website,
+        estSince: estSince,
+        teamSize: teamSize,
+        Description: descript,
+      };
+  
+      fetch(`http://localhost:7300/company/update/${compId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(compDetails),
       })
-      .then((data)=>{
-          console.log(data)
-          alert("Company created");
-          // Navigate("/sign-in")
-      })
-      .catch((err)=> console.log(err.message))
-
-      SetCompName("")
-      setPhone("")
-      setEmail("")
-      setWebsite("")
-      setEstSince("")
-      setTeamSize("")
-      setDescrip("")
-  };
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log(data);
+          alert("Company profile updated");
+        })
+        .catch((err) => console.log(err.message));
+    };
 
   return (
     <body>
@@ -71,12 +93,12 @@ export default function CreateCompany() {
         <div id="content">
           <div className="content-admin-main">
             <div className="wt-admin-right-page-header clearfix">
-              <h2>Company Profile!</h2>
-              <div className="breadcrumbs">
+              <h2>Edit Company Profile!</h2>
+              {/* <div className="breadcrumbs">
                 <a href="#">Home</a>
                 <a href="#">Dasboard</a>
                 <span>Company Profile!</span>
-              </div>
+              </div> */}
             </div>
 
             {/* <!--Logo and Cover image--> */}
@@ -136,14 +158,14 @@ export default function CreateCompany() {
                 <h4 className="panel-tittle m-a0">Basic Informations</h4>
               </div>
               <div className="panel-body wt-panel-body p-a20 m-b30 ">
-                <form onSubmit={CreateCompany}>
+                <form onSubmit={updateCompanyProfile}>
                   <div className="row">
                     <div className="col-xl-4 col-lg-12 col-md-12">
                       <div className="form-group">
                         <label>Company Name</label>
                         <div className="ls-inputicon-box">
                           <input
-                            onChange={(e) => SetCompName(e.target.value)}
+                            onChange={(e) => setCompName(e.target.value)}
                             value={compName}
                             className="form-control"
                             name="company_name"

@@ -69,6 +69,17 @@ export default function Signup_Pop() {
                                                 <div className="col-md-12">
                                                     <button type="submit" className="site-button">Sign Up</button>
                                                 </div>
+                                                <div className="col-md-12">
+                                                <a
+                                                className="twm-nav-sign-up site-button mt-3"
+                                                data-bs-toggle="modal"
+                                                href="#sign_up_popup2"
+                                                role="button"
+                                            >
+                                                <i className="feather-log-in "></i> Login
+                                            </a>
+                                                    {/* <button type="submit" className="site-button mt-3"  href="#sign_up_popup2">Login</button> */}
+                                                </div>
 
                                             </div>
                                         </div>
