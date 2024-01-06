@@ -49,10 +49,10 @@ const jobSchema = new mongoose.Schema({
         type: Date,
         required: true
     },
-    category:{
+    jobCategory_id:{
         type:String,
         required:true,
-        enum:["Accounting and Finance", "Counseling Data Entry", "Counseling", "Court Administration", "Human Resources", "Investigative", "IT and Computers","Law Enforcement", "Management",  "Miscellaneous", "Public Relations"]
+       ref:"jobCategory"
     },
     company_id: {type: String,
         required: true,
