@@ -50,6 +50,7 @@ router.post("/company-login", async function(req, res){
             res.status(200).send({
                 status:"Success",
                 message: "Login Successful",
+                data:noPasswordCompany,
                 token
             })
         }else if(!company){
@@ -73,7 +74,7 @@ router.post("/company-login", async function(req, res){
 
 
 // GET COMPANIES
-router.get("/company", verifyToken, async function (req, res){
+router.get("/company", async function (req, res){
     try{
         let company = await Company.find().populate("job_id message_id")
         if(!company){
@@ -91,7 +92,7 @@ router.get("/company", verifyToken, async function (req, res){
 
 
 // GET SINGLE COMPANY 
-router.get("/company/:id", verifyToken, async function (req, res){
+router.get("/company/:id", async function (req, res){
     try{
         let { id } = req.params  
         let company = await Company.findById(id).populate("job_id message_id")
@@ -110,7 +111,7 @@ router.get("/company/:id", verifyToken, async function (req, res){
 
 
 // UPDATE COMPANY 
-router.put("/company/update/:id", verifyToken, async function (req, res){
+router.put("/company/update/:id", async function (req, res){
     try{
         let { id } = req.params
         
@@ -133,7 +134,7 @@ router.put("/company/update/:id", verifyToken, async function (req, res){
 
 
 // DELETE 
-router.delete("/company/delete/:id", verifyToken, async function (req, res){
+router.delete("/company/delete/:id", async function (req, res){
     try{
         let { id } = req.params
 

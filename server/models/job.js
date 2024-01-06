@@ -49,13 +49,18 @@ const jobSchema = new mongoose.Schema({
         type: Date,
         required: true
     },
-    jobCategory_id: {type: String,
-        required: true,
-        ref: "jobCategory"
+    category:{
+        type:String,
+        required:true,
+        enum:["Accounting and Finance", "Counseling Data Entry", "Counseling", "Court Administration", "Human Resources", "Investigative", "IT and Computers","Law Enforcement", "Management",  "Miscellaneous", "Public Relations"]
     },
     company_id: {type: String,
         required: true,
         ref: "company"
+    },
+    jobDescription: {
+        type: String,
+        required: true
     },
     application_id:[{type:mongoose.Schema.Types.ObjectId, ref:"apply"}],
 
