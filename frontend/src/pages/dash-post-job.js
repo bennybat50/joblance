@@ -10,6 +10,7 @@ export default function DashPostJob() {
   const [selectedCompanyId, setSelectedCompanyId] = useState();
   const [jobTitle, setJobTitle] = useState();
   const [jobCategory, setJobCategory] = useState();
+  const [JobCategoryID, setJobCategoryId] = useState();
   const [jobType, setJobType] = useState();
   // const [compoa] = useState()
   const [salary, setSalary] = useState();
@@ -25,7 +26,6 @@ export default function DashPostJob() {
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
   const [err, setErr] = useState(false);
-
 
   useEffect(() => {
     fetch("http://localhost:7300/company", {
@@ -48,8 +48,35 @@ export default function DashPostJob() {
       });
   }, []);
 
+  // Job category
+  useEffect(() => {
+    fetch("http://localhost:7300/job-categories", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setJobCategory(data.data);
+        console.log(data.data);
+      })
+      .catch((error) => {
+        console.error("Fetch error:", error.message);
+      });
+  }, []);
+
   const handleCompanySelect = (event) => {
     setSelectedCompanyId(event.target.value);
+  };
+
+  const handleJobCategory = (event) => {
+    setJobCategoryId(event.target.options[event.target.selectedIndex].value);
   };
 
   const postJob = (e) => {
@@ -57,7 +84,7 @@ export default function DashPostJob() {
     if (
       selectedCompanyId === undefined ||
       jobTitle === undefined ||
-      jobCategory === undefined ||
+      JobCategoryID === undefined ||
       jobType === undefined ||
       salary === undefined ||
       experiece === undefined ||
@@ -66,14 +93,14 @@ export default function DashPostJob() {
       country === undefined ||
       city === undefined ||
       location === undefined ||
-      Latitude === undefined||
+      Latitude === undefined ||
       longitude === undefined ||
       description === undefined ||
       startDate === undefined ||
-      endDate ===undefined
+      endDate === undefined
     ) {
       alert("fill form ");
-      setErr(true)
+      setErr(true);
       return;
     }
 
@@ -90,12 +117,11 @@ export default function DashPostJob() {
       longitude: longitude,
       startDate: startDate,
       endDate: endDate,
-      category: jobCategory,
+      jobCategory_id: JobCategoryID,
       jobDescription: description,
-      company_id: selectedCompanyId
+      company_id: selectedCompanyId,
     };
     console.log(jobData);
-
 
     // fetch("http://localhost:7300/post-job",{
     //   method: "POST",
@@ -119,14 +145,11 @@ export default function DashPostJob() {
     fetch("http://localhost:7300/post-job", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(jobData)
+      body: JSON.stringify(jobData),
     })
-    .then(response => response.json())
-    .then(data => console.log(data))
-    .catch(error => console.error('Fetch error:', error.message));
-    
-    
-    
+      .then((response) => response.json())
+      .then((data) => console.log(data))
+      .catch((error) => console.error("Fetch error:", error.message));
   };
 
   return (
@@ -192,38 +215,18 @@ export default function DashPostJob() {
                             title=""
                             id="j-category"
                             data-bv-field="size"
-                            onChange={(e) => setJobCategory(e.target.value)}
-                            value={jobCategory}
+                            onChange={handleJobCategory}
+                            value={JobCategoryID}
                           >
-                            <option disabled selected value="">
-                              Select Category
-                            </option>
-                            <option value="Accounting and Finance">
-                              Accounting and Finance
-                            </option>
-                            <option value="Counseling Data Entry">
-                              Clerical &amp; Data Entry
-                            </option>
-                            <option value="Counseling">Counseling</option>
-                            <option value="Court Administration">
-                              Court Administration
-                            </option>
-                            <option value="Human Resources">
-                              Human Resources
-                            </option>
-                            <option value="Investigative">Investigative</option>
-                            <option value="IT and Computers">
-                              IT and Computers
-                            </option>
-                            <option value="Law Enforcement">
-                              Law Enforcement
-                            </option>
-                            <option value="Management">Management</option>
-                            <option value="Miscellaneous">Miscellaneous</option>
-                            <option value="Public Relations">
-                              Public Relations
-                            </option>
+                            <option value="">Select Category</option>
+                            {jobCategory &&
+                              jobCategory.map((cat) => (
+                                <option key={cat._id} value={cat._id}>
+                                  {cat.name}
+                                </option>
+                              ))}
                           </select>
+
                           <i className="fs-input-icon fa fa-border-all"></i>
                         </div>
                         <div>
@@ -411,14 +414,14 @@ export default function DashPostJob() {
                             <option className="bs-title-option" value="">
                               Gender
                             </option>
-                            <option value="male">Male</option>
-                            <option value="femal">Female</option>
-                            <option value="other">Other</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
                           </select>
                           <i className="fs-input-icon fa fa-venus-mars"></i>
                         </div>
                         <div>
-                          {err === true && gender ===  undefined ? (
+                          {err === true && gender === undefined ? (
                             <span>Enter company name</span>
                           ) : (
                             gender === null
@@ -558,7 +561,7 @@ export default function DashPostJob() {
                           <i className="fs-input-icon fa fa-map-pin"></i>
                         </div>
                         <div>
-                          {err === true && Latitude ===  undefined ? (
+                          {err === true && Latitude === undefined ? (
                             <span>Enter latitude</span>
                           ) : (
                             Latitude === null
@@ -583,7 +586,7 @@ export default function DashPostJob() {
                           <i className="fs-input-icon fa fa-map-pin"></i>
                         </div>
                         <div>
-                          {err === true && longitude ===  undefined ? (
+                          {err === true && longitude === undefined ? (
                             <span>Enter longitude</span>
                           ) : (
                             longitude === null
@@ -669,12 +672,12 @@ export default function DashPostJob() {
                         ></textarea>
                       </div>
                       <div>
-                          {err === true && description ===  undefined ? (
-                            <span>Enter description</span>
-                          ) : (
-                            description === null
-                          )}
-                        </div>
+                        {err === true && description === undefined ? (
+                          <span>Enter description</span>
+                        ) : (
+                          description === null
+                        )}
+                      </div>
                     </div>
 
                     {/* <!--Start Date--> */}
@@ -693,7 +696,7 @@ export default function DashPostJob() {
                           <i className="fs-input-icon fa fa-map-pin"></i>
                         </div>
                         <div>
-                          {err === true && startDate ===  undefined ? (
+                          {err === true && startDate === undefined ? (
                             <span>Enter start date </span>
                           ) : (
                             startDate === null
@@ -736,7 +739,7 @@ export default function DashPostJob() {
                           <i className="fs-input-icon fa fa-map-pin"></i>
                         </div>
                         <div>
-                          {err === true && endDate ===  undefined ? (
+                          {err === true && endDate === undefined ? (
                             <span>Enter end date </span>
                           ) : (
                             endDate === null
