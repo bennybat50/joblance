@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import banner_1 from "../assets/images/images/banner/1.jpg"
@@ -23,11 +24,12 @@ import pic1 from "../assets/images/images/jobs-company/pic1.jpg"
 import job_detail from "../assets/images/images/job-detail-bg.jpg"
 import Signup_Pop from "../components/Signup_Pop"
 import LoginPop from "../components/LoginPop"
+import { BASEURL } from "../common/config";
 import PublicHeader from "../components/PublicHeader"
 
 
 export default function JobDetail() {
-    const MYAPP_URL = "http://localhost:7300";
+    
     const token=localStorage.getItem("token");
 
     const [jobDetail, setJobDetail] = useState({});
@@ -38,7 +40,7 @@ export default function JobDetail() {
     useEffect(() => {
         setIsLoading(true);
         const getJob = async () => {
-          let api_url = MYAPP_URL + `/job/${job_id}`;
+          let api_url = BASEURL + `/job/${job_id}`;
           const headers = { Authorization: `Bearer ${token}` };
           try {
             const res = await axios.get(api_url,{headers});
@@ -119,7 +121,7 @@ export default function JobDetail() {
                                                 <div className="twm-job-self-info">
                                                     <div className="twm-job-self-top">
                                                         <div className="twm-media-bg">
-                                                            {/* {jobDetail.company_id.bannerImage!=null?<img src={jobDetail.company_id.bannerImage} alt="#" className="bannerSize" />:<></>} */}
+                                                            {comDetail.bannerImage!=null?<img src={comDetail.bannerImage} alt="#" className="bannerSize" />:<></>}
                                                             <div className="twm-jobs-category green"><span className="twm-bg-green">New</span></div>
                                                         </div>
 
@@ -127,7 +129,7 @@ export default function JobDetail() {
                                                         <div className="twm-mid-content">
 
                                                             <div className="twm-media">
-                                                               {/* { jobDetail.company_id.image?<img src={jobDetail.company_id.image} alt="#" />:<></>} */}
+                                                               { comDetail.image?<img src={comDetail.image} alt="#" />:<></>}
                                                             </div>
 
                                                             <h4 className="twm-job-title">{jobDetail.jobTitle} <span className="twm-job-post-duration">/ {new Date(jobDetail.startDate).getDate()} - {new Date(jobDetail.startDate).getMonth()} {new Date(jobDetail.startDate).getFullYear()}</span></h4>
@@ -306,7 +308,7 @@ export default function JobDetail() {
                                             <div className="twm-s-info3">
                                                 <div className="twm-s-info-logo-section">
                                                     <div className="twm-media">
-                                                        {/* <img src={jobDetail.company_id.image} alt="#" /> */}
+                                                        <img src={comDetail.image} alt="#" />
                                                     </div>
                                                     <h4 className="twm-title">{jobDetail.jobTitle} </h4>
                                                 </div>
@@ -316,28 +318,28 @@ export default function JobDetail() {
                                                         <div className="twm-s-info-inner">
                                                             <i className="fas fa-building"></i>
                                                             <span className="twm-title">Company</span>
-                                                            <div className="twm-s-info-discription">{jobDetail.company_id.companyName}</div>
+                                                            <div className="twm-s-info-discription">{comDetail.companyName}</div>
                                                         </div>
                                                     </li>
                                                     <li>
                                                         <div className="twm-s-info-inner">
                                                             <i className="fas fa-mobile-alt"></i>
                                                             <span className="twm-title">Phone</span>
-                                                            <div className="twm-s-info-discription">{jobDetail.company_id.phone}</div>
+                                                            <div className="twm-s-info-discription">{comDetail.phone}</div>
                                                         </div>
                                                     </li>
                                                     <li>
                                                         <div className="twm-s-info-inner">
                                                             <i className="fas fa-at"></i>
                                                             <span className="twm-title">Email</span>
-                                                            <div className="twm-s-info-discription">{jobDetail.company_id.email}</div>
+                                                            <div className="twm-s-info-discription">{comDetail.email}</div>
                                                         </div>
                                                     </li>
                                                     <li>
                                                         <div className="twm-s-info-inner">
                                                             <i className="fas fa-desktop"></i>
                                                             <span className="twm-title">Website</span>
-                                                            <div className="twm-s-info-discription">{jobDetail.company_id.website}</div>
+                                                            <div className="twm-s-info-discription">{comDetail.website}</div>
                                                         </div>
                                                     </li>
                                                     <li>
@@ -350,7 +352,7 @@ export default function JobDetail() {
                                                     </li>
 
                                                 </ul>
-                                                <a href="about-1.html" className=" site-button">Vew Profile</a>
+                                                <Link to={"/employer-detail/"+comDetail._id} className=" site-button">Vew Profile</Link>
 
                                             </div>
                                         </div>

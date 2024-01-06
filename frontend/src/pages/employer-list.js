@@ -1,4 +1,7 @@
 import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { BASEURL } from "../common/config";
 import logo_11 from "../assets/images/images/logo-11.png";
 import f_bg from "../assets/images/images/f-bg.jpg"
 import bgImage from "../assets/images/images/banner/1.jpg";
@@ -21,6 +24,29 @@ import PublicHeader from "../components/PublicHeader";
 
 
 export default function  EmployerList(){
+    
+    const token=localStorage.getItem("token");
+
+    const [companies, setCompanies] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        setIsLoading(true);
+        const getJob = async () => {
+          let api_url = BASEURL + "/company";
+          const headers = { Authorization: `Bearer ${token}` };
+          try {
+            const res = await axios.get(api_url,{headers});
+            console.log(res.data);
+            setCompanies(res.data.data);
+          } catch (err) {
+            console.log(err);
+          }
+          setIsLoading(false);
+        };
+        getJob();
+      }, []);
+      
     return(
         <div >
          {/* HEADERR START */}
@@ -296,169 +322,28 @@ export default function  EmployerList(){
 
                 <div className="twm-employer-list-wrap">
                     <ul>
-                         <li>
-                             <div className="twm-employer-list-style1 mb-5">
-                                 <div className="twm-media">
-                                     <img src={pic1} alt="#"/>
-                                 </div>
-                                 <div className="twm-mid-content">
-                                     <Link to="/employer-detail" className="twm-job-title link-tag">
-                                         <h5>Herbal Ltd</h5>
-                                     </Link>
-                                     <p className="twm-job-address">1363-1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
-                                     <Link to="/employer-detail" className="twm-job-websites site-text-primary">Accountancy</Link>
-                                 </div>
-                                 <div className="twm-right-content">
-                                    
-                                     <div className="twm-jobs-vacancies"><span>25</span>Vacancies</div>
-                                 </div>
-                             </div>
-                         </li>
-
-                         <li>
-                             <div className="twm-employer-list-style1 mb-5">
-                                 <div className="twm-media">
-                                     <img src={pic2} alt="#"/>
-                                 </div>
-                                 <div className="twm-mid-content">
-                                     <Link to="/employer-detail" className="twm-job-title link-tag">
-                                         <h5>Artistre Studio PVT Ltd</h5>
-                                     </Link>
-                                     <p className="twm-job-address">1363-1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
-                                     <Link to="/employer-detail" className="twm-job-websites site-text-primary">IT Contractor</Link>
-                                 </div>
-                                 <div className="twm-right-content">
-                                    <div className="twm-jobs-vacancies"><span>30</span>Vacancies</div>
-                                 </div>
-                             </div>
-                         </li>
-
-                         <li>
-                             <div className="twm-employer-list-style1 mb-5">
-                                 <div className="twm-media">
-                                     <img src={pic3} alt="#"/>
-                                 </div>
-                                 <div className="twm-mid-content">
-                                     <Link to="/employer-detail" className="twm-job-title link-tag">
-                                         <h5 className="twm-job-title">Wins Developers</h5>
-                                     </Link>
-                                     <p className="twm-job-address">1363-1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
-                                     <Link to="/employer-detail" className="twm-job-websites site-text-primary">Banking</Link>
-                                 </div>
-                                 <div className="twm-right-content">
-                                    <div className="twm-jobs-vacancies"><span>32</span>Vacancies</div>
-                                 </div>
-                             </div>
-                         </li>
-
-                         <li>
-                             <div className="twm-employer-list-style1 mb-5">
-                                 <div className="twm-media">
-                                     <img src={pic4} alt="#"/>
-                                 </div>
-                                 <div className="twm-mid-content">
-                                     <Link to="/employer-detail" className="twm-job-title link-tag">
-                                         <h5 className="twm-job-title">Thewebmax PVT Ltd</h5>
-                                     </Link>
-                                     <p className="twm-job-address">1363-1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
-                                     <Link to="/employer-detail" className="twm-job-websites site-text-primary">Digital & Creative</Link>
-                                 </div>
-                                 <div className="twm-right-content">
-                                    <div className="twm-jobs-vacancies"><span>38</span>Vacancies</div>
-                                 </div>
-                             </div>
-                         </li>
-
-                         <li>
-                             <div className="twm-employer-list-style1 mb-5">
-                                 <div className="twm-media">
-                                     <img src={pic5} alt="#"/>
-                                 </div>
-                                 <div className="twm-mid-content">
-                                     <Link to="/employer-detail" className="twm-job-title link-tag">
-                                         <h5 className="twm-job-title">Robo Tech</h5>
-                                     </Link>
-                                     <p className="twm-job-address">1363-1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
-                                     <Link to="/employer-detail" className="twm-job-websites site-text-primary">Sales & Marketing</Link>
-                                 </div>
-                                 <div className="twm-right-content">
-                                    <div className="twm-jobs-vacancies"><span>40</span>Vacancies</div>
-                                 </div>
-                             </div>
-                         </li>
-
-                         <li>
-                            <div className="twm-employer-list-style1 mb-5">
-                                <div className="twm-media">
-                                    <img src={pic1} alt="#"/>
+                        {companies.map((comp,index)=>{
+                            return (<li>
+                                <div className="twm-employer-list-style1 mb-5">
+                                    <div className="twm-media">
+                                        <img src={comp.image} alt="#"/>
+                                    </div>
+                                    <div className="twm-mid-content">
+                                        <Link to={"/employer-detail/"+comp._id} className="twm-job-title link-tag">
+                                            <h5>{comp.companyName}</h5>
+                                        </Link>
+                                        <p className="twm-job-address">{comp.companyName}</p>
+                                        <Link to={"/employer-detail/"+comp._id} className="twm-job-websites site-text-primary">Accountancy</Link>
+                                    </div>
+                                    <div className="twm-right-content">
+                                       
+                                        <div className="twm-jobs-vacancies"><span>{comp.job_id.length}</span>Vacancies</div>
+                                    </div>
                                 </div>
-                                <div className="twm-mid-content">
-                                    <Link to="/employer-detail" className="twm-job-title link-tag">
-                                        <h5>Galaxy IT Solution</h5>
-                                    </Link>
-                                    <p className="twm-job-address">1363-1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
-                                    <Link to="/employer-detail" className="twm-job-websites site-text-primary">Leisure & Tourismm</Link>
-                                </div>
-                                <div className="twm-right-content">
-                                    <div className="twm-jobs-vacancies"><span>38</span>Vacancies</div>
-                                </div>
-                            </div>
-                         </li>
-
-                         <li>
-                            <div className="twm-employer-list-style1 mb-5">
-                                <div className="twm-media">
-                                    <img src={pic2} alt="#"/>
-                                </div>
-                                <div className="twm-mid-content">
-                                    <Link to="/employer-detail" className="twm-job-title link-tag">
-                                        <h5>Coderbotics solutions</h5>
-                                    </Link>
-                                    <p className="twm-job-address">1363-1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
-                                    <Link to="/employer-detail" className="twm-job-websites site-text-primary">Consultancy</Link>
-                                </div>
-                                <div className="twm-right-content">
-                                    <div className="twm-jobs-vacancies"><span>35</span>Vacancies</div>
-                                </div>
-                            </div>
-                         </li>
-
-                         <li>
-                            <div className="twm-employer-list-style1 mb-5">
-                                <div className="twm-media">
-                                    <img src={pic3} alt="#"/>
-                                </div>
-                                <div className="twm-mid-content">
-                                    <Link to="/employer-detail" className="twm-job-title link-tag">
-                                        <h5 className="twm-job-title">Microsoft solution</h5>
-                                    </Link>
-                                    <p className="twm-job-address">1363-1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
-                                    <Link to="/employer-detail" className="twm-job-websites site-text-primary">Technologies</Link>
-                                </div>
-                                <div className="twm-right-content">
-                                    <div className="twm-jobs-vacancies"><span>65</span>Vacancies</div>
-                                </div>
-                            </div>
-                         </li>
-
-                         <li>
-                            <div className="twm-employer-list-style1 mb-5">
-                                <div className="twm-media">
-                                    <img src={pic4}alt="#"/>
-                                </div>
-                                <div className="twm-mid-content">
-                                    <Link to="/employer-detail" className="twm-job-title link-tag">
-                                        <h5 className="twm-job-title">Dot Circle PVT Ltd</h5>
-                                    </Link>
-                                    <p className="twm-job-address">1363-1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
-                                    <Link to="/employer-detail" className="twm-job-websites site-text-primary">Sales & Marketing</Link>
-                                </div>
-                                <div className="twm-right-content">
-                                    <div className="twm-jobs-vacancies"><span>50</span>Vacancies</div>
-                                </div>
-                            </div>
-                         </li>
-
+                            </li>)
+                        })}
+                         
+ 
                         
                     </ul>
                 </div>

@@ -9,12 +9,12 @@ import add_bg from "../assets/images/images/add-bg.jpg"
 import PublicHeader from "../components/PublicHeader";
 import Signup_Pop from "../components/Signup_Pop";
 import LoginPop from "../components/LoginPop";
+import { BASEURL } from "../common/config";
 
 
 export default function JobList() {
 
-    const MYAPP_URL = "http://localhost:7300";
-    const token=localStorage.getItem("token");
+     const token=localStorage.getItem("token");
 
     const [jobs, setJobs] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -22,7 +22,7 @@ export default function JobList() {
     useEffect(() => {
         setIsLoading(true);
         const getJob = async () => {
-          let api_url = MYAPP_URL + "/jobs";
+          let api_url = BASEURL + "/jobs";
           const headers = { Authorization: `Bearer ${token}` };
           try {
             const res = await axios.get(api_url,{headers});
