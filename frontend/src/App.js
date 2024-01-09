@@ -20,6 +20,9 @@ import Dashboard from './pages/dashboard';
 import EmployerDetail from './pages/employer-detail';
 import JobDetail from './pages/job-detail';
 import EditCompany from './pages/dash-edit-company';
+import UserDashboard from './pages/candidate/user-dashboard';
+import UserProfile from './pages/candidate/user-profile';
+import UserResume from './pages/candidate/user-resume';
 
 function App() {
   return (
@@ -46,6 +49,9 @@ function App() {
           <Route path='/job-detail/:id' element={<JobDetail/>}/>
           <Route path='/job-detail' element={<JobDetail/>}/>
           <Route path='/edit-company/:compId' element={<EditCompany/>}/>
+          <Route path='/my-dashboard' element={<UserDashboard/>}/> 
+          <Route path='/my-profile' element={<UserProfile/>}/> 
+          <Route path='/my-resume' element={<UserResume/>}/> 
         </Routes>
       </BrowserRouter>
     </div>

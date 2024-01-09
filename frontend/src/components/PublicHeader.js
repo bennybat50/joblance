@@ -15,12 +15,16 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
 import { Link } from "react-router-dom"
-
+import React, { useEffect, useState } from "react";
+ import axios from "axios";
+import { BASEURL } from "../common/config";
+import { useParams } from "react-router-dom";
 
 
 
 
 export default function PublicHeader() {
+    const token=localStorage.getItem("token");
     const settings = {
         dots: false,
         infinite: true,
@@ -62,7 +66,7 @@ export default function PublicHeader() {
                         <div className="container-fluid clearfix">
                             <div className="logo-header">
                                 <div className="logo-header-inner logo-header-one">
-                                    <Link to="/index">
+                                    <Link to="/">
                                         <img src={logo_11} alt="" />
                                     </Link>
                                 </div>
@@ -115,14 +119,21 @@ export default function PublicHeader() {
                                 <div className="extra-cell">
                                     <div className="header-nav-btn-section">
                                         <div className="twm-nav-btn-left">
-                                            <a
+                                            {token==null? <a
                                                 className="twm-nav-sign-up"
                                                 data-bs-toggle="modal"
                                                 href="#sign_up_popup"
                                                 role="button"
                                             >
                                                 <i className="feather-log-in"></i> Sign Up
-                                            </a>
+                                            </a>: <Link
+                                                className="twm-nav-sign-up"
+                                                 to="/my-profile"
+                                                role="button"
+                                            >
+                                                <i className="feather-user"></i> My Profile
+                                            </Link>}
+                                            
                                         </div>
                                         <div className=" link-tag twm-nav-btn-right">
                                             <Link to="/dash-post-job" className=" link-tag twm-nav-post-a-job">
