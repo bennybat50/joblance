@@ -1,11 +1,13 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import pic1 from "../assets/images/images/candidates/pic1.jpg";
 // import logo_white from "../assets/images/images/logo-white.png"
 import logo from "../assets/images/images/logo-dark.png";
 import Dash_Header from "../components/Dashheader";
 import { useEffect, useState } from "react";
 
-export default function DashPostJob() {
+export default function EditJob() {
+    const {jobId} = useParams()
+
   const [companies, setCompanies] = useState([]);
   const [selectedCompanyId, setSelectedCompanyId] = useState();
   const [jobTitle, setJobTitle] = useState();
@@ -19,7 +21,8 @@ export default function DashPostJob() {
   const [gender, setGender] = useState();
   const [country, setCountry] = useState();
   const [city, setCity] = useState();
-  const [location, setLocation] = useState();
+//   const [location, setLocation] = useState();
+
   const [Latitude, setLatitude] = useState();
   const [longitude, setLongitude] = useState();
   const [description, setDescription] = useState();
@@ -27,6 +30,11 @@ export default function DashPostJob() {
   const [endDate, setEndDate] = useState();
   const [err, setErr] = useState(false);
 
+
+// 
+
+
+// Get Company 
   useEffect(() => {
     fetch("http://localhost:7300/company", {
       method: "GET",
@@ -47,6 +55,45 @@ export default function DashPostJob() {
         console.error("Fetch error:", error.message);
       });
   }, []);
+
+
+  useEffect(() => {
+        fetch(`http://localhost:7300/job/${jobId}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then((data) => {
+            console.log(data.data)
+            setJobTitle(data.data.jobTitle)
+            // setJobCategory(data.data.name)
+            setJobType(data.data.jobType)
+            setLongitude(data.data.longitude)
+            setLatitude(data.data.latitude)
+            setSalary(data.data.offeredSalary)
+            // setSelectedCompanyId(data.dats.company_id._id)
+            setStartDate(data.data.startDate)
+            setEndDate(data.data.endDate)
+            setDescription(data.data.jobDescription)
+            setCity(data.data.city)
+            setCountry(data.data.country)
+            setQualification(data.data.qualification)
+            setExperience(data.data.experience)
+            setGender(data.data.gender)
+            
+          })
+          .catch((error) => {
+            console.log("Fetch error:", error.message);
+          });
+      }, [jobId]);
+
 
   // Job category
   useEffect(() => {
@@ -92,7 +139,7 @@ export default function DashPostJob() {
       gender === undefined ||
       country === undefined ||
       city === undefined ||
-      location === undefined ||
+    //   location === undefined ||
       Latitude === undefined ||
       longitude === undefined ||
       description === undefined ||
@@ -123,8 +170,8 @@ export default function DashPostJob() {
     };
     console.log(jobData);
     
-    fetch("http://localhost:7300/post-job", {
-      method: "POST",
+    fetch(`http://localhost:7300/job/update/${jobId}`, {
+      method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(jobData),
     })
@@ -142,7 +189,7 @@ export default function DashPostJob() {
         <div id="content">
           <div className="content-admin-main">
             <div className="wt-admin-right-page-header clearfix">
-              <h2>Post a Job</h2>
+              <h2>Edit a Job</h2>
               <div className="breadcrumbs">
                 <a href="#">Home</a>
                 <a href="#">Dasboard</a>
@@ -502,7 +549,7 @@ export default function DashPostJob() {
                     </div>
 
                     {/* <!--Location-->  */}
-                    <div className="col-xl-4 col-lg-6 col-md-12">
+                    {/* <div className="col-xl-4 col-lg-6 col-md-12">
                       <div className="form-group">
                         <label>Location</label>
                         <div className="ls-inputicon-box">
@@ -524,7 +571,7 @@ export default function DashPostJob() {
                           )}
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
                     {/* <!--Latitude-->  */}
                     <div className="col-xl-4 col-lg-6 col-md-12">
@@ -575,70 +622,6 @@ export default function DashPostJob() {
                         </div>
                       </div>
                     </div>
-
-                    {/* <!--Email Address--> */}
-                    {/* <div className="col-xl-4 col-lg-6 col-md-12">
-                      <div className="form-group">
-                        <label>Email Address</label>
-                        <div className="ls-inputicon-box">
-                          <input
-                            className="form-control"
-                            name="company_Email"
-                            type="email"
-                            placeholder="Devid@example.com"
-                          />
-                          <i className="fs-input-icon fas fa-at"></i>
-                        </div>
-                      </div>
-                    </div> */}
-
-                    {/* <!--Website--> */}
-                    {/* <div className="col-xl-4 col-lg-6 col-md-12">
-                      <div className="form-group">
-                        <label>Website</label>
-                        <div className="ls-inputicon-box">
-                          <input
-                            className="form-control"
-                            name="company_website"
-                            type="text"
-                            placeholder="https://.../"
-                          />
-                          <i className="fs-input-icon fa fa-globe-americas"></i>
-                        </div>
-                      </div>
-                    </div> */}
-
-                    {/* <!--Est. Since--> */}
-                    {/* <div className="col-xl-4 col-lg-6 col-md-12">
-                      <div className="form-group">
-                        <label>Est. Since</label>
-                        <div className="ls-inputicon-box">
-                          <input
-                            className="form-control"
-                            name="company_since"
-                            type="text"
-                            placeholder="Since..."
-                          />
-                          <i className="fs-input-icon fa fa-clock"></i>
-                        </div>
-                      </div>
-                    </div> */}
-
-                    {/* <!--Complete Address--> */}
-                    {/* <div className="col-xl-12 col-lg-6 col-md-12">
-                      <div className="form-group">
-                        <label>Complete Address</label>
-                        <div className="ls-inputicon-box">
-                          <input
-                            className="form-control"
-                            name="company_since"
-                            type="text"
-                            placeholder="1363-1385 Sunset Blvd Los Angeles, CA 90026, USA"
-                          />
-                          <i className="fs-input-icon fa fa-home"></i>
-                        </div>
-                      </div>
-                    </div> */}
 
                     {/* <!--Description--> */}
                     <div className="col-md-12">

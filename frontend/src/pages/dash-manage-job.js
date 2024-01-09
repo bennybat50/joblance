@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import pic1 from "../assets/images/images/jobs-company/pic1.jpg"
 import pic2 from "../assets/images/images/jobs-company/pic2.jpg"
 import pic3 from "../assets/images/images/jobs-company/pic3.jpg"
@@ -7,9 +7,68 @@ import pic5 from "../assets/images/images/jobs-company/pic5.jpg"
 // import logo_white from "../assets/images/images/logo-white.png"
 import logo from "../assets/images/images/logo-dark.png"
 import Dash_Header from "../components/Dashheader"
+import { useEffect, useState } from "react"
 
 
 export default function DashManageJob() {
+    const navigate = useNavigate()
+    const [jobs, setJobs] = useState()
+    useEffect(() => {
+        fetch("http://localhost:7300/jobs/", {
+          method: 'GET', 
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json(); 
+        })
+        .then(data => {
+          console.log(data.data);
+          setJobs(data.data)
+       
+        })
+        .catch(error => {
+          console.error('Fetch error:', error.message);
+        });
+      }, []);
+
+
+      const deleteData = (id) => {
+
+        const shouldDelete = window.confirm("Are you sure you want to delete this item?");
+
+        if (!shouldDelete) {
+            return;
+        }
+
+        fetch(`http://localhost:7300/job/delete/${id}`,{
+            method: "DELETE",
+            headers: {"content-type" : "application/json"},
+        }).then(response =>{
+            if(!response.ok){
+                throw new Error(`HTTP error! Status: ${response.status}`)
+            }
+            return
+        })
+        .then(data=>{
+            alert("Deleted")
+        })
+        .catch(error => {
+            console.error('Fetch error:', error.message);
+          });
+      }
+
+      const editCompany = (id) => {
+            navigate(`/edit-job/${id}`)
+      }
+
+
+   
+
     return (
         <div>
             <div className="page-wraper">
@@ -50,366 +109,62 @@ export default function DashManageJob() {
                                         </thead>
                                         <tbody>
                                             {/* <!--1--> */}
-                                            <tr>
-                                                <td>
-                                                    <div className="twm-bookmark-list">
-                                                        <div className="twm-media">
-                                                            <div className="twm-media-pic">
-                                                                <img src={pic1} alt="#" />
+                                            {
+                                                jobs && jobs.map((job)=>(
+                                                    <tr>
+                                                        
+                                                        <td>
+                                                            <div className="twm-bookmark-list">
+                                                                <div className="twm-media">
+                                                                    <div className="twm-media-pic">
+                                                                        <img src={""} alt="#" />
+                                                                    </div>
+                                                                </div>
+                                                                <div className="twm-mid-content">
+                                                                    <a href="#" className="twm-job-title">
+                                                                        <h4>{job.jobTitle}</h4>
+                                                                        <p className="twm-bookmark-address">
+                                                                            <i className="feather-map-pin"></i>{job.city}, {job.country}
+                                                                        </p>
+                                                                    </a>
+
+                                                                </div>
+
                                                             </div>
-                                                        </div>
-                                                        <div className="twm-mid-content">
-                                                            <a href="#" className="twm-job-title">
-                                                                <h4>Senior Web Designer</h4>
-                                                                <p className="twm-bookmark-address">
-                                                                    <i className="feather-map-pin"></i>1363-1385 Sunset Blvd Los Angeles, CA 90026, USA
-                                                                </p>
-                                                            </a>
+                                                        </td>
+                                                        <td>Frontend</td>
+                                                        <td><div className="twm-jobs-category"><span className="twm-bg-green">{job.jobType}</span></div></td>
+                                                        <td><a href="javascript:;" className="site-text-primary">{job.application_id.length >= 1 ? job.application_id.length + " applied" : "no applicant " }  </a></td>
+                                                        <td>
+                                                            <div>{job.startDate.slice(0, 10)}</div>
+                                                            <div>{job.endDate.slice(0, 10)}</div>
+                                                        </td>
 
-                                                        </div>
-
-                                                    </div>
-                                                </td>
-                                                <td>Web Designer</td>
-                                                <td><div className="twm-jobs-category"><span className="twm-bg-green">Part Time</span></div></td>
-                                                <td><a href="javascript:;" className="site-text-primary">03 Applied</a></td>
-                                                <td>
-                                                    <div>08/06/2023</div>
-                                                    <div>28/06/2023</div>
-                                                </td>
-
-                                                <td>
-                                                    <div className="twm-table-controls">
-                                                        <ul className="twm-DT-controls-icon list-unstyled">
-                                                            <li>
-                                                                <button title="View profile" data-bs-toggle="tooltip" data-bs-placement="top">
-                                                                    <span className="fa fa-eye"></span>
-                                                                </button>
-                                                            </li>
-                                                            <li>
-                                                                <button title="Edit" data-bs-toggle="tooltip" data-bs-placement="top">
-                                                                    <span className="far fa-edit"></span>
-                                                                </button>
-                                                            </li>
-                                                            <li>
-                                                                <button title="Delete" data-bs-toggle="tooltip" data-bs-placement="top">
-                                                                    <span className="far fa-trash-alt"></span>
-                                                                </button>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            {/* <!--2--> */}
-                                            <tr>
-                                                <td>
-                                                    <div className="twm-bookmark-list">
-                                                        <div className="twm-media">
-                                                            <div className="twm-media-pic">
-                                                                <img src={pic2} alt="#" />
+                                                        <td>
+                                                            <div className="twm-table-controls">
+                                                                <ul className="twm-DT-controls-icon list-unstyled">
+                                                                    <li>
+                                                                        <button title="View profile" data-bs-toggle="tooltip" data-bs-placement="top">
+                                                                            <span className="fa fa-eye"></span>
+                                                                        </button>
+                                                                    </li>
+                                                                    <li>
+                                                                        <button onClick={()=> editCompany(job._id)} title="Edit" data-bs-toggle="tooltip" data-bs-placement="top">
+                                                                            <span className="far fa-edit"></span>
+                                                                        </button>
+                                                                    </li>
+                                                                    <li>
+                                                                        <button onClick={()=>deleteData(job._id)} title="Delete" data-bs-toggle="tooltip" data-bs-placement="top">
+                                                                            <span className="far fa-trash-alt"></span>
+                                                                        </button>
+                                                                    </li>
+                                                                </ul>
                                                             </div>
-                                                        </div>
-                                                        <div className="twm-mid-content">
-                                                            <a href="#" className="twm-job-title">
-                                                                <h4>Sr. Rolling Stock Technician</h4>
-                                                                <p className="twm-bookmark-address">
-                                                                    <i className="feather-map-pin"></i>1363-1385 Sunset Blvd Los Angeles, CA 90026, USA
-                                                                </p>
-                                                            </a>
-
-                                                        </div>
-
-                                                    </div>
-                                                </td>
-                                                <td>Product Manager</td>
-                                                <td><div className="twm-jobs-category"><span className="twm-bg-brown">Intership</span></div></td>
-                                                <td><a href="javascript:;" className="site-text-primary">05 Applied</a></td>
-                                                <td>
-                                                    <div>08/06/2023</div>
-                                                    <div>28/06/2023</div>
-                                                </td>
-
-                                                <td>
-                                                    <div className="twm-table-controls">
-                                                        <ul className="twm-DT-controls-icon list-unstyled">
-                                                            <li>
-                                                                <button title="View profile" data-bs-toggle="tooltip" data-bs-placement="top">
-                                                                    <span className="fa fa-eye"></span>
-                                                                </button>
-                                                            </li>
-                                                            <li>
-                                                                <button title="Edit" data-bs-toggle="tooltip" data-bs-placement="top">
-                                                                    <span className="far fa-edit"></span>
-                                                                </button>
-                                                            </li>
-                                                            <li>
-                                                                <button title="Delete" data-bs-toggle="tooltip" data-bs-placement="top">
-                                                                    <span className="far fa-trash-alt"></span>
-                                                                </button>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                            </tr>
-
-                                            {/* <!--3--> */}
-                                            <tr>
-                                                <td>
-                                                    <div className="twm-bookmark-list">
-                                                        <div className="twm-media">
-                                                            <div className="twm-media-pic">
-                                                                <img src={pic3} alt="#" />
-                                                            </div>
-                                                        </div>
-                                                        <div className="twm-mid-content">
-                                                            <a href="#" className="twm-job-title">
-                                                                <h4>IT Department Manager</h4>
-                                                                <p className="twm-bookmark-address">
-                                                                    <i className="feather-map-pin"></i>1363-1385 Sunset Blvd Los Angeles, CA 90026, USA
-                                                                </p>
-                                                            </a>
-
-                                                        </div>
-
-                                                    </div>
-                                                </td>
-                                                <td>PHP Developer</td>
-                                                <td><div className="twm-jobs-category"><span className="twm-bg-purple">Fulltime</span></div></td>
-                                                <td><a href="javascript:;" className="site-text-primary">06 Applied</a></td>
-                                                <td>
-                                                    <div>08/06/2023</div>
-                                                    <div>28/06/2023</div>
-                                                </td>
-
-                                                <td>
-                                                    <div className="twm-table-controls">
-                                                        <ul className="twm-DT-controls-icon list-unstyled">
-                                                            <li>
-                                                                <button title="View profile" data-bs-toggle="tooltip" data-bs-placement="top">
-                                                                    <span className="fa fa-eye"></span>
-                                                                </button>
-                                                            </li>
-                                                            <li>
-                                                                <button title="Edit" data-bs-toggle="tooltip" data-bs-placement="top">
-                                                                    <span className="far fa-edit"></span>
-                                                                </button>
-                                                            </li>
-                                                            <li>
-                                                                <button title="Delete" data-bs-toggle="tooltip" data-bs-placement="top">
-                                                                    <span className="far fa-trash-alt"></span>
-                                                                </button>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                            </tr>
-
-                                            {/* <!--4--> */}
-                                            <tr>
-                                                <td>
-                                                    <div className="twm-bookmark-list">
-                                                        <div className="twm-media">
-                                                            <div className="twm-media-pic">
-                                                                <img src={pic4} alt="#" />
-                                                            </div>
-                                                        </div>
-                                                        <div className="twm-mid-content">
-                                                            <a href="#" className="twm-job-title">
-                                                                <h4>Art Production Specialist</h4>
-                                                                <p className="twm-bookmark-address">
-                                                                    <i className="feather-map-pin"></i>1363-1385 Sunset Blvd Los Angeles, CA 90026, USA
-                                                                </p>
-                                                            </a>
-
-                                                        </div>
-
-                                                    </div>
-                                                </td>
-                                                <td>Product Designer</td>
-                                                <td><div className="twm-jobs-category"><span className="twm-bg-sky">Freelancer</span></div></td>
-                                                <td><a href="javascript:;" className="site-text-primary">13 Applied</a></td>
-                                                <td>
-                                                    <div>08/06/2023</div>
-                                                    <div>28/06/2023</div>
-                                                </td>
-
-                                                <td>
-                                                    <div className="twm-table-controls">
-                                                        <ul className="twm-DT-controls-icon list-unstyled">
-                                                            <li>
-                                                                <button title="View profile" data-bs-toggle="tooltip" data-bs-placement="top">
-                                                                    <span className="fa fa-eye"></span>
-                                                                </button>
-                                                            </li>
-                                                            <li>
-                                                                <button title="Edit" data-bs-toggle="tooltip" data-bs-placement="top">
-                                                                    <span className="far fa-edit"></span>
-                                                                </button>
-                                                            </li>
-                                                            <li>
-                                                                <button title="Delete" data-bs-toggle="tooltip" data-bs-placement="top">
-                                                                    <span className="far fa-trash-alt"></span>
-                                                                </button>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                            </tr>
-
-                                            {/* <!--5--> */}
-                                            <tr>
-                                                <td>
-                                                    <div className="twm-bookmark-list">
-                                                        <div className="twm-media">
-                                                            <div className="twm-media-pic">
-                                                                <img src={pic5} alt="#" />
-                                                            </div>
-                                                        </div>
-                                                        <div className="twm-mid-content">
-                                                            <a href="#" className="twm-job-title">
-                                                                <h4>Recreation & Fitness Worker</h4>
-                                                                <p className="twm-bookmark-address">
-                                                                    <i className="feather-map-pin"></i>1363-1385 Sunset Blvd Los Angeles, CA 90026, USA
-                                                                </p>
-                                                            </a>
-
-                                                        </div>
-
-                                                    </div>
-                                                </td>
-                                                <td>Gym Trainer</td>
-                                                <td><div className="twm-jobs-category"><span className="twm-bg-golden">Temporary</span></div></td>
-                                                <td><a href="javascript:;" className="site-text-primary">08 Applied</a></td>
-                                                <td>
-                                                    <div>08/06/2023</div>
-                                                    <div>28/06/2023</div>
-                                                </td>
-
-                                                <td>
-                                                    <div className="twm-table-controls">
-                                                        <ul className="twm-DT-controls-icon list-unstyled">
-                                                            <li>
-                                                                <button title="View profile" data-bs-toggle="tooltip" data-bs-placement="top">
-                                                                    <span className="fa fa-eye"></span>
-                                                                </button>
-                                                            </li>
-                                                            <li>
-                                                                <button title="Edit" data-bs-toggle="tooltip" data-bs-placement="top">
-                                                                    <span className="far fa-edit"></span>
-                                                                </button>
-                                                            </li>
-                                                            <li>
-                                                                <button title="Delete" data-bs-toggle="tooltip" data-bs-placement="top">
-                                                                    <span className="far fa-trash-alt"></span>
-                                                                </button>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                            </tr>
-
-                                            {/* <!--6--> */}
-                                            <tr>
-                                                <td>
-                                                    <div className="twm-bookmark-list">
-                                                        <div className="twm-media">
-                                                            <div className="twm-media-pic">
-                                                                <img src={pic1} alt="#" />
-                                                            </div>
-                                                        </div>
-                                                        <div className="twm-mid-content">
-                                                            <a href="#" className="twm-job-title">
-                                                                <h4>Senior Web Designer</h4>
-                                                                <p className="twm-bookmark-address">
-                                                                    <i className="feather-map-pin"></i>1363-1385 Sunset Blvd Los Angeles, CA 90026, USA
-                                                                </p>
-                                                            </a>
-
-                                                        </div>
-
-                                                    </div>
-                                                </td>
-                                                <td>Web Designer</td>
-                                                <td><div className="twm-jobs-category"><span className="twm-bg-green">New</span></div></td>
-                                                <td><a href="javascript:;" className="site-text-primary">14 Applied</a></td>
-                                                <td>
-                                                    <div>08/06/2023</div>
-                                                    <div>28/06/2023</div>
-                                                </td>
-
-                                                <td>
-                                                    <div className="twm-table-controls">
-                                                        <ul className="twm-DT-controls-icon list-unstyled">
-                                                            <li>
-                                                                <button title="View profile" data-bs-toggle="tooltip" data-bs-placement="top">
-                                                                    <span className="fa fa-eye"></span>
-                                                                </button>
-                                                            </li>
-                                                            <li>
-                                                                <button title="Edit" data-bs-toggle="tooltip" data-bs-placement="top">
-                                                                    <span className="far fa-edit"></span>
-                                                                </button>
-                                                            </li>
-                                                            <li>
-                                                                <button title="Delete" data-bs-toggle="tooltip" data-bs-placement="top">
-                                                                    <span className="far fa-trash-alt"></span>
-                                                                </button>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            {/* <!--7--> */}
-                                            <tr>
-                                                <td>
-                                                    <div className="twm-bookmark-list">
-                                                        <div className="twm-media">
-                                                            <div className="twm-media-pic">
-                                                                <img src={pic2} alt="#" />
-                                                            </div>
-                                                        </div>
-                                                        <div className="twm-mid-content">
-                                                            <a href="#" className="twm-job-title">
-                                                                <h4>Sr. Rolling Stock Technician</h4>
-                                                                <p className="twm-bookmark-address">
-                                                                    <i className="feather-map-pin"></i>1363-1385 Sunset Blvd Los Angeles, CA 90026, USA
-                                                                </p>
-                                                            </a>
-
-                                                        </div>
-
-                                                    </div>
-                                                </td>
-                                                <td>Product Manager</td>
-                                                <td><div className="twm-jobs-category"><span className="twm-bg-green">New</span></div></td>
-                                                <td><a href="javascript:;" className="site-text-primary">10 Applied</a></td>
-                                                <td>
-                                                    <div>08/06/2023</div>
-                                                    <div>28/06/2023</div>
-                                                </td>
-
-                                                <td>
-                                                    <div className="twm-table-controls">
-                                                        <ul className="twm-DT-controls-icon list-unstyled">
-                                                            <li>
-                                                                <button title="View profile" data-bs-toggle="tooltip" data-bs-placement="top">
-                                                                    <span className="fa fa-eye"></span>
-                                                                </button>
-                                                            </li>
-                                                            <li>
-                                                                <button title="Edit" data-bs-toggle="tooltip" data-bs-placement="top">
-                                                                    <span className="far fa-edit"></span>
-                                                                </button>
-                                                            </li>
-                                                            <li>
-                                                                <button title="Delete" data-bs-toggle="tooltip" data-bs-placement="top">
-                                                                    <span className="far fa-trash-alt"></span>
-                                                                </button>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                                        </td>
+                                                    </tr>
+                                                ))
+                                            }
+                                         
 
                                         </tbody>
                                         <tfoot>

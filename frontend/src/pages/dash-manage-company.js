@@ -41,6 +41,13 @@ export default function DashManageCompany() {
  
      
       const deleteData = (id) => {
+
+        const shouldDelete = window.confirm("Are you sure you want to delete?");
+
+        if (!shouldDelete) {
+            return;
+        }
+
         fetch(`http://localhost:7300/company/delete/${id}`,{
             method: "DELETE",
             headers: {"content-type" : "application/json"},
@@ -110,7 +117,7 @@ export default function DashManageCompany() {
                                                             <div className="twm-bookmark-list">
                                                                 <div className="twm-media">
                                                                     <div className="twm-media-pic">
-                                                                        <img src={pic1} alt="#" />
+                                                                        <img src={comp.image} alt="#" />
                                                                     </div>
                                                                 </div>
                                                                 <div className="twm-mid-content">

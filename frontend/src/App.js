@@ -20,6 +20,11 @@ import Dashboard from './pages/dashboard';
 import EmployerDetail from './pages/employer-detail';
 import JobDetail from './pages/job-detail';
 import EditCompany from './pages/dash-edit-company';
+import EditJob from './pages/dash-edit-job';
+import CreateUser from './pages/dash-create-user';
+import ManageUsers from './pages/dash-manage-users';
+import EditUser from './pages/dash-edit-user';
+import ApplyJob from './pages/dash-apply-job';
 
 function App() {
   return (
@@ -46,6 +51,11 @@ function App() {
           <Route path='/job-detail/:id' element={<JobDetail/>}/>
           <Route path='/job-detail' element={<JobDetail/>}/>
           <Route path='/edit-company/:compId' element={<EditCompany/>}/>
+          <Route path='/edit-job/:jobId' element={<EditJob/>}/>
+          <Route path='/dash-create-user' element={<CreateUser/>}/>
+          <Route path='/dash-manage-user' element={<ManageUsers/>}/>
+          <Route path='/dash-edit-user/:userId' element={<EditUser/>}/>
+          <Route path='/dash-apply' element={<ApplyJob/>}/>
         </Routes>
       </BrowserRouter>
     </div>

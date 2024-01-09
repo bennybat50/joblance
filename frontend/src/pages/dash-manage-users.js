@@ -8,15 +8,13 @@ import pic5 from "../assets/images/images/candidates/pic5.jpg"
 import logo from "../assets/images/images/logo-dark.png"
 import Dash_Header from "../components/Dashheader"
 import { useEffect, useState } from "react"
-// import { response } from "express"
 
 
-export default function DashCandidates(){
-    
-    const [candidate, setCandidate] = useState()
+export default function ManageUsers(){
+    const [users, setUsers] = useState()
     const navigate = useNavigate()
     useEffect(() => {
-        fetch("http://localhost:7300/applications/", {
+        fetch("http://localhost:7300/users/", {
           method: 'GET', 
           headers: {
             'Content-Type': 'application/json',
@@ -30,7 +28,7 @@ export default function DashCandidates(){
         })
         .then(data => {
           console.log(data.data);
-          setCandidate(data.data)
+          setUsers(data.data)
        
         })
         .catch(error => {
@@ -38,15 +36,16 @@ export default function DashCandidates(){
         });
       }, []);
 
+
       const deleteData = (id) => {
 
-        // const shouldDelete = window.confirm("Are you sure you want to delete?");
+        const shouldDelete = window.confirm("Are you sure you want to delete this item?");
 
-        // if (!shouldDelete) {
-        //     return;
-        // }
+        if (!shouldDelete) {
+            return;
+        }
 
-        fetch(`http://localhost:7300/application/delete/${id}`,{
+        fetch(`http://localhost:7300/user/delete/${id}`,{
             method: "DELETE",
             headers: {"content-type" : "application/json"},
         }).then(response =>{
@@ -56,18 +55,19 @@ export default function DashCandidates(){
             return
         })
         .then(data=>{
-            // alert("Deleted")
+            alert("Deleted")
         })
         .catch(error => {
             console.error('Fetch error:', error.message);
           });
       }
 
+      const editUser = ( userId) =>{
+        navigate(`/dash-edit-user/:${userId}`)
+      }
+    
     return(
         <div>
-
-   
-
 	<div className="page-wraper">
     
         <Dash_Header />           
@@ -80,8 +80,8 @@ export default function DashCandidates(){
             <div className="content-admin-main">
 
                 <div className="wt-admin-right-page-header clearfix">
-                    <h2>Candidates</h2>
-                    <div className="breadcrumbs"><a href="#">Home</a><a href="#">Dasboard</a><span>Candidates</span></div>
+                    <h2>Users</h2>
+                    <div className="breadcrumbs"><a href="#">Home</a><a href="#">Dasboard</a><span>Users</span></div>
                 </div>
 
                 <div className="twm-pro-view-chart-wrap">
@@ -89,82 +89,74 @@ export default function DashCandidates(){
                     <div className="col-lg-12 col-md-12 mb-4">
                         <div className="panel panel-default site-bg-white m-t30">
                             <div className="panel-heading wt-panel-heading p-a20">
-                                <h4 className="panel-tittle m-a0"><i className="far fa-list-alt"></i>All Candidates</h4>
+                                <h4 className="panel-tittle m-a0"><i className="far fa-list-alt"></i>All users</h4>
                             </div>
                             <div className="panel-body wt-panel-body">
                                 <div className="twm-D_table p-a20 table-responsive">
                                     <table id="candidate_data_table" className="table table-bordered">
                                         <thead>
                                             <tr>
-                                                <th><input type="checkbox" onclick="checkAll(this)"/></th>
-                                                <th>Name</th>
-                                                <th>Applied for</th>
-                                                <th>Date</th>
-                                                <th>Status</th>
+                                                {/* <th><input type="checkbox" onclick="checkAll(this)"/></th> */}
+                                                <th>User name</th>
+                                                <th>Email</th>
+                                                <th>Phone</th>
+                                                {/* <th>Status</th> */}
                                                 <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                         
+                                            {/* <!--1--> */}
                                             {
-                                                candidate && candidate.map((cand)=>(
-                                                        <tr>
-                                                            <td><input type="checkbox" /></td>
-                                                            <td>
-                                                                <div className="twm-DT-candidates-list">
-                                                                    <div className="twm-media">
-                                                                        <div className="twm-media-pic">
-                                                                        <img src={pic1} alt="#"/>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div className="twm-mid-content">
-                                                                        <a href="#" className="twm-job-title">
-                                                                            <h4>{cand.user_id.userName}</h4>
-                                                                            <p className="twm-candidate-address">
-                                                                                <i className="feather-map-pin"></i>New York
-                                                                            </p>
-                                                                        </a>
-                                                                        
-                                                                    </div>
+                                                users && users.map((user)=>(
+                                                    <tr>
+                                                        {/* <td><input type="checkbox" /></td> */}
+                                                        <td>
+                                                            <div className="twm-DT-candidates-list">
+                                                            
+                                                                <div className="twm-mid-content">
+                                                                    <a href="#" className="twm-job-title">
+                                                                        <h4>{user.userName} </h4>
+                                                                    
+                                                                    </a>
                                                                     
                                                                 </div>
-                                                            </td>
-                                                            <td>{cand.job_id.jobTitle}</td>
-                                                            <td>{cand.createdAt.slice(0,10)} at {cand.createdAt.slice(11,19)}</td>
-                                                            <td><div className="twm-jobs-category"><span className="twm-bg-green">Approved</span></div></td>
-                                                            <td>
-                                                                <div className="twm-table-controls">
-                                                                    <ul className="twm-DT-controls-icon list-unstyled">
-                                                                        <li>
-                                                                            <button title="View profile" data-bs-toggle="tooltip" data-bs-placement="top">
-                                                                                <span className="fa fa-eye"></span>
-                                                                            </button>
-                                                                        </li>
-                                                                        <li>
-                                                                            <button title="Send message" data-bs-toggle="tooltip" data-bs-placement="top">
-                                                                                <span className="far fa-envelope-open"></span>
-                                                                            </button>
-                                                                        </li>
-                                                                        <li>
-                                                                            <button onClick={()=>deleteData(cand._id)} title="Delete" data-bs-toggle="tooltip" data-bs-placement="top">
-                                                                                <span className="far fa-trash-alt"></span>
-                                                                            </button>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
+                                                                
+                                                            </div>
+                                                        </td>
+                                                        <td>{user.email}</td>
+                                                        <td>{user.phone}</td>
+                                                        <td>
+                                                            <div className="twm-table-controls">
+                                                                <ul className="twm-DT-controls-icon list-unstyled">
+                                                                    <li>
+                                                                        <button title="View profile" data-bs-toggle="tooltip" data-bs-placement="top">
+                                                                            <span className="fa fa-eye"></span>
+                                                                        </button>
+                                                                    </li>
+                                                                    <li>
+                                                                        <button onClick={()=> editUser(user._id)} title="Send message" data-bs-toggle="tooltip" data-bs-placement="top">
+                                                                            <span className="far fa-envelope-open"></span>
+                                                                        </button>
+                                                                    </li>
+                                                                    <li>
+                                                                        <button onClick={()=> deleteData(user._id)} title="Delete" data-bs-toggle="tooltip" data-bs-placement="top">
+                                                                            <span className="far fa-trash-alt"></span>
+                                                                        </button>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
                                                 ))
                                             }
+                                         
                                             
                                         </tbody>
                                         <tfoot>
                                             <tr>
-                                                <th></th>
-                                                <th>Name</th>
-                                                <th>Applied for</th>
-                                                <th>Date</th>
-                                                <th>Status</th>
+                                                <th>User name</th>
+                                                <th>email</th>
+                                                <th>phoner</th>
                                                 <th></th>
                                             </tr>
                                         </tfoot>
