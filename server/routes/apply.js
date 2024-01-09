@@ -8,12 +8,12 @@ const handleError = require("../middlewares/error")
 
 
 // APPLY JOB
-router.post("/apply", verifyToken, async function (req, res){
-    const existingApplication = await Apply.findOne({ user_id: req.body.user_id });
+router.post("/apply", async function (req, res){
+    // const existingApplication = await Apply.findOne({ user_id: req.body.user_id });
 
-    if (existingApplication) {
-        return res.status(403).send({ message: "You've already applied" });
-    }
+    // if (existingApplication) {
+    //     return res.status(403).send({ message: "You've already applied" });
+    // }
 
     try {
         let { job_id, user_id } = req.body
@@ -22,7 +22,7 @@ router.post("/apply", verifyToken, async function (req, res){
         let user = await User.findById(user_id)
 
         if (!job || !user) {
-            return handleError(res, 404, "Job and user required");
+            return res.status(403).send({message: "bad request"})
         }
         
         let newApplication = new Apply(req.body);
@@ -37,11 +37,12 @@ router.post("/apply", verifyToken, async function (req, res){
             data: newApplication
         });
     } catch (e) {
-            return handleError(res, 404, "Job and user required");
+        console.log(e)
+            return handleError(res, 404, "Job ID and user ID required");
     }
 })
 
-router.get("/applications", verifyToken, async function (req, res){
+router.get("/applications", async function (req, res){
     try{
         let application = await Apply.find().populate("user_id job_id")
         if(!application){
@@ -58,7 +59,7 @@ router.get("/applications", verifyToken, async function (req, res){
     }
 })
 
-router.get("/applications/:id", verifyToken, async function (req, res){
+router.get("/applications/:id", async function (req, res){
     try{
         let application = await Apply.findOne().populate("user_id job_id")
         if(!application){
@@ -75,7 +76,7 @@ router.get("/applications/:id", verifyToken, async function (req, res){
     }
 })
 
-router.delete("/application/delete/:id", verifyToken, async function(req, res){
+router.delete("/application/delete/:id", async function(req, res){
     try{
         let { id } = req.params 
 

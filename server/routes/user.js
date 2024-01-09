@@ -27,7 +27,7 @@ router.post("/create-user", async function(req, res) {
 });
 
 
-router.get("/users", verifyToken, async function(req, res){
+router.get("/users", async function(req, res){
     try{
         let user = await User.find().populate("message_id")
         res.status(200).send({
@@ -40,7 +40,7 @@ router.get("/users", verifyToken, async function(req, res){
     }
 })
 
-router.get("/user/:id", verifyToken, async function(req, res){
+router.get("/user/:id", async function(req, res){
     try{
         let { id } = req.params
         let user = await User.findById(id).populate("message_id")
@@ -54,13 +54,14 @@ router.get("/user/:id", verifyToken, async function(req, res){
             data: user 
         })
     }catch(e){
+        console.log(e)
         res.status(500).send(e.message)
     }
 })
 
 
 
-router.put("/user/update/:id", verifyToken, async function ( req, res){
+router.put("/user/update/:id", async function ( req, res){
     try{
         let { id } = req.params
 
@@ -85,7 +86,7 @@ router.put("/user/update/:id", verifyToken, async function ( req, res){
 })
 
 
-router.delete("/user/delete/:id", verifyToken,  async function(req, res){
+router.delete("/user/delete/:id",  async function(req, res){
     try{
         let { id } = req.params
 

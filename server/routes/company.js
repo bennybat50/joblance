@@ -21,6 +21,7 @@ router.post("/create-company", async function (req, res){
         res.status(200).send({message: "Company created"})
 
     }catch(e){
+        console.log(e)
         res.status(500).send(e.message)
     }
 })
