@@ -1,3 +1,7 @@
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 import banner_1 from "../assets/images/images/banner/1.jpg"
 import thumb from "../assets/images/images/gallery/thumb/pic1.jpg"
 import thumb2 from "../assets/images/images/gallery/thumb/pic2.jpg"
@@ -20,10 +24,36 @@ import pic1 from "../assets/images/images/jobs-company/pic1.jpg"
 import job_detail from "../assets/images/images/job-detail-bg.jpg"
 import Signup_Pop from "../components/Signup_Pop"
 import LoginPop from "../components/LoginPop"
+import { BASEURL } from "../common/config";
 import PublicHeader from "../components/PublicHeader"
 
 
 export default function JobDetail() {
+    
+    const token=localStorage.getItem("token");
+
+    const [jobDetail, setJobDetail] = useState({});
+    const [comDetail, setComDetail] = useState({});
+    const [isLoading, setIsLoading] = useState(false);
+    let job_id = useParams().id;
+
+    useEffect(() => {
+        setIsLoading(true);
+        const getJob = async () => {
+          let api_url = BASEURL + `/job/${job_id}`;
+          const headers = { Authorization: `Bearer ${token}` };
+          try {
+            const res = await axios.get(api_url,{headers});
+            console.log(res.data);
+            setJobDetail(res.data.data);
+            setComDetail(res.data.data.company_id);
+          } catch (err) {
+            console.log(err);
+          }
+          setIsLoading(false);
+        };
+        getJob();
+      }, []);
     return (
 
         <div>
@@ -56,7 +86,7 @@ export default function JobDetail() {
                             <div className="wt-bnr-inr-entry">
                                 <div className="banner-title-outer">
                                     <div className="banner-title-name">
-                                        <h2 className="wt-title">IT Department Manager</h2>
+                                        <h2 className="wt-title">{jobDetail.jobTitle}</h2>
                                     </div>
                                 </div>
                                 {/* <!-- BREADCRUMB ROW -->*/}
@@ -91,7 +121,7 @@ export default function JobDetail() {
                                                 <div className="twm-job-self-info">
                                                     <div className="twm-job-self-top">
                                                         <div className="twm-media-bg">
-                                                            <img src={job_detail} alt="#" />
+                                                            {comDetail.bannerImage!=null?<img src={comDetail.bannerImage} alt="#" className="bannerSize" />:<></>}
                                                             <div className="twm-jobs-category green"><span className="twm-bg-green">New</span></div>
                                                         </div>
 
@@ -99,18 +129,18 @@ export default function JobDetail() {
                                                         <div className="twm-mid-content">
 
                                                             <div className="twm-media">
-                                                                <img src={pic1} alt="#" />
+                                                               { comDetail.image?<img src={comDetail.image} alt="#" />:<></>}
                                                             </div>
 
-                                                            <h4 className="twm-job-title">Senior Web Designer , Developer <span className="twm-job-post-duration">/ 1 days ago</span></h4>
-                                                            <p className="twm-job-address"><i className="feather-map-pin"></i>1363-1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
+                                                            <h4 className="twm-job-title">{jobDetail.jobTitle} <span className="twm-job-post-duration">/ {new Date(jobDetail.startDate).getDate()} - {new Date(jobDetail.startDate).getMonth()} {new Date(jobDetail.startDate).getFullYear()}</span></h4>
+                                                            <p className="twm-job-address"><i className="feather-map-pin"></i>{jobDetail.city} , {jobDetail.country}</p>
                                                             <div className="twm-job-self-mid">
                                                                 <div className="twm-job-self-mid-left">
                                                                     <a href="https://themeforest.net/user/thewebmax/portfolio" className="twm-job-websites site-text-primary">https://thewebmax.com</a>
-                                                                    <div className="twm-jobs-amount">$2000 - $2500 <span>/ Month</span></div>
+                                                                    <div className="twm-jobs-amount">$ {jobDetail.offeredSalary} <span>/ Annual  Salary</span></div>
                                                                 </div>
                                                                 <div className="twm-job-apllication-area">Application ends:
-                                                                    <span className="twm-job-apllication-date">October 1, 2025</span>
+                                                                    <span className="twm-job-apllication-date">({new Date(jobDetail.endDate).getDate()} - {new Date(jobDetail.endDate).getMonth()} {new Date(jobDetail.endDate).getFullYear()})</span>
                                                                 </div>
                                                             </div>
 
@@ -127,11 +157,8 @@ export default function JobDetail() {
 
                                             <h4 className="twm-s-title">Job Description:</h4>
 
-                                            <p>Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae
-                                                consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+                                            <p>{jobDetail.description}
                                             </p>
-
-                                            <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi.</p>
 
 
                                             <h4 className="twm-s-title">Requirments:</h4>
@@ -188,153 +215,7 @@ export default function JobDetail() {
 
                                             </ul>
 
-                                            <h4 className="twm-s-title">Share Profile</h4>
-                                            <div className="twm-social-tags">
-                                                <a href="javascript:void(0)" className="fb-clr">Facebook</a>
-                                                <a href="javascript:void(0)" className="tw-clr">Twitter</a>
-                                                <a href="javascript:void(0)" className="link-clr">Linkedin</a>
-                                                <a href="javascript:void(0)" className="whats-clr">Whatsapp</a>
-                                                <a href="javascript:void(0)" className="pinte-clr">Pinterest</a>
-                                            </div>
-
-                                            <h4 className="twm-s-title">Location</h4>
-                                            <div className="twm-m-map mb-5">
-                                                <div className="twm-m-map-iframe">
-                                                    <iframe height="310" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3304.8534521658976!2d-118.2533646842856!3d34.073270780600225!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2c6fd9829c6f3%3A0x6ecd11bcf4b0c23a!2s1363%20Sunset%20Blvd%2C%20Los%20Angeles%2C%20CA%2090026%2C%20USA!5e0!3m2!1sen!2sin!4v1620815366832!5m2!1sen!2sin"></iframe>
-                                                </div>
-                                            </div>
-
-                                            <div className="twm-two-part-section">
-                                                <div className="row">
-
-                                                    <div className="col-lg-6 col-md-12">
-                                                        <h4 className="twm-s-title">Office Photos</h4>
-                                                        <div className="tw-sidebar-gallery">
-                                                            <ul>
-                                                                <li>
-                                                                    <div className="tw-service-gallery-thumb">
-                                                                        <a className="elem" href="images/gallery/pic1.jpg" title="Title 1" data-lcl-author="" data-lcl-thumb="images/gallery/thumb/pic1.jpg">
-                                                                            <img src={thumb} alt="" />
-                                                                            <i className="fa fa-file-image"></i>
-                                                                        </a>
-                                                                    </div>
-                                                                </li>
-
-                                                                <li>
-                                                                    <div className="tw-service-gallery-thumb">
-                                                                        <a className="elem" href="images/gallery/pic2.jpg" title="Title 2" data-lcl-author="" data-lcl-thumb="images/gallery/thumb/pic2.jpg">
-                                                                            <img src={thumb} alt="" />
-                                                                            <i className="fa fa-file-image"></i>
-                                                                        </a>
-                                                                    </div>
-                                                                </li>
-
-                                                                <li>
-                                                                    <div className="tw-service-gallery-thumb ">
-                                                                        <a className="elem" href="images/gallery/pic3.jpg" title="Title 3" data-lcl-author="" data-lcl-thumb="images/gallery/thumb/pic3.jpg">
-                                                                            <img src={thumb2} alt="" />
-                                                                            <i className="fa fa-file-image"></i>
-                                                                        </a>
-                                                                    </div>
-                                                                </li>
-
-                                                                <li>
-                                                                    <div className="tw-service-gallery-thumb">
-                                                                        <a className="elem" href="images/gallery/pic4.jpg" title="Title 4" data-lcl-author="" data-lcl-thumb="images/gallery/thumb/pic4.jpg">
-                                                                            <img src={thumb3} alt="" />
-                                                                            <i className="fa fa-file-image"></i>
-                                                                        </a>
-                                                                    </div>
-                                                                </li>
-
-                                                                <li>
-                                                                    <div className="tw-service-gallery-thumb">
-                                                                        <a className="elem" href="images/gallery/pic5.jpg" title="Title 5" data-lcl-author="" data-lcl-thumb="images/gallery/thumb/pic5.jpg">
-                                                                            <img src={thumb4} alt="" />
-                                                                            <i className="fa fa-file-image"></i>
-                                                                        </a>
-                                                                    </div>
-                                                                </li>
-
-                                                                <li>
-                                                                    <div className="tw-service-gallery-thumb">
-                                                                        <a className="elem" href="images/gallery/pic6.jpg" title="Title 6" data-lcl-author="" data-lcl-thumb="images/gallery/thumb/pic6.jpg">
-                                                                            <img src={thumb5} alt="" />
-                                                                            <i className="fa fa-file-image"></i>
-                                                                        </a>
-                                                                    </div>
-                                                                </li>
-
-                                                                <li>
-                                                                    <div className="tw-service-gallery-thumb">
-                                                                        <a className="elem" href="images/gallery/pic7.jpg" title="Title 7" data-lcl-author="" data-lcl-thumb="images/gallery/thumb/pic1.jpg">
-                                                                            <img src={thumb6} alt="" />
-                                                                            <i className="fa fa-file-image"></i>
-                                                                        </a>
-                                                                    </div>
-                                                                </li>
-
-                                                                <li>
-                                                                    <div className="tw-service-gallery-thumb">
-                                                                        <a className="elem" href="images/gallery/pic8.jpg" title="Title 8" data-lcl-author="" data-lcl-thumb="images/gallery/thumb/pic2.jpg">
-                                                                            <img src={thumb7} alt="" />
-                                                                            <i className="fa fa-file-image"></i>
-                                                                        </a>
-                                                                    </div>
-                                                                </li>
-
-                                                                <li>
-                                                                    <div className="tw-service-gallery-thumb ">
-                                                                        <a className="elem" href="images/gallery/pic9.jpg" title="Title 9" data-lcl-author="" data-lcl-thumb="images/gallery/thumb/pic3.jpg">
-                                                                            <img src={thumb8} alt="" />
-                                                                            <i className="fa fa-file-image"></i>
-                                                                        </a>
-                                                                    </div>
-                                                                </li>
-
-                                                                <li>
-                                                                    <div className="tw-service-gallery-thumb">
-                                                                        <a className="elem" href="images/gallery/pic10.jpg" title="Title 10" data-lcl-author="" data-lcl-thumb="images/gallery/thumb/pic4.jpg">
-                                                                            <img src={thumb9} alt="" />
-                                                                            <i className="fa fa-file-image"></i>
-                                                                        </a>
-                                                                    </div>
-                                                                </li>
-
-                                                                <li>
-                                                                    <div className="tw-service-gallery-thumb">
-                                                                        <a className="elem" href="images/gallery/pic11.jpg" title="Title 11" data-lcl-author="" data-lcl-thumb="images/gallery/thumb/pic5.jpg">
-                                                                            <img src={thumb10} alt="" />
-                                                                            <i className="fa fa-file-image"></i>
-                                                                        </a>
-                                                                    </div>
-                                                                </li>
-
-                                                                <li>
-                                                                    <div className="tw-service-gallery-thumb">
-                                                                        <a className="elem" href="images/gallery/pic12.jpg" title="Title 12" data-lcl-author="" data-lcl-thumb="images/gallery/thumb/pic6.jpg">
-                                                                            <img src={thumb12} alt="" />
-                                                                            <i className="fa fa-file-image"></i>
-                                                                        </a>
-                                                                    </div>
-                                                                </li>
-
-                                                            </ul>
-
-                                                        </div>
-                                                    </div>
-                                                    <div className="col-lg-6 col-md-12">
-                                                        <h4 className="twm-s-title">Video</h4>
-                                                        <div className="video-section-first" style={{ backgroundImage: `url(${video_bg})` }}>
-                                                            <a href="https://www.youtube.com/watch?v=c1XNqw2gSbU" className="mfp-video play-now-video">
-                                                                <i className="icon feather-play"></i>
-                                                                <span className="ripple"></span>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                            </div>
+                                             
 
 
                                         </div>
@@ -346,62 +227,49 @@ export default function JobDetail() {
                                             <div className="twm-s-info2-wrap mb-5">
                                                 <div className="twm-s-info2">
                                                     <h4 className="section-head-small mb-4">Job Information</h4>
-                                                    <ul className="twm-job-hilites">
-                                                        <li>
-                                                            <i className="fas fa-calendar-alt"></i>
-                                                            <span className="twm-title">Date Posted</span>
-                                                        </li>
-                                                        <li>
-                                                            <i className="fas fa-eye"></i>
-                                                            <span className="twm-title">8160 Views</span>
-                                                        </li>
-                                                        <li>
-                                                            <i className="fas fa-file-signature"></i>
-                                                            <span className="twm-title">6 Applicants</span>
-                                                        </li>
-                                                    </ul>
+                                                    
                                                     <ul className="twm-job-hilites2">
 
                                                         <li>
                                                             <div className="twm-s-info-inner">
                                                                 <i className="fas fa-calendar-alt"></i>
                                                                 <span className="twm-title">Date Posted</span>
-                                                                <div className="twm-s-info-discription">April 22, 2023</div>
+                                                                <div className="twm-s-info-discription">{new Date(jobDetail.startDate).getDate()} - {new Date(jobDetail.startDate).getMonth()} {new Date(jobDetail.startDate).getFullYear()}</div>
                                                             </div>
                                                         </li>
                                                         <li>
                                                             <div className="twm-s-info-inner">
                                                                 <i className="fas fa-map-marker-alt"></i>
                                                                 <span className="twm-title">Location</span>
-                                                                <div className="twm-s-info-discription">Munchen, Germany</div>
+                                                                <div className="twm-s-info-discription">{jobDetail.city} , {jobDetail.country}</div>
                                                             </div>
                                                         </li>
                                                         <li>
                                                             <div className="twm-s-info-inner">
                                                                 <i className="fas fa-user-tie"></i>
                                                                 <span className="twm-title">Job Title</span>
-                                                                <div className="twm-s-info-discription">Web Developer</div>
+                                                                <div className="twm-s-info-discription">{jobDetail.jobTitle} </div>
                                                             </div>
                                                         </li>
                                                         <li>
                                                             <div className="twm-s-info-inner">
                                                                 <i className="fas fa-clock"></i>
                                                                 <span className="twm-title">Experience</span>
-                                                                <div className="twm-s-info-discription">3 Year</div>
+                                                                <div className="twm-s-info-discription">{jobDetail.experience} </div>
                                                             </div>
                                                         </li>
                                                         <li>
                                                             <div className="twm-s-info-inner">
                                                                 <i className="fas fa-suitcase"></i>
                                                                 <span className="twm-title">Qualification</span>
-                                                                <div className="twm-s-info-discription">Bachelor Degree </div>
+                                                                <div className="twm-s-info-discription">{jobDetail.qualification} </div>
                                                             </div>
                                                         </li>
                                                         <li>
                                                             <div className="twm-s-info-inner">
                                                                 <i className="fas fa-venus-mars"></i>
                                                                 <span className="twm-title">Gender</span>
-                                                                <div className="twm-s-info-discription">Both</div>
+                                                                <div className="twm-s-info-discription">{jobDetail.gender}</div>
                                                             </div>
                                                         </li>
                                                         <li>
@@ -409,7 +277,7 @@ export default function JobDetail() {
 
                                                                 <i className="fas fa-money-bill-wave"></i>
                                                                 <span className="twm-title">Offered Salary</span>
-                                                                <div className="twm-s-info-discription">$2000-$2500 / Month</div>
+                                                                <div className="twm-s-info-discription">{jobDetail.offeredSalary} / Annual Salary</div>
                                                             </div>
                                                         </li>
 
@@ -418,7 +286,7 @@ export default function JobDetail() {
                                                 </div>
                                             </div>
 
-                                            <div className="widget tw-sidebar-tags-wrap">
+                                            {/* <div className="widget tw-sidebar-tags-wrap">
                                                 <h4 className="section-head-small mb-4">Job Skills</h4>
 
                                                 <div className="tagcloud">
@@ -432,7 +300,7 @@ export default function JobDetail() {
                                                     <a href="javascript:void(0)">Drupal</a>
                                                     <a href="javascript:void(0)">Joomla</a>
                                                 </div>
-                                            </div>
+                                            </div> */}
 
                                         </div>
 
@@ -440,9 +308,9 @@ export default function JobDetail() {
                                             <div className="twm-s-info3">
                                                 <div className="twm-s-info-logo-section">
                                                     <div className="twm-media">
-                                                        <img src={pic1} alt="#" />
+                                                        <img src={comDetail.image} alt="#" />
                                                     </div>
-                                                    <h4 className="twm-title">Senior Web Designer , Developer</h4>
+                                                    <h4 className="twm-title">{jobDetail.jobTitle} </h4>
                                                 </div>
                                                 <ul>
 
@@ -450,28 +318,28 @@ export default function JobDetail() {
                                                         <div className="twm-s-info-inner">
                                                             <i className="fas fa-building"></i>
                                                             <span className="twm-title">Company</span>
-                                                            <div className="twm-s-info-discription">Software Development</div>
+                                                            <div className="twm-s-info-discription">{comDetail.companyName}</div>
                                                         </div>
                                                     </li>
                                                     <li>
                                                         <div className="twm-s-info-inner">
                                                             <i className="fas fa-mobile-alt"></i>
                                                             <span className="twm-title">Phone</span>
-                                                            <div className="twm-s-info-discription">+291  560 56456</div>
+                                                            <div className="twm-s-info-discription">{comDetail.phone}</div>
                                                         </div>
                                                     </li>
                                                     <li>
                                                         <div className="twm-s-info-inner">
                                                             <i className="fas fa-at"></i>
                                                             <span className="twm-title">Email</span>
-                                                            <div className="twm-s-info-discription">thewebmaxdemo@gmail.com</div>
+                                                            <div className="twm-s-info-discription">{comDetail.email}</div>
                                                         </div>
                                                     </li>
                                                     <li>
                                                         <div className="twm-s-info-inner">
                                                             <i className="fas fa-desktop"></i>
                                                             <span className="twm-title">Website</span>
-                                                            <div className="twm-s-info-discription">https://themeforest.net</div>
+                                                            <div className="twm-s-info-discription">{comDetail.website}</div>
                                                         </div>
                                                     </li>
                                                     <li>
@@ -484,18 +352,12 @@ export default function JobDetail() {
                                                     </li>
 
                                                 </ul>
-                                                <a href="about-1.html" className=" site-button">Vew Profile</a>
+                                                <Link to={"/employer-detail/"+comDetail._id} className=" site-button">Vew Profile</Link>
 
                                             </div>
                                         </div>
 
-                                        <div className="twm-advertisment" style={{ backgroundImage: `url(${add_bg})` }}>
-                                            <div className="overlay"></div>
-                                            <h4 className="twm-title">Recruiting?</h4>
-                                            <p>Get Best Matched Jobs On your <br />
-                                                Email. Add Resume NOW!</p>
-                                            <a href="javascript:;" className="site-button white">Read More</a>
-                                        </div>
+                                       
 
 
                                     </div>

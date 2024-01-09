@@ -25,6 +25,9 @@ import CreateUser from './pages/dash-create-user';
 import ManageUsers from './pages/dash-manage-users';
 import EditUser from './pages/dash-edit-user';
 import ApplyJob from './pages/dash-apply-job';
+import UserDashboard from './pages/candidate/user-dashboard';
+import UserProfile from './pages/candidate/user-profile';
+import UserResume from './pages/candidate/user-resume';
 
 function App() {
   return (
@@ -47,7 +50,7 @@ function App() {
           <Route path='/dash-my-profile' element={<DashMyProfile/>}/>
           <Route path='/dash-post-job' element={<DashPostJob/>}/>
           <Route path='/dashboard' element={<Dashboard/>}/>
-          <Route path='/employer-detail' element={<EmployerDetail/>}/>
+          <Route path='/employer-detail/:id' element={<EmployerDetail/>}/>
           <Route path='/job-detail/:id' element={<JobDetail/>}/>
           <Route path='/job-detail' element={<JobDetail/>}/>
           <Route path='/edit-company/:compId' element={<EditCompany/>}/>
@@ -56,6 +59,9 @@ function App() {
           <Route path='/dash-manage-user' element={<ManageUsers/>}/>
           <Route path='/dash-edit-user/:userId' element={<EditUser/>}/>
           <Route path='/dash-apply' element={<ApplyJob/>}/>
+          <Route path='/my-dashboard' element={<UserDashboard/>}/> 
+          <Route path='/my-profile' element={<UserProfile/>}/> 
+          <Route path='/my-resume' element={<UserResume/>}/> 
         </Routes>
       </BrowserRouter>
     </div>

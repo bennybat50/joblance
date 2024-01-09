@@ -1,4 +1,7 @@
 import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { BASEURL } from "../common/config";
 import logo_11 from "../assets/images/images/logo-11.png";
 import f_bg from "../assets/images/images/f-bg.jpg"
 import bgImage from "../assets/images/images/banner/1.jpg";
@@ -21,6 +24,29 @@ import PublicHeader from "../components/PublicHeader";
 
 
 export default function  EmployerList(){
+    
+    const token=localStorage.getItem("token");
+
+    const [companies, setCompanies] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        setIsLoading(true);
+        const getJob = async () => {
+          let api_url = BASEURL + "/company";
+          const headers = { Authorization: `Bearer ${token}` };
+          try {
+            const res = await axios.get(api_url,{headers});
+            console.log(res.data);
+            setCompanies(res.data.data);
+          } catch (err) {
+            console.log(err);
+          }
+          setIsLoading(false);
+        };
+        getJob();
+      }, []);
+      
     return(
         <div >
          {/* HEADERR START */}
@@ -296,169 +322,28 @@ export default function  EmployerList(){
 
                 <div className="twm-employer-list-wrap">
                     <ul>
-                         <li>
-                             <div className="twm-employer-list-style1 mb-5">
-                                 <div className="twm-media">
-                                     <img src={pic1} alt="#"/>
-                                 </div>
-                                 <div className="twm-mid-content">
-                                     <Link to="/employer-detail" className="twm-job-title link-tag">
-                                         <h5>Herbal Ltd</h5>
-                                     </Link>
-                                     <p className="twm-job-address">1363-1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
-                                     <Link to="/employer-detail" className="twm-job-websites site-text-primary">Accountancy</Link>
-                                 </div>
-                                 <div className="twm-right-content">
-                                    
-                                     <div className="twm-jobs-vacancies"><span>25</span>Vacancies</div>
-                                 </div>
-                             </div>
-                         </li>
-
-                         <li>
-                             <div className="twm-employer-list-style1 mb-5">
-                                 <div className="twm-media">
-                                     <img src={pic2} alt="#"/>
-                                 </div>
-                                 <div className="twm-mid-content">
-                                     <Link to="/employer-detail" className="twm-job-title link-tag">
-                                         <h5>Artistre Studio PVT Ltd</h5>
-                                     </Link>
-                                     <p className="twm-job-address">1363-1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
-                                     <Link to="/employer-detail" className="twm-job-websites site-text-primary">IT Contractor</Link>
-                                 </div>
-                                 <div className="twm-right-content">
-                                    <div className="twm-jobs-vacancies"><span>30</span>Vacancies</div>
-                                 </div>
-                             </div>
-                         </li>
-
-                         <li>
-                             <div className="twm-employer-list-style1 mb-5">
-                                 <div className="twm-media">
-                                     <img src={pic3} alt="#"/>
-                                 </div>
-                                 <div className="twm-mid-content">
-                                     <Link to="/employer-detail" className="twm-job-title link-tag">
-                                         <h5 className="twm-job-title">Wins Developers</h5>
-                                     </Link>
-                                     <p className="twm-job-address">1363-1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
-                                     <Link to="/employer-detail" className="twm-job-websites site-text-primary">Banking</Link>
-                                 </div>
-                                 <div className="twm-right-content">
-                                    <div className="twm-jobs-vacancies"><span>32</span>Vacancies</div>
-                                 </div>
-                             </div>
-                         </li>
-
-                         <li>
-                             <div className="twm-employer-list-style1 mb-5">
-                                 <div className="twm-media">
-                                     <img src={pic4} alt="#"/>
-                                 </div>
-                                 <div className="twm-mid-content">
-                                     <Link to="/employer-detail" className="twm-job-title link-tag">
-                                         <h5 className="twm-job-title">Thewebmax PVT Ltd</h5>
-                                     </Link>
-                                     <p className="twm-job-address">1363-1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
-                                     <Link to="/employer-detail" className="twm-job-websites site-text-primary">Digital & Creative</Link>
-                                 </div>
-                                 <div className="twm-right-content">
-                                    <div className="twm-jobs-vacancies"><span>38</span>Vacancies</div>
-                                 </div>
-                             </div>
-                         </li>
-
-                         <li>
-                             <div className="twm-employer-list-style1 mb-5">
-                                 <div className="twm-media">
-                                     <img src={pic5} alt="#"/>
-                                 </div>
-                                 <div className="twm-mid-content">
-                                     <Link to="/employer-detail" className="twm-job-title link-tag">
-                                         <h5 className="twm-job-title">Robo Tech</h5>
-                                     </Link>
-                                     <p className="twm-job-address">1363-1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
-                                     <Link to="/employer-detail" className="twm-job-websites site-text-primary">Sales & Marketing</Link>
-                                 </div>
-                                 <div className="twm-right-content">
-                                    <div className="twm-jobs-vacancies"><span>40</span>Vacancies</div>
-                                 </div>
-                             </div>
-                         </li>
-
-                         <li>
-                            <div className="twm-employer-list-style1 mb-5">
-                                <div className="twm-media">
-                                    <img src={pic1} alt="#"/>
+                        {companies.map((comp,index)=>{
+                            return (<li>
+                                <div className="twm-employer-list-style1 mb-5">
+                                    <div className="twm-media">
+                                        <img src={comp.image} alt="#"/>
+                                    </div>
+                                    <div className="twm-mid-content">
+                                        <Link to={"/employer-detail/"+comp._id} className="twm-job-title link-tag">
+                                            <h5>{comp.companyName}</h5>
+                                        </Link>
+                                        <p className="twm-job-address">{comp.companyName}</p>
+                                        <Link to={"/employer-detail/"+comp._id} className="twm-job-websites site-text-primary">Accountancy</Link>
+                                    </div>
+                                    <div className="twm-right-content">
+                                       
+                                        <div className="twm-jobs-vacancies"><span>{comp.job_id.length}</span>Vacancies</div>
+                                    </div>
                                 </div>
-                                <div className="twm-mid-content">
-                                    <Link to="/employer-detail" className="twm-job-title link-tag">
-                                        <h5>Galaxy IT Solution</h5>
-                                    </Link>
-                                    <p className="twm-job-address">1363-1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
-                                    <Link to="/employer-detail" className="twm-job-websites site-text-primary">Leisure & Tourismm</Link>
-                                </div>
-                                <div className="twm-right-content">
-                                    <div className="twm-jobs-vacancies"><span>38</span>Vacancies</div>
-                                </div>
-                            </div>
-                         </li>
-
-                         <li>
-                            <div className="twm-employer-list-style1 mb-5">
-                                <div className="twm-media">
-                                    <img src={pic2} alt="#"/>
-                                </div>
-                                <div className="twm-mid-content">
-                                    <Link to="/employer-detail" className="twm-job-title link-tag">
-                                        <h5>Coderbotics solutions</h5>
-                                    </Link>
-                                    <p className="twm-job-address">1363-1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
-                                    <Link to="/employer-detail" className="twm-job-websites site-text-primary">Consultancy</Link>
-                                </div>
-                                <div className="twm-right-content">
-                                    <div className="twm-jobs-vacancies"><span>35</span>Vacancies</div>
-                                </div>
-                            </div>
-                         </li>
-
-                         <li>
-                            <div className="twm-employer-list-style1 mb-5">
-                                <div className="twm-media">
-                                    <img src={pic3} alt="#"/>
-                                </div>
-                                <div className="twm-mid-content">
-                                    <Link to="/employer-detail" className="twm-job-title link-tag">
-                                        <h5 className="twm-job-title">Microsoft solution</h5>
-                                    </Link>
-                                    <p className="twm-job-address">1363-1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
-                                    <Link to="/employer-detail" className="twm-job-websites site-text-primary">Technologies</Link>
-                                </div>
-                                <div className="twm-right-content">
-                                    <div className="twm-jobs-vacancies"><span>65</span>Vacancies</div>
-                                </div>
-                            </div>
-                         </li>
-
-                         <li>
-                            <div className="twm-employer-list-style1 mb-5">
-                                <div className="twm-media">
-                                    <img src={pic4}alt="#"/>
-                                </div>
-                                <div className="twm-mid-content">
-                                    <Link to="/employer-detail" className="twm-job-title link-tag">
-                                        <h5 className="twm-job-title">Dot Circle PVT Ltd</h5>
-                                    </Link>
-                                    <p className="twm-job-address">1363-1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
-                                    <Link to="/employer-detail" className="twm-job-websites site-text-primary">Sales & Marketing</Link>
-                                </div>
-                                <div className="twm-right-content">
-                                    <div className="twm-jobs-vacancies"><span>50</span>Vacancies</div>
-                                </div>
-                            </div>
-                         </li>
-
+                            </li>)
+                        })}
+                         
+ 
                         
                     </ul>
                 </div>
@@ -623,142 +508,7 @@ export default function  EmployerList(){
 {/* 
         <!--Model Popup Section Start-->
             <!--Signup popup --> */}
-            <div className="modal fade twm-sign-up" id="sign_up_popup" aria-hidden="true" aria-labelledby="sign_up_popupLabel" tabindex="-1">
-                <div className="modal-dialog modal-dialog-centered">
-                    <div className="modal-content">
-                        <form>
-
-                            <div className="modal-header">
-                                <h2 className="modal-title" id="sign_up_popupLabel">Sign Up</h2>
-                                <p>Sign Up and get access to all the features of Jobzilla</p>
-                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-
-                            <div className="modal-body">
-                                <div className="twm-tabs-style-2">
-                                    <ul className="nav nav-tabs" id="myTab" role="tablist">
-
-                                    {/* <!--Signup Candidate-->   */}
-                                    <li className="nav-item" role="presentation">
-                                        <button className="nav-link active" data-bs-toggle="tab" data-bs-target="#sign-candidate" type="button"><i className="fas fa-user-tie"></i>Candidate</button>
-                                    </li>
-                                    {/* <!--Signup Employer--> */}
-                                    <li className="nav-item" role="presentation">
-                                        <button className="nav-link" data-bs-toggle="tab" data-bs-target="#sign-Employer" type="button"><i className="fas fa-building"></i>Employer</button>
-                                    </li>
-                                    
-                                    </ul>
-                                    <div className="tab-content" id="myTabContent">
-                                    {/* <!--Signup Candidate Content-->   */}
-                                    <div className="tab-pane fade show active" id="sign-candidate">
-                                        <div className="row">
-
-                                            <div className="col-lg-12">
-                                                <div className="form-group mb-3">
-                                                    <input name="username" type="text" required="" className="form-control" placeholder="Usearname*"/>
-                                                </div>
-                                            </div>
-                                            
-                                            <div className="col-lg-12">
-                                                <div className="form-group mb-3">
-                                                    <input name="email" type="text" className="form-control" required="" placeholder="Password*"/>
-                                                </div>
-                                            </div>
-                                            
-                                            <div className="col-lg-12">
-                                                <div className="form-group mb-3">
-                                                    <input name="phone" type="text" className="form-control" required="" placeholder="Email*"/>
-                                                </div>
-                                            </div>
-            
-                                            <div className="col-lg-12">
-                                                <div className="form-group mb-3">
-                                                    <input name="phone" type="text" className="form-control" required="" placeholder="Phone*"/>
-                                                </div>
-                                            </div>
-                                            
-                                            <div className="col-lg-12">
-                                                <div className="form-group mb-3">
-                                                    <div className=" form-check">
-                                                        <input type="checkbox" className="form-check-input" id="agree1"/>
-                                                        <label className="form-check-label" for="agree1">I agree to the <a href="javascript:;">Terms and conditions</a></label>
-                                                        <p>Already registered?
-                                                            <button className="twm-backto-login" data-bs-target="#sign_up_popup2" data-bs-toggle="modal" data-bs-dismiss="modal">Log in here</button>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="col-md-12">
-                                                <button type="submit" className="site-button">Sign Up</button>
-                                            </div>
-                                            
-                                        </div>
-                                    </div>
-                                    {/* <!--Signup Employer Content-->  */}
-                                    <div className="tab-pane fade" id="sign-Employer">
-                                        <div className="row">
-
-                                            <div className="col-lg-12">
-                                                <div className="form-group mb-3">
-                                                    <input name="username" type="text" required="" className="form-control" placeholder="Usearname*"/>
-                                                </div>
-                                            </div>
-                                            
-                                            <div className="col-lg-12">
-                                                <div className="form-group mb-3">
-                                                    <input name="email" type="text" className="form-control" required="" placeholder="Password*"/>
-                                                </div>
-                                            </div>
-                                            
-                                            <div className="col-lg-12">
-                                                <div className="form-group mb-3">
-                                                    <input name="phone" type="text" className="form-control" required="" placeholder="Email*"/>
-                                                </div>
-                                            </div>
-            
-                                            <div className="col-lg-12">
-                                                <div className="form-group mb-3">
-                                                    <input name="phone" type="text" className="form-control" required="" placeholder="Phone*"/>
-                                                </div>
-                                            </div>
-                                            
-                                            <div className="col-lg-12">
-                                                <div className="form-group mb-3">
-                                                    <div className=" form-check">
-                                                        <input type="checkbox" className="form-check-input" id="agree2"/>
-                                                        <label className="form-check-label" for="agree2">I agree to the <a href="javascript:;">Terms and conditions</a></label>
-                                                        <p>Already registered?
-                                                            <button className="twm-backto-login" data-bs-target="#sign_up_popup2" data-bs-toggle="modal" data-bs-dismiss="modal">Log in here</button>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="col-md-12">
-                                                <button type="submit" className="site-button">Sign Up</button>
-                                            </div>
-                                            
-                                        </div>
-                                    </div>
-                                    
-                                    </div>
-                                </div> 
-                            </div>
-
-                            <div className="modal-footer">
-                                <span className="modal-f-title">Login or Sign up with</span>
-                                <ul className="twm-modal-social">
-                                    <li><a href="javascript" className="facebook-clr"><i className="fab fa-facebook-f"></i></a></li>
-                                    <li><a href="javascript" className="twitter-clr"><i className="fab fa-twitter"></i></a></li>
-                                    <li><a href="javascript" className="linkedin-clr"><i className="fab fa-linkedin-in"></i></a></li>
-                                    <li><a href="javascript" className="google-clr"><i className="fab fa-google"></i></a></li>
-                                </ul>
-                            </div>
-
-                        </form>
-                    </div>
-                </div>
-                
-            </div>
+             
             {/* <!--Login popup -->/ */}
             <Signup_Pop />
             <LoginPop />

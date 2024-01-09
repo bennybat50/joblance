@@ -2,23 +2,19 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import bgImage from "../assets/images/images/banner/1.jpg";
 import { Link } from "react-router-dom";
-import pic1 from "../assets/images/images/jobs-company/pic1.jpg";
-import pic2 from "../assets/images/images/jobs-company/pic2.jpg";
-import pic3 from "../assets/images/images/jobs-company/pic3.jpg";
-import pic4 from "../assets/images/images/jobs-company/pic4.jpg";
-import pic5 from "../assets/images/images/jobs-company/pic5.jpg";
-import logo_11 from "../assets/images/images/logo-11.png";
+ 
 import f_bg from "../assets/images/images/f-bg.jpg"
 import banner_1 from "../assets/images/images/banner/1.jpg"
 import add_bg from "../assets/images/images/add-bg.jpg"
 import PublicHeader from "../components/PublicHeader";
 import Signup_Pop from "../components/Signup_Pop";
 import LoginPop from "../components/LoginPop";
+import { BASEURL } from "../common/config";
 
 
 export default function JobList() {
-    const MYAPP_URL = "http://localhost:7300";
-    const token=localStorage.getItem("token");
+
+     const token=localStorage.getItem("token");
 
     const [jobs, setJobs] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -26,7 +22,7 @@ export default function JobList() {
     useEffect(() => {
         setIsLoading(true);
         const getJob = async () => {
-          let api_url = MYAPP_URL + "/jobs";
+          let api_url = BASEURL + "/jobs";
           const headers = { Authorization: `Bearer ${token}` };
           try {
             const res = await axios.get(api_url,{headers});
@@ -317,28 +313,29 @@ export default function JobList() {
                             <div class="row">
                                 {/* <!--Block one--> */}
                                {jobs.map((data, index)=>{
+
                                 return ( <div class="col-lg-6 col-md-12 m-b30">
 
                                 <div class="twm-jobs-grid-style1">
                                     <div class="twm-media">
-                                        <img src="images/jobs-company/pic1.jpg" alt="#"/>
+                                        <img src={data.company_id.image} alt="#"/>
                                     </div>
-                                    <span class="twm-job-post-duration">1 days ago</span>
+                                    <span class="twm-job-post-duration">Deadline <b>({new Date(data.endDate).getDate()} - {new Date(data.endDate).getMonth()} {new Date(data.endDate).getFullYear()})</b> </span>
                                     <div class="twm-jobs-category green"><span class="twm-bg-green">{data.jobType}</span></div>
                                     <div class="twm-mid-content">
-                                        <a href={`/job-detail/${data._id}`} class="twm-job-title">
+                                        <Link to={`/job-detail/${data._id}`} class="twm-job-title">
                                             <h4>{data.jobTitle}</h4>
-                                        </a>
+                                        </Link>
                                         <p class="twm-job-address">{data.city} , {data.country}
                                         </p>
-                                       {data.company_id? <a href={`/job-detail/${data._id}`}
-                                            class="twm-job-websites site-text-primary">Company ({data.company_id.companyName})</a> :<></> } 
+                                       {data.company_id? <Link to={`/job-detail/${data._id}`}
+                                            class="twm-job-websites site-text-primary">Company ({data.company_id.companyName})</Link> :<></> } 
                                     </div>
                                     <div class="twm-right-content">
 
                                         <div class="twm-jobs-amount">${data.offeredSalary} <span>/ Annual Salary</span></div>
-                                        <a href={`/job-detail/${data._id}`} class="twm-jobs-browse site-text-primary">Browse
-                                            Job</a>
+                                        <Link to={`/job-detail/${data._id}`} class="twm-jobs-browse site-text-primary">Browse
+                                            Job</Link>
                                     </div>
                                 </div>
 

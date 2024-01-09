@@ -1,10 +1,68 @@
+import axios from "axios";
+import { useState } from "react";
+
 export default function Signup_Pop() {
+    const [role, setRole] = useState("candidate");
+    const [fullName, setFullName] = useState();
+    const [phone, setPhone] = useState();
+    const [email, setEmail] = useState();
+    const [password, setPassword] = useState();
+    const [err, setErr] = useState(false);
+
+    const switchRole = (e) => {
+        setRole(e)
+    }
+
+    const signup = (e) => {
+        e.preventDefault();
+
+        if (email === "" || password === "") {
+            setErr(true);
+            return;
+        }
+        if (role === "") {
+            setErr(true);
+            return;
+
+        }
+
+
+
+        const signupData = {
+            email: email,
+            password: password,
+            fullName: fullName,
+            phone: phone,
+            role: role,
+        };
+
+        console.log(signupData);
+
+
+        axios.post("http://localhost:7300/create-user", signupData).then((res) => {
+            console.log(res.data)
+            if (res.data.message == null) {
+                alert("User Registered in");
+                localStorage.setItem("user-details", JSON.stringify(res.data.newUser))
+                localStorage.setItem("token", res.data.token)
+                window.location.href = "/my-dashboard"
+            } else {
+                alert(res.data.message);
+            }
+
+        }).catch((err) => {
+            alert(err.message)
+            console.log(err.message)
+        })
+
+    };
+
     return (
         <div>
             <div className="modal fade twm-sign-up" id="sign_up_popup" aria-hidden="true" aria-labelledby="sign_up_popupLabel" tabindex="-1">
                 <div className="modal-dialog modal-dialog-centered">
                     <div className="modal-content">
-                        <form>
+                        <form onSubmit={signup}>
 
                             <div className="modal-header">
                                 <h2 className="modal-title" id="sign_up_popupLabel">Sign Up</h2>
@@ -18,40 +76,44 @@ export default function Signup_Pop() {
 
                                         {/* <!--Signup Candidate-->   */}
                                         <li className="nav-item" role="presentation">
-                                            <button className="nav-link active" data-bs-toggle="tab" data-bs-target="#sign-candidate" type="button"><i className="fas fa-user-tie"></i>Candidate</button>
+                                            <button className="nav-link active" data-bs-toggle="tab" onClick={() => switchRole("candidate")} data-bs-target="#sign-candidate" type="button"><i className="fas fa-user-tie"></i>Candidate</button>
                                         </li>
                                         {/* <!--Signup Employer--> */}
                                         <li className="nav-item" role="presentation">
-                                            <button className="nav-link" data-bs-toggle="tab" data-bs-target="#sign-Employer" type="button"><i className="fas fa-building"></i>Employer</button>
+                                            <button className="nav-link" data-bs-toggle="tab" onClick={() => switchRole("company")} data-bs-target="#sign-Employer" type="button"><i className="fas fa-building"></i>Employer</button>
                                         </li>
 
                                     </ul>
                                     <div className="tab-content" id="myTabContent">
                                         {/* <!--Signup Candidate Content-->   */}
-                                        <div className="tab-pane fade show active" id="sign-candidate">
+                                        <div className="tab-pane fade show active" >
                                             <div className="row">
 
                                                 <div className="col-lg-12">
                                                     <div className="form-group mb-3">
-                                                        <input name="username" type="text" required="" className="form-control" placeholder="Usearname*" />
+                                                        <input name="text" type="text" required="" className="form-control" placeholder="Full Name*"
+                                                            onChange={(e) => setFullName(e.target.value)} />
                                                     </div>
                                                 </div>
 
                                                 <div className="col-lg-12">
                                                     <div className="form-group mb-3">
-                                                        <input name="email" type="text" className="form-control" required="" placeholder="Password*" />
+                                                        <input name="email" type="text" className="form-control" required="" placeholder="Email*"
+                                                            onChange={(e) => setEmail(e.target.value)} />
                                                     </div>
                                                 </div>
 
                                                 <div className="col-lg-12">
                                                     <div className="form-group mb-3">
-                                                        <input name="phone" type="text" className="form-control" required="" placeholder="Email*" />
+                                                        <input name="phone" type="text" className="form-control" required="" placeholder="Phone*"
+                                                            onChange={(e) => setPhone(e.target.value)} />
                                                     </div>
                                                 </div>
 
                                                 <div className="col-lg-12">
                                                     <div className="form-group mb-3">
-                                                        <input name="phone" type="text" className="form-control" required="" placeholder="Phone*" />
+                                                        <input name="password" type="text" className="form-control" required="true" placeholder="Password*"
+                                                            onChange={(e) => setPassword(e.target.value)} />
                                                     </div>
                                                 </div>
 
@@ -70,78 +132,26 @@ export default function Signup_Pop() {
                                                     <button type="submit" className="site-button">Sign Up</button>
                                                 </div>
                                                 <div className="col-md-12">
-                                                <a
-                                                className="twm-nav-sign-up site-button mt-3"
-                                                data-bs-toggle="modal"
-                                                href="#sign_up_popup2"
-                                                role="button"
-                                            >
-                                                <i className="feather-log-in "></i> Login
-                                            </a>
+                                                    <a
+                                                        className="twm-nav-sign-up site-button mt-3"
+                                                        data-bs-toggle="modal"
+                                                        href="#sign_up_popup2"
+                                                        role="button"
+                                                    >
+                                                        <i className="feather-log-in "></i> Login
+                                                    </a>
                                                     {/* <button type="submit" className="site-button mt-3"  href="#sign_up_popup2">Login</button> */}
                                                 </div>
 
                                             </div>
                                         </div>
-                                        {/* <!--Signup Employer Content-->  */}
-                                        <div className="tab-pane fade" id="sign-Employer">
-                                            <div className="row">
 
-                                                <div className="col-lg-12">
-                                                    <div className="form-group mb-3">
-                                                        <input name="username" type="text" required="" className="form-control" placeholder="Usearname*" />
-                                                    </div>
-                                                </div>
-
-                                                <div className="col-lg-12">
-                                                    <div className="form-group mb-3">
-                                                        <input name="email" type="text" className="form-control" required="" placeholder="Password*" />
-                                                    </div>
-                                                </div>
-
-                                                <div className="col-lg-12">
-                                                    <div className="form-group mb-3">
-                                                        <input name="phone" type="text" className="form-control" required="" placeholder="Email*" />
-                                                    </div>
-                                                </div>
-
-                                                <div className="col-lg-12">
-                                                    <div className="form-group mb-3">
-                                                        <input name="phone" type="text" className="form-control" required="" placeholder="Phone*" />
-                                                    </div>
-                                                </div>
-
-                                                <div className="col-lg-12">
-                                                    <div className="form-group mb-3">
-                                                        <div className=" form-check">
-                                                            <input type="checkbox" className="form-check-input" id="agree2" />
-                                                            <label className="form-check-label" for="agree2">I agree to the <a href="javascript:;">Terms and conditions</a></label>
-                                                            <p>Already registered?
-                                                                <button className="twm-backto-login" data-bs-target="#sign_up_popup2" data-bs-toggle="modal" data-bs-dismiss="modal">Log in here</button>
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="col-md-12">
-                                                    <button type="submit" className="site-button">Sign Up</button>
-                                                </div>
-
-                                            </div>
-                                        </div>
 
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="modal-footer">
-                                <span className="modal-f-title">Login or Sign up with</span>
-                                <ul className="twm-modal-social">
-                                    <li><a href="javascript" className="facebook-clr"><i className="fab fa-facebook-f"></i></a></li>
-                                    <li><a href="javascript" className="twitter-clr"><i className="fab fa-twitter"></i></a></li>
-                                    <li><a href="javascript" className="linkedin-clr"><i className="fab fa-linkedin-in"></i></a></li>
-                                    <li><a href="javascript" className="google-clr"><i className="fab fa-google"></i></a></li>
-                                </ul>
-                            </div>
+
 
                         </form>
                     </div>

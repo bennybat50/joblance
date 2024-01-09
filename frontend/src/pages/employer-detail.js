@@ -22,9 +22,37 @@ import compIc3 from "../assets/images/images/jobs-company/pic3.jpg"
 import Signup_Pop from "../components/Signup_Pop"
 import LoginPop from "../components/LoginPop"
 import PublicHeader from "../components/PublicHeader"
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import { BASEURL } from "../common/config";
+import { useParams } from "react-router-dom";
 
 
 export default function EmployerDetail() {
+    const token=localStorage.getItem("token");
+
+    const [company, setCompany] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    let com_id = useParams().id;
+
+    useEffect(() => {
+        setIsLoading(true);
+        const getJob = async () => {
+            let api_url = BASEURL + `/company/${com_id}`;
+          const headers = { Authorization: `Bearer ${token}` };
+          try {
+            const res = await axios.get(api_url,{headers});
+            console.log(res.data);
+            setCompany(res.data.data);
+          } catch (err) {
+            console.log(err);
+          }
+          setIsLoading(false);
+        };
+        getJob();
+      }, []);
+
     return (
 
 
@@ -58,7 +86,7 @@ export default function EmployerDetail() {
                             <div className="wt-bnr-inr-entry">
                                 <div className="banner-title-outer">
                                     <div className="banner-title-name">
-                                        <h2 className="wt-title">Employer Detail</h2>
+                                        <h2 className="wt-title">{company.companyName}</h2>
                                     </div>
                                 </div>
                                 {/* <!-- BREADCRUMB ROW -->                          */}
@@ -91,23 +119,20 @@ export default function EmployerDetail() {
                                                 <div className="twm-employer-self-info">
                                                     <div className="twm-employer-self-top">
                                                         <div className="twm-media-bg">
-                                                            <img src={employer_bg} alt="#" />
+                                                            <img src={company.bannerImage}  className="bannerSize" alt="#" />
                                                         </div>
 
 
                                                         <div className="twm-mid-content">
 
                                                             <div className="twm-media">
-                                                                <img src={pic1} alt="#" />
+                                                                <img src={company.image} alt="#" />
                                                             </div>
 
-                                                            <h4 className="twm-job-title">Galaxy Software Development</h4>
-                                                            <p className="twm-employer-address"><i className="feather-map-pin"></i>1363-1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
+                                                            <h4 className="twm-job-title">{company.companyName}</h4>
+                                                            <p className="twm-employer-address"><i className="feather-map-pin"></i>{company.email}</p>
                                                             <a href="https://themeforest.net/user/thewebmax/portfolio" className="twm-employer-websites site-text-primary">https://thewebmax.com</a>
-                                                            <div className="twm-employer-self-bottom">
-                                                                <a href="javascript:;" className="site-button outline-primary">Add Review</a>
-                                                                <a href="javascript:;" className="site-button">Follow Us</a>
-                                                            </div>
+                                                           
                                                         </div>
                                                     </div>
 
@@ -122,164 +147,9 @@ export default function EmployerDetail() {
                                             <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui  officia deserunt mollitia animi.</p>
                                             <p>Opossum but dramatically despite expeditiously that jeepers loosely yikes that as or eel underneath kept and slept compactly far purred sure abidingly up above fitting to strident wiped set waywardly far the and pangolin horse approving paid chuckled cassowary oh above a much opposite far much hypnotically more therefore wasp less that  hey apart well like while superbly orca and far hence one.Far much that one rank beheld bluebird after outside ignobly  allegedly more when oh arrogantly vehement irresistibly fussy.? </p>
 
-                                            <h4 className="twm-s-title">Responsabilities</h4>
-                                            <ul className="description-list-2">
-                                                <li>
-                                                    <i className="feather-check"></i>
-                                                    Establish and promote design guidelines, best practices and standards.
-                                                </li>
-                                                <li>
-                                                    <i className="feather-check"></i>
-                                                    Accurately estimate design tickets during planning sessions.
-                                                </li>
-                                                <li>
-                                                    <i className="feather-check"></i>
-                                                    Partnering with product and engineering to translate business and user goals.
-                                                </li>
+                                            
 
-                                            </ul>
-
-                                            <h4 className="twm-s-title">Share Profile</h4>
-                                            <div className="twm-social-tags">
-                                                <a href="javascript:void(0)" className="fb-clr">Facebook</a>
-                                                <a href="javascript:void(0)" className="tw-clr">Twitter</a>
-                                                <a href="javascript:void(0)" className="link-clr">Linkedin</a>
-                                                <a href="javascript:void(0)" className="whats-clr">Whatsapp</a>
-                                                <a href="javascript:void(0)" className="pinte-clr">Pinterest</a>
-                                            </div>
-
-                                            <div className="twm-two-part-section">
-                                                <div className="row">
-
-                                                    <div className="col-lg-6 col-md-6">
-                                                        <h4 className="twm-s-title">Office Photos</h4>
-                                                        <div className="tw-sidebar-gallery">
-                                                            <ul>
-                                                                <li>
-                                                                    <div className="tw-service-gallery-thumb">
-                                                                        <a className="elem" href="images/gallery/pic1.jpg" title="Title 1" data-lcl-author="" data-lcl-thumb="images/gallery/thumb/pic1.jpg">
-                                                                            <img src={thumb} alt="" />
-                                                                            <i className="fa fa-file-image"></i>
-                                                                        </a>
-                                                                    </div>
-                                                                </li>
-
-                                                                <li>
-                                                                    <div className="tw-service-gallery-thumb">
-                                                                        <a className="elem" href="images/gallery/pic2.jpg" title="Title 2" data-lcl-author="" data-lcl-thumb="images/gallery/thumb/pic2.jpg">
-                                                                            <img src={thumb2} alt="" />
-                                                                            <i className="fa fa-file-image"></i>
-                                                                        </a>
-                                                                    </div>
-                                                                </li>
-
-                                                                <li>
-                                                                    <div className="tw-service-gallery-thumb ">
-                                                                        <a className="elem" href="images/gallery/pic3.jpg" title="Title 3" data-lcl-author="" data-lcl-thumb="images/gallery/thumb/pic3.jpg">
-                                                                            <img src={thumb3} alt="" />
-                                                                            <i className="fa fa-file-image"></i>
-                                                                        </a>
-                                                                    </div>
-                                                                </li>
-
-                                                                <li>
-                                                                    <div className="tw-service-gallery-thumb">
-                                                                        <a className="elem" href="images/gallery/pic4.jpg" title="Title 4" data-lcl-author="" data-lcl-thumb="images/gallery/thumb/pic4.jpg">
-                                                                            <img src={thumb4} alt="" />
-                                                                            <i className="fa fa-file-image"></i>
-                                                                        </a>
-                                                                    </div>
-                                                                </li>
-
-                                                                <li>
-                                                                    <div className="tw-service-gallery-thumb">
-                                                                        <a className="elem" href="images/gallery/pic5.jpg" title="Title 5" data-lcl-author="" data-lcl-thumb="images/gallery/thumb/pic5.jpg">
-                                                                            <img src={thumb5} alt="" />
-                                                                            <i className="fa fa-file-image"></i>
-                                                                        </a>
-                                                                    </div>
-                                                                </li>
-
-                                                                <li>
-                                                                    <div className="tw-service-gallery-thumb">
-                                                                        <a className="elem" href="images/gallery/pic6.jpg" title="Title 6" data-lcl-author="" data-lcl-thumb="images/gallery/thumb/pic6.jpg">
-                                                                            <img src={thumb6} alt="" />
-                                                                            <i className="fa fa-file-image"></i>
-                                                                        </a>
-                                                                    </div>
-                                                                </li>
-
-                                                                <li>
-                                                                    <div className="tw-service-gallery-thumb">
-                                                                        <a className="elem" href="images/gallery/pic7.jpg" title="Title 7" data-lcl-author="" data-lcl-thumb="images/gallery/thumb/pic1.jpg">
-                                                                            <img src={thumb7} alt="" />
-                                                                            <i className="fa fa-file-image"></i>
-                                                                        </a>
-                                                                    </div>
-                                                                </li>
-
-                                                                <li>
-                                                                    <div className="tw-service-gallery-thumb">
-                                                                        <a className="elem" href="images/gallery/pic8.jpg" title="Title 8" data-lcl-author="" data-lcl-thumb="images/gallery/thumb/pic2.jpg">
-                                                                            <img src={thumb8} alt="" />
-                                                                            <i className="fa fa-file-image"></i>
-                                                                        </a>
-                                                                    </div>
-                                                                </li>
-
-                                                                <li>
-                                                                    <div className="tw-service-gallery-thumb ">
-                                                                        <a className="elem" href="images/gallery/pic9.jpg" title="Title 9" data-lcl-author="" data-lcl-thumb="images/gallery/thumb/pic3.jpg">
-                                                                            <img src={thumb9} alt="" />
-                                                                            <i className="fa fa-file-image"></i>
-                                                                        </a>
-                                                                    </div>
-                                                                </li>
-
-                                                                <li>
-                                                                    <div className="tw-service-gallery-thumb">
-                                                                        <a className="elem" href="images/gallery/pic10.jpg" title="Title 10" data-lcl-author="" data-lcl-thumb="images/gallery/thumb/pic4.jpg">
-                                                                            <img src={thumb10} alt="" />
-                                                                            <i className="fa fa-file-image"></i>
-                                                                        </a>
-                                                                    </div>
-                                                                </li>
-
-                                                                <li>
-                                                                    <div className="tw-service-gallery-thumb">
-                                                                        <a className="elem" href="images/gallery/pic11.jpg" title="Title 11" data-lcl-author="" data-lcl-thumb="images/gallery/thumb/pic5.jpg">
-                                                                            <img src={thumb11} alt="" />
-                                                                            <i className="fa fa-file-image"></i>
-                                                                        </a>
-                                                                    </div>
-                                                                </li>
-
-                                                                <li>
-                                                                    <div className="tw-service-gallery-thumb">
-                                                                        <a className="elem" href="images/gallery/pic12.jpg" title="Title 12" data-lcl-author="" data-lcl-thumb="images/gallery/thumb/pic6.jpg">
-                                                                            <img src={thumb12} alt="" />
-                                                                            <i className="fa fa-file-image"></i>
-                                                                        </a>
-                                                                    </div>
-                                                                </li>
-
-                                                            </ul>
-
-                                                        </div>
-                                                    </div>
-                                                    <div className="col-lg-6 col-md-6">
-                                                        <h4 className="twm-s-title">Video</h4>
-                                                        <div className="video-section-first" style={{ backgroundImage: `url(${video_bg})` }}>
-                                                            <a href="https://www.youtube.com/watch?v=c1XNqw2gSbU" className="mfp-video play-now-video">
-                                                                <i className="icon feather-play"></i>
-                                                                <span className="ripple"></span>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-
+                                            
                                             <h4 className="twm-s-title">Available Jobs</h4>
                                             <div className="twm-jobs-list-wrap">
                                                 <ul>
@@ -351,12 +221,7 @@ export default function EmployerDetail() {
 
                                         <div className="side-bar-2">
 
-                                            <div className="twm-s-map mb-5">
-                                                <h4 className="section-head-small mb-4">Location</h4>
-                                                <div className="twm-s-map-iframe">
-                                                    <iframe height="270" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3304.8534521658976!2d-118.2533646842856!3d34.073270780600225!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2c6fd9829c6f3%3A0x6ecd11bcf4b0c23a!2s1363%20Sunset%20Blvd%2C%20Los%20Angeles%2C%20CA%2090026%2C%20USA!5e0!3m2!1sen!2sin!4v1620815366832!5m2!1sen!2sin"></iframe>
-                                                </div>
-                                            </div>
+                                            
 
 
                                             <div className="twm-s-info-wrap mb-5">
