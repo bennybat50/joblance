@@ -11,8 +11,7 @@ const companySchema = new mongoose.Schema({
     },
     companyName: {
         type: String,
-        required: true,
-        unique: true 
+         unique: true 
     },
     phone: {
         type: String, 
@@ -24,20 +23,16 @@ const companySchema = new mongoose.Schema({
     },
     website: {
         type: String,
-        required: true
-    },
+     },
     estSince: {
         type: String,
-        required: true
-    },
+     },
     teamSize: {
         type: String,
-        required : true
-    },
+     },
     Description: {
         type: String,
-        required: true
-    },
+     },
     youTube: {
         type:String,
     },
@@ -81,6 +76,7 @@ const companySchema = new mongoose.Schema({
         type:String,
         // required: true 
     },
+    user_id:[{type:mongoose.Schema.Types.ObjectId, ref:"user"}],
     job_id:[{type:mongoose.Schema.Types.ObjectId, ref:"job"}],
     message_id:[{type:mongoose.Schema.Types.ObjectId, ref:"message"}],
 

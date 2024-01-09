@@ -13,16 +13,26 @@ router.post("/create-user", async function(req, res) {
     const existingUser = await User.findOne({ email: req.body.email });
 
     if (existingUser) {
-        return res.status(403).send({ message: "User already exists" });
+        return res.status(200).send({ message: "User already exists" });
     }
 
     try {
+        
         const newUser = new User(req.body);
         await newUser.save();
-        res.status(200).send(newUser);
+        const { password: adminPassword, ...noPasswordAdmin } = newUser.toObject();
+            const token = jwt.sign(
+                { noPasswordAdmin },
+                process.env.NODE_APP_JWT_SECRET,
+                {
+                    expiresIn: "24h"
+                }
+            );
+
+        res.status(200).send({newUser, token});
     } catch (e) {
         console.log(e)
-        res.status(500).send("Server error");
+        res.status(500).send({message:"Server error"});
     }
 });
 
@@ -36,7 +46,7 @@ router.get("/users", verifyToken, async function(req, res){
             data: user 
         })
     }catch(e){
-        res.status(500).send(e.message)
+        res.status(500).send({message:e.message})
     }
 })
 
@@ -127,14 +137,13 @@ router.post("/user-login", async (req, res) => {
 
             res.status(200).send({
                 status: "success",
-                message: "Login successful",
-                // data: noPasswordAdmin,
+                data: user,
                 token,
             });
         } else if (!user) {
-            res.status(404).send({
+            res.status(200).send({
                 status: "error",
-                message: "Admin does not exist",
+                message: "User does not exist",
             });
         } else {
             res.status(400).send({

@@ -21,12 +21,10 @@ const userSchema = new mongoose.Schema({
     },
     jobTitle:{
         type:String,
-        required: true
     },
     jobType:{
         type: String,
         enum: ["Full Time", "Part Time", "Freelance"],
-        required: true
     },
     qualification:{
         type:String,
@@ -34,38 +32,31 @@ const userSchema = new mongoose.Schema({
     },
     language:{
         type:String,
-        required: true
     },
     jobCategory_id:{
         type:String,
-        required: true,
         ref: "jobCategory"
     },
     experience:{
         type: String,
         enum: ["Beginner", "One year", "two years", "three years", "four years", "five years"],
-        required: true
     },
 
     currentSalary:{
         type: String,
         enum: ["10 - 20k", "20 - 30k", "30 - 40k", "40 - 50k", ],
-        required: true
     },
 
     expectedSalary:{
         type: String,
         enum: ["10 - 20k", "20 - 30k", "30 - 40k", "40 - 50k", ],
-        required: true
     },
     age:{
         type: String,
         enum: ["20 year", "25+ years", "30+ years", "40+ years"],
-        required: true
     },
     description:{
         type:String,
-        required: true,
     },
     facebook:{
         type:String
@@ -100,6 +91,10 @@ const userSchema = new mongoose.Schema({
     password:{
         type:String,
         required: true 
+    },
+    role:{
+        type: String,
+        default: "candidate"
     },
     message_id:[{type:mongoose.Schema.Types.ObjectId, ref:"message"}],
 
