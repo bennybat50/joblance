@@ -129,7 +129,7 @@ export default function PublicHeader() {
                                                 <i className="feather-log-in"></i> Sign Up
                                             </a>: <Link
                                                 className="twm-nav-sign-up"
-                                                 to="/my-profile"
+                                                 to="/my-dashboard"
                                                 role="button"
                                             >
                                                 <i className="feather-user"></i> My Profile

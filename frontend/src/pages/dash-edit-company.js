@@ -4,85 +4,89 @@ import Dash_Header from "../components/Dashheader";
 import { useEffect, useState } from "react";
 
 export default function EditCompany() {
-    const [compName, setCompName] = useState();
-    const [phone, setPhone] = useState();
-    const [email, setEmail] = useState();
-    const [website, setWebsite] = useState();
-    const [estSince, setEstSince] = useState();
-    const [teamSize, setTeamSize] = useState();
-    const [descript, setDescrip] = useState();
-    const [err, setErr] = useState(false);
-    const { compId } = useParams();
-  
-    useEffect(() => {
-      fetch(`http://localhost:7300/company/${compId}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
+  const [compName, setCompName] = useState();
+  const [phone, setPhone] = useState();
+  const [email, setEmail] = useState();
+  const [website, setWebsite] = useState();
+  const [estSince, setEstSince] = useState();
+  const [teamSize, setTeamSize] = useState();
+  const [descript, setDescrip] = useState();
+  const [formImage, setFormImage] = useState("")
+  const [formBanner, setFormBanner] = useState("")
+  const [err, setErr] = useState(false);
+  const { compId } = useParams();
+
+  useEffect(() => {
+    fetch(`http://localhost:7300/company/${compId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
       })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-          }
-          return response.json();
-        })
-        .then((data) => {
-          setCompName(data.data.companyName);
-          setPhone(data.data.phone);
-          setEmail(data.data.email);
-          setWebsite(data.data.website);
-          setEstSince(data.data.estSince);
-          setTeamSize(data.data.teamSize);
-          setDescrip(data.data.Description);
-        })
-        .catch((error) => {
-          console.error("Fetch error:", error.message);
-        });
-    }, [compId]);
-  
-    const updateCompanyProfile = (e) => {
-      e.preventDefault();
-      if (
-        compName === "" ||
-        phone === "" ||
-        email === "" ||
-        website === "" ||
-        estSince === "" ||
-        teamSize === "" ||
-        descript === ""
-      ) {
-        setErr(true);
-        return;
-      }
-  
-      const compDetails = {
-        companyName: compName,
-        phone: phone,
-        email: email,
-        website: website,
-        estSince: estSince,
-        teamSize: teamSize,
-        Description: descript,
-      };
-  
-      fetch(`http://localhost:7300/company/update/${compId}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(compDetails),
+      .then((data) => {
+        setCompName(data.data.companyName);
+        setPhone(data.data.phone);
+        setEmail(data.data.email);
+        setWebsite(data.data.website);
+        setEstSince(data.data.estSince);
+        setTeamSize(data.data.teamSize);
+        setDescrip(data.data.Description);
       })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-          }
-          return response.json();
-        })
-        .then((data) => {
-          console.log(data);
-          alert("Company profile updated");
-        })
-        .catch((err) => console.log(err.message));
+      .catch((error) => {
+        console.error("Fetch error:", error.message);
+      });
+  }, [compId]);
+
+  const updateCompanyProfile = (e) => {
+    e.preventDefault();
+    if (
+      compName === "" ||
+      phone === "" ||
+      email === "" ||
+      website === "" ||
+      estSince === "" ||
+      teamSize === "" ||
+      descript === ""
+    ) {
+      setErr(true);
+      return;
+    }
+
+    const compDetails = {
+      companyName: compName,
+      phone: phone,
+      email: email,
+      website: website,
+      estSince: estSince,
+      teamSize: teamSize,
+      Description: descript,
+      image: formImage,
+      bannerImage: formBanner,
     };
+
+    fetch(`http://localhost:7300/company/update/${compId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(compDetails),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+        alert("Company profile updated");
+      })
+      .catch((err) => console.log(err.message));
+  };
 
   return (
     <body>
@@ -106,48 +110,31 @@ export default function EditCompany() {
               <div className="panel-heading wt-panel-heading p-a20">
                 <h4 className="panel-tittle m-a0">Logo and Cover image</h4>
               </div>
-              <div className="panel-body wt-panel-body p-a20 p-b0 m-b30 ">
-                <div className="row">
-                  <div className="col-lg-12 col-md-12">
-                    <div className="form-group">
-                      <div className="dashboard-profile-pic">
-                        <div className="dashboard-profile-photo">
-                          <img src="images/jobs-company/pic1.jpg" alt="" />
-                          <div className="upload-btn-wrapper">
-                            <div id="upload-image-grid"></div>
-                            <button className="site-button button-sm">
-                              Upload Photo
-                            </button>
-                            <input
-                              type="file"
-                              name="myfile"
-                              id="file-uploader"
-                              accept=".jpg, .jpeg, .png"
-                            />
-                          </div>
-                        </div>
-                        <p>
-                          <b>Company Logo :- </b> Max file size is 1MB, Minimum
-                          dimension: 136 x 136 And Suitable files are .jpg &
-                          .png
-                        </p>
+              <div className="col-lg-12 col-md-12 ">
+                <div className="dashboard-cover-pic">
+                  <div
+                    action="https://thewebmax.org/jobzilla/upload.php"
+                    className="dropzone "
+                  >
+                    <div className="row mb-5">
+                      <div className="col-lg-6 ">
+                        <label className="mb-3 fw-bolder" htmlFor="">Company logo</label>
+                        <input type="text" placeholder="input company logo" onChange={(e) => setFormImage(e.target.value)} className="form-control" />
+
+                        <figure className="h-75 w-100 ">
+                          <img src={formImage} alt="" className="h-100 w-100" />
+                        </figure>
+                      </div>
+                      <div className="col-lg-6 ">
+                        <label className="mb-3 fw-bolder" htmlFor="">Company banner</label>
+                        <input type="text" placeholder="input company baner image" onChange={(e) => setFormBanner(e.target.value)} className="form-control" />
+                        <figure className="w-100 h-75">
+                          <img src={formBanner} alt="" className="w-100 h-100" />
+                        </figure>
                       </div>
                     </div>
                   </div>
 
-                  <div className="col-lg-12 col-md-12">
-                    <div className="dashboard-cover-pic">
-                      <form
-                        action="https://thewebmax.org/jobzilla/upload.php"
-                        className="dropzone"
-                      ></form>
-                      <p>
-                        <b>Background Banner Image :- </b> Max file size is 1MB,
-                        Minimum dimension: 770 x 310 And Suitable files are .jpg
-                        & .png
-                      </p>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
@@ -199,10 +186,10 @@ export default function EditCompany() {
                           <i className="fs-input-icon fa fa-phone-alt"></i>
                         </div>
                         <div>
-                          {err === true && phone  === "" ? (
+                          {err === true && phone === "" ? (
                             <span>Enter phone number</span>
                           ) : (
-                            phone  === null
+                            phone === null
                           )}
                         </div>
                       </div>
@@ -331,12 +318,12 @@ export default function EditCompany() {
                         ></textarea>
                       </div>
                       <div>
-                          {err === true && descript === "" ? (
-                            <span>Enter description</span>
-                          ) : (
-                            descript === null
-                          )}
-                        </div>
+                        {err === true && descript === "" ? (
+                          <span>Enter description</span>
+                        ) : (
+                          descript === null
+                        )}
+                      </div>
                     </div>
 
                     <div className="col-lg-12 col-md-12">
@@ -351,7 +338,7 @@ export default function EditCompany() {
               </div>
             </div>
 
-          
+
           </div>
         </div>
 

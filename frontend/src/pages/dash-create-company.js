@@ -145,11 +145,7 @@ export default function CreateCompany() {
                           </div>
                         </div>
                       </div>
-                      <p>
-                        <b>Background Banner Image :- </b> Max file size is 1MB,
-                        Minimum dimension: 770 x 310 And Suitable files are .jpg
-                        & .png
-                      </p>
+                       
                     </div>
                   </div>
                 </div>
