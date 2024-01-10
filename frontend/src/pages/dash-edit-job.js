@@ -4,6 +4,7 @@ import pic1 from "../assets/images/images/candidates/pic1.jpg";
 import logo from "../assets/images/images/logo-dark.png";
 import Dash_Header from "../components/Dashheader";
 import { useEffect, useState } from "react";
+import { BASEURL } from "../common/config";
 
 export default function EditJob() {
     const {jobId} = useParams()
@@ -170,7 +171,7 @@ export default function EditJob() {
     };
     console.log(jobData);
     
-    fetch(`http://localhost:7300/job/update/${jobId}`, {
+    fetch(`${BASEURL}/job/update/${jobId}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(jobData),

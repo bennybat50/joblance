@@ -20,15 +20,21 @@ const userSchema = new mongoose.Schema({
         type:String,
         default:""
     },
-    jobTitle:{
+    city:{
         type:String,
         default:""
     },
-    jobType:{
-        type: String,
-        enum: ["Full Time", "Part Time", "Freelance"],
+     
+    country:{
+        type:String,
         default:""
     },
+    jobtype:{
+        type:String,
+        default:""
+    },
+     
+     
     qualification:{
         type:String,
         default:""

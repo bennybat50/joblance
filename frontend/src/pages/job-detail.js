@@ -29,31 +29,43 @@ import PublicHeader from "../components/PublicHeader"
 
 
 export default function JobDetail() {
-    
-    const token=localStorage.getItem("token");
+
+    const userDetails = JSON.parse(localStorage.getItem("user-details"));
+    const token = localStorage.getItem("token");
+
 
     const [jobDetail, setJobDetail] = useState({});
     const [comDetail, setComDetail] = useState({});
     const [isLoading, setIsLoading] = useState(false);
+
+    const [applyName, setapplyName] = useState();
+    const [applyEmail, setapplyEmail] = useState("");
+    const [applyMessage, setapplyMessage] = useState("");
+    const [cvLink, setcvLink] = useState("");
+
     let job_id = useParams().id;
 
     useEffect(() => {
+        if (userDetails != null) {
+            setapplyName(userDetails.fullName)
+            setapplyEmail(userDetails.email)
+        }
         setIsLoading(true);
         const getJob = async () => {
-          let api_url = BASEURL + `/job/${job_id}`;
-          const headers = { Authorization: `Bearer ${token}` };
-          try {
-            const res = await axios.get(api_url,{headers});
-            console.log(res.data);
-            setJobDetail(res.data.data);
-            setComDetail(res.data.data.company_id);
-          } catch (err) {
-            console.log(err);
-          }
-          setIsLoading(false);
+            let api_url = BASEURL + `/job/${job_id}`;
+            const headers = { Authorization: `Bearer ${token}` };
+            try {
+                const res = await axios.get(api_url, { headers });
+                console.log(res.data);
+                setJobDetail(res.data.data);
+                setComDetail(res.data.data.company_id);
+            } catch (err) {
+                console.log(err);
+            }
+            setIsLoading(false);
         };
         getJob();
-      }, []);
+    }, []);
     return (
 
         <div>
@@ -72,7 +84,7 @@ export default function JobDetail() {
             <div className="page-wraper">
 
                 {/* <!-- HEADER START --> */}
-               <PublicHeader/>
+                <PublicHeader />
                 {/* <!-- HEADER END -->
 
   
@@ -121,7 +133,7 @@ export default function JobDetail() {
                                                 <div className="twm-job-self-info">
                                                     <div className="twm-job-self-top">
                                                         <div className="twm-media-bg">
-                                                            {comDetail.bannerImage!=null?<img src={comDetail.bannerImage} alt="#" className="bannerSize" />:<></>}
+                                                            {comDetail.bannerImage != null ? <img src={comDetail.bannerImage} alt="#" className="bannerSize" /> : <></>}
                                                             <div className="twm-jobs-category green"><span className="twm-bg-green">New</span></div>
                                                         </div>
 
@@ -129,7 +141,7 @@ export default function JobDetail() {
                                                         <div className="twm-mid-content">
 
                                                             <div className="twm-media">
-                                                               { comDetail.image?<img src={comDetail.image} alt="#" />:<></>}
+                                                                {comDetail.image ? <img src={comDetail.image} alt="#" /> : <></>}
                                                             </div>
 
                                                             <h4 className="twm-job-title">{jobDetail.jobTitle} <span className="twm-job-post-duration">/ {new Date(jobDetail.startDate).getDate()} - {new Date(jobDetail.startDate).getMonth()} {new Date(jobDetail.startDate).getFullYear()}</span></h4>
@@ -215,7 +227,7 @@ export default function JobDetail() {
 
                                             </ul>
 
-                                             
+
 
 
                                         </div>
@@ -227,7 +239,7 @@ export default function JobDetail() {
                                             <div className="twm-s-info2-wrap mb-5">
                                                 <div className="twm-s-info2">
                                                     <h4 className="section-head-small mb-4">Job Information</h4>
-                                                    
+
                                                     <ul className="twm-job-hilites2">
 
                                                         <li>
@@ -352,12 +364,12 @@ export default function JobDetail() {
                                                     </li>
 
                                                 </ul>
-                                                <Link to={"/employer-detail/"+comDetail._id} className=" site-button">Vew Profile</Link>
+                                                <Link to={"/employer-detail/" + comDetail._id} className=" site-button">Vew Profile</Link>
 
                                             </div>
                                         </div>
 
-                                       
+
 
 
                                     </div>
@@ -531,7 +543,10 @@ export default function JobDetail() {
                                                         <div className="form-group">
                                                             <label>Your Name</label>
                                                             <div className="ls-inputicon-box">
-                                                                <input className="form-control" name="company_name" type="text" placeholder="Devid Smith" />
+                                                                <input className="form-control" name="company_name"
+                                                                    // onChange={(e) => setapplyName(e.target.value)}
+                                                                    // value={applyName}
+                                                                    type="text" placeholder="Devid Smith" />
                                                                 <i className="fs-input-icon fa fa-user "></i>
                                                             </div>
                                                         </div>
@@ -540,7 +555,10 @@ export default function JobDetail() {
                                                         <div className="form-group">
                                                             <label>Email Address</label>
                                                             <div className="ls-inputicon-box">
-                                                                <input className="form-control" name="company_Email" type="email" placeholder="Devid@example.com" />
+                                                                <input className="form-control" name="company_Email"
+                                                                    // onChange={(e) => setapplyEmail(e.target.value)}
+                                                                    // value={applyEmail}
+                                                                    type="email" placeholder="Devid@example.com" />
                                                                 <i className="fs-input-icon fas fa-at"></i>
                                                             </div>
                                                         </div>
@@ -549,15 +567,20 @@ export default function JobDetail() {
                                                     <div className="col-md-12">
                                                         <div className="form-group">
                                                             <label>Message</label>
-                                                            <textarea className="form-control" rows="3" placeholder="Message sent to the employer"></textarea>
+                                                            <textarea className="form-control" rows="3"
+                                                                // onChange={(e) => setapplyMessage(e.target.value)}
+                                                                // value={applyMessage}
+                                                                placeholder="Message sent to the employer"></textarea>
                                                         </div>
                                                     </div>
 
                                                     <div className="col-lg-12 col-md-12">
                                                         <div className="form-group">
-                                                            <label>Upload Resume</label>
-                                                            <form action="https://thewebmax.org/jobzilla/upload.php" className="dropzone dz-clickable"><div className="dz-default dz-message"><span><i className="sl sl-icon-plus"></i> Click here or drop files to upload</span></div></form>
-                                                            <small>If you do not have a resume document, you may write your brief professional profile <a className="site-text-primary" href="javascript:void(0);">here</a></small>
+                                                            <label>Upload Link</label>
+                                                            <input className="form-control" name="company_Email"
+                                                                // onChange={(e) => setcvLink(e.target.value)}
+                                                                // value={cvLink}
+                                                                type="text" placeholder="Devid@example.com" />                                                            <small>If you do not have a resume document, you may write your brief professional profile <a className="site-text-primary" href="javascript:void(0);">here</a></small>
                                                         </div>
                                                     </div>
 

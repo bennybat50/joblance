@@ -6,24 +6,28 @@ const CVEducationSchema=new mongoose.Schema({
         ref: "user",
         required: true 
     },
-    graduationDate:{
+    startDate:{
+        type:String, 
+        default:"" 
+    },
+    endDate:{
         type:String,  
+        default:""
     },
     school: {
         type: String,
+        default:""
     },
-    faculty:{
+    course:{
         type:String,
+        default:""
     },
-    department:{
-        type:String, 
+    education_level:{
+        type:String,
+        default:""
     },
-    level:{
-        type:String,  
-    },
-    notes: {
-        type: String,
-    },
+    
+    
     time_created:{type:Number, default:()=>Date.now()},	
     updated_at:{type:Number, default:()=>Date.now()}	
 })

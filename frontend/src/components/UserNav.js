@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import Logout_Pop from "./Logout";
 
 export default function UserNav() {
+    const token=localStorage.getItem("token");
+    const userDetails=JSON.parse(localStorage.getItem("user-details"));
     return <div>
         <Logout_Pop/>
         <div class="side-bar-st-1">
@@ -19,9 +21,9 @@ export default function UserNav() {
             </div>
             <div class="twm-mid-content text-center">
                 <Link to="candidate-detail.html" class="twm-job-title">
-                    <h4>Randall Henderson </h4>
+                    <h4>{userDetails.fullName} </h4>
                 </Link>
-                <p>IT Contractor</p>
+                <p>{userDetails.jobtype??""} </p>
             </div>
 
             <div class="twm-nav-list-1">
@@ -30,9 +32,7 @@ export default function UserNav() {
                     <li><Link to="/my-profile"><i class="fa fa-user"></i> My Pfofile</Link></li>
                     <li><Link to="/my-resume"><i class="fa fa-receipt"></i> My Resume</Link></li>
                     <li><Link to="candidate-jobs-applied.html"><i class="fa fa-suitcase"></i> Applied Jobs</Link></li>
-                    <li><Link to="candidate-saved-jobs.html"><i class="fa fa-file-download"></i> Saved Jobs</Link></li>
-                    <li><Link to="candidate-cv-manager.html"><i class="fa fa-paperclip"></i> CV Manager</Link></li>
-                    <li><Link to="candidate-job-alert.html"><i class="fa fa-bell"></i> Job Alerts</Link></li>
+                    <li><Link to="candidate-saved-jobs.html"><i class="fa fa-file-download"></i> Saved Jobs</Link></li>  
                     <li><Link to="candidate-change-password.html"><i class="fa fa-fingerprint"></i> Change Password</Link></li>
                     <li><Link to="candidate-chat.html"><i class="fa fa-comments"></i>Chat</Link></li>
                     <li>

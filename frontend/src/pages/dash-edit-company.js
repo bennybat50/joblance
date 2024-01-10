@@ -37,6 +37,8 @@ export default function EditCompany() {
         setEstSince(data.data.estSince);
         setTeamSize(data.data.teamSize);
         setDescrip(data.data.Description);
+        setFormImage(data.data.image);
+        setFormBanner(data.data.bannerImage);
       })
       .catch((error) => {
         console.error("Fetch error:", error.message);

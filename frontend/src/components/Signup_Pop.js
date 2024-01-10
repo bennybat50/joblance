@@ -40,7 +40,7 @@ export default function Signup_Pop() {
 
 
         axios.post("http://localhost:7300/create-user", signupData).then((res) => {
-            console.log(res.data)
+          
             if (res.data.message == null) {
                 alert("User Registered in");
                 localStorage.setItem("user-details", JSON.stringify(res.data.newUser))

@@ -10,13 +10,14 @@ export default function UserProfile() {
     const token = localStorage.getItem("token");
 
 
-    const [email, setEmail] = useState(userDetails.email);
-    const [phone, setPhone] = useState(userDetails.phone);
+    const [email, setEmail] = useState("");
+    const [phone, setPhone] = useState("");
     const [userData, setUserData] = useState({});
-    const [jobTitle, setJobTitle] = useState("");
     const [website, setWebsite] = useState("");
-    const [fullName, setFullName] = useState(userDetails.fullName);
-    const [jobType, setJobType] = useState("");
+    const [fullName, setFullName] = useState("");
+    const [city, setCity] = useState("");
+    const [jobtype, setJobtype] = useState("");
+    const [country, setCountry] = useState("");
     const [qualification, setQualification] = useState("");
     const [language, setLanguage] = useState("");
     const [jobCategory_id, setJobCategory_id] = useState("");
@@ -27,6 +28,7 @@ export default function UserProfile() {
     const [user_id, setUser_id] = useState(userDetails._id);
     const [jobCategory, setJobCategory] = useState();
     const [JobCategoryID, setJobCategoryId] = useState();
+    const [refresh, setRefresh] = useState(0);
 
 
     useEffect(() => {
@@ -34,11 +36,14 @@ export default function UserProfile() {
             let api_url = BASEURL + "/user/" + userDetails._id;
             const headers = { Authorization: `Bearer ${token}` };
             try {
+                
                 const res = await axios.get(api_url, { headers });
                 console.log(res.data);
                 setUserData(res.data.data)
-                setJobTitle(res.data.data.jobTitle)
-                setJobType(res.data.data.jobType)
+                localStorage.setItem("user-details", JSON.stringify(res.data.data))
+                setFullName(res.data.data.fullName)
+                setEmail(res.data.data.email)
+                setPhone(res.data.data.phone)
                 setQualification(res.data.data.qualification)
                 setJobCategory_id(res.data.data.jobCategory_id)
                 setExperience(res.data.data.experience)
@@ -47,12 +52,15 @@ export default function UserProfile() {
                 setDescription(res.data.data.description)
                 setLanguage(res.data.data.language)
                 setWebsite(res.data.data.website)
+                setCity(res.data.data.city)
+                setCountry(res.data.data.country)
+                setJobtype(res.data.data.jobtype)
             } catch (err) {
                 console.log(err);
             }
         };
         getUser();
-    }, []);
+    }, refresh);
 
     // Job category
     useEffect(() => {
@@ -82,6 +90,28 @@ export default function UserProfile() {
     };
 
 
+    const updateProfile = async(event) => {
+        event.preventDefault();
+        let userData = {
+            website: website,
+            fullName: fullName,
+            city: city,
+            country: country,
+            qualification: qualification,
+            language: language,
+            experience: experience,
+            currentSalary: currentSalary,
+            age: age,
+            description: description,
+            jobtype: jobtype,
+        }
+        let api_url = BASEURL + "/user/update/" + userDetails._id;
+        await axios.put(api_url, userData);
+        alert("Update Profile updated")
+        setRefresh(refresh+1)
+    }
+
+
     return (
         <div>
             {/* <!-- HEADER START --> */}
@@ -106,7 +136,7 @@ export default function UserProfile() {
                             <div class="col-xl-9 col-lg-8 col-md-12 m-b30">
                                 {/* <!--Filter Short By--> */}
                                 <div class="twm-right-section-panel site-bg-gray">
-                                    <form>
+                                    <form onSubmit={updateProfile}>
 
 
                                         {/* <!--Basic Information--> */}
@@ -170,7 +200,7 @@ export default function UserProfile() {
                                                     </div>
 
 
-                                                    <div class="col-xl-6 col-lg-6 col-md-12">
+                                                    <div class="col-xl-4 col-lg-4 col-md-12">
                                                         <div class="form-group">
                                                             <label>Qualification</label>
                                                             <div class="ls-inputicon-box">
@@ -183,7 +213,7 @@ export default function UserProfile() {
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-xl-6 col-lg-6 col-md-12">
+                                                    <div class="col-xl-4 col-lg-4 col-md-12">
                                                         <div class="form-group">
                                                             <label>Language</label>
                                                             <div class="ls-inputicon-box">
@@ -195,8 +225,20 @@ export default function UserProfile() {
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <div class="col-xl-4 col-lg-4 col-md-12">
+                                                        <div class="form-group">
+                                                            <label>Job Type</label>
+                                                            <div class="ls-inputicon-box">
+                                                                <input class="form-control"
+                                                                    onChange={(e) => setJobtype(e.target.value)}
+                                                                    value={jobtype}
+                                                                    name="company_since" type="text" placeholder="e.x Software Developer, Data Analyst" />
+                                                                <i class="fs-input-icon fa fa-language"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
 
-                                                    <div class="col-xl-6 col-lg-6 col-md-12">
+                                                    <div class="col-xl-4 col-lg-4 col-md-12">
                                                         <div class="form-group city-outer-bx has-feedback">
                                                             <label>Job Interest</label>
                                                             <div class="ls-inputicon-box">
@@ -223,11 +265,13 @@ export default function UserProfile() {
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-xl-6 col-lg-6 col-md-12">
+                                                    <div class="col-xl-4 col-lg-4 col-md-12">
                                                         <div class="form-group city-outer-bx has-feedback">
                                                             <label>Experience</label>
                                                             <div class="ls-inputicon-box">
-                                                                <input class="form-control" name="company_since" type="text" placeholder="05 Years" />
+                                                                <input class="form-control" name="company_since"
+                                                                    onChange={(e) => setExperience(e.target.value)}
+                                                                    value={experience} type="text" placeholder="05 Years" />
                                                                 <i class="fs-input-icon fa fa-user-edit"></i>
                                                             </div>
 
@@ -238,28 +282,25 @@ export default function UserProfile() {
                                                         <div class="form-group city-outer-bx has-feedback">
                                                             <label>Current Salary</label>
                                                             <div class="ls-inputicon-box">
-                                                                <input class="form-control" name="company_since" type="text" placeholder="65K" />
+                                                                <input class="form-control" name="company_since"
+                                                                    onChange={(e) => setCurrentSalary(e.target.value)}
+                                                                    value={currentSalary}
+                                                                    type="text" placeholder="65K" />
                                                                 <i class="fs-input-icon fa fa-dollar-sign"></i>
                                                             </div>
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-xl-4 col-lg-6 col-md-12">
-                                                        <div class="form-group city-outer-bx has-feedback">
-                                                            <label>Expected Salary</label>
-                                                            <div class="ls-inputicon-box">
-                                                                <input class="form-control" name="company_since" type="text" placeholder="75K" />
-                                                                <i class="fs-input-icon fa fa-dollar-sign"></i>
-                                                            </div>
 
-                                                        </div>
-                                                    </div>
 
                                                     <div class="col-xl-4 col-lg-12 col-md-12">
                                                         <div class="form-group city-outer-bx has-feedback">
                                                             <label>Age</label>
                                                             <div class="ls-inputicon-box">
-                                                                <input class="form-control" name="company_since" type="text" placeholder="35 Years" />
+                                                                <input class="form-control" name="company_since"
+                                                                    onChange={(e) => setAge(e.target.value)}
+                                                                    value={age}
+                                                                    type="text" placeholder="35 Years" />
                                                                 <i class="fs-input-icon fa fa-child"></i>
                                                             </div>
 
@@ -271,7 +312,10 @@ export default function UserProfile() {
                                                         <div class="form-group city-outer-bx has-feedback">
                                                             <label>Country</label>
                                                             <div class="ls-inputicon-box">
-                                                                <input class="form-control" name="company_since" type="text" placeholder="USA" />
+                                                                <input class="form-control" name="company_since"
+                                                                    onChange={(e) => setCountry(e.target.value)}
+                                                                    value={country}
+                                                                    type="text" placeholder="USA" />
                                                                 <i class="fs-input-icon fa fa-globe-americas"></i>
                                                             </div>
 
@@ -282,45 +326,25 @@ export default function UserProfile() {
                                                         <div class="form-group city-outer-bx has-feedback">
                                                             <label>City</label>
                                                             <div class="ls-inputicon-box">
-                                                                <input class="form-control" name="company_since" type="text" placeholder="Texas" />
+                                                                <input class="form-control" name="company_since"
+                                                                    onChange={(e) => setCity(e.target.value)}
+                                                                    value={city}
+                                                                    type="text" placeholder="Texas" />
                                                                 <i class="fs-input-icon fa fa-globe-americas"></i>
                                                             </div>
 
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-xl-4 col-lg-12 col-md-12">
-                                                        <div class="form-group city-outer-bx has-feedback">
-                                                            <label>Postcode</label>
-                                                            <div class="ls-inputicon-box">
-                                                                <input class="form-control" name="company_since" type="text" placeholder="75462" />
-                                                                <i class="fs-input-icon fas fa-map-pin"></i>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-xl-12 col-lg-12 col-md-12">
-                                                        <div class="form-group city-outer-bx has-feedback">
-                                                            <label>Full Address</label>
-                                                            <div class="ls-inputicon-box">
-                                                                <input class="form-control" name="company_since" type="text" placeholder="1363-1385 Sunset Blvd Angeles, CA 90026 ,USA" />
-                                                                <i class="fs-input-icon fas fa-map-marker-alt"></i>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-
-
-
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label>Description</label>
-                                                            <textarea class="form-control" rows="3"></textarea>
+                                                            <textarea class="form-control" rows="3"
+                                                                onChange={(e) => setDescription(e.target.value)}
+                                                                value={description}
+                                                            ></textarea>
                                                         </div>
                                                     </div>
-
-
                                                     <div class="col-lg-12 col-md-12">
                                                         <div class="text-left">
                                                             <button type="submit" class="site-button">Save Changes</button>
