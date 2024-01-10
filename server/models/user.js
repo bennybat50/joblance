@@ -58,36 +58,7 @@ const userSchema = new mongoose.Schema({
     description:{
         type:String,
     },
-    facebook:{
-        type:String
-    },
-    twitter:{
-        type:String
-    },
-    linkedin:{
-        type:String
-    },
-    whatsapp:{
-        type:String
-    },
-    instagram:{
-        type:String
-    },
-    pinterest:{
-        type:String
-    },
-    instagram:{
-        type:String
-    },
-    pinterest:{
-        type:String
-    },
-    tumblr:{
-        type:String
-    },
-    youtube:{
-        type:String
-    },
+     
     password:{
         type:String,
         required: true 

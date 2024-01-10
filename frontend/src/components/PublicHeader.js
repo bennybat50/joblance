@@ -25,6 +25,7 @@ import { useParams } from "react-router-dom";
 
 export default function PublicHeader() {
     const token=localStorage.getItem("token");
+    const userDetails=JSON.parse(localStorage.getItem("user-details"));
     const settings = {
         dots: false,
         infinite: true,
@@ -135,11 +136,12 @@ export default function PublicHeader() {
                                             </Link>}
                                             
                                         </div>
-                                        <div className=" link-tag twm-nav-btn-right">
+                                        {userDetails!=null && userDetails.role==="company"? <div className=" link-tag twm-nav-btn-right">
                                             <Link to="/dash-post-job" className=" link-tag twm-nav-post-a-job">
                                                 <i className=" link-tag feather-briefcase"></i> Post a job
                                             </Link>
-                                        </div>
+                                        </div>:<></>}
+                                        
                                     </div>
                                 </div>
                             </div>

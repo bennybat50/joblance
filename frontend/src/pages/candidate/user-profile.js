@@ -1,7 +1,46 @@
 import { Link } from "react-router-dom"
 import PublicHeader from "../../components/PublicHeader"
 import UserNav from "../../components/UserNav"
+import { useEffect, useState } from "react";
+import { BASEURL } from "../../common/config";
+import axios from "axios";
 export default function UserProfile() {
+
+    const userDetails=JSON.parse(localStorage.getItem("user-details"));
+    const token=localStorage.getItem("token");
+   
+
+    const [email, setEmail] = useState(userDetails.email);
+    const [phone, setPhone] = useState(userDetails.phone);
+    const [jobTitle, setJobTitle] = useState("");
+    const [fullName, setFullName] = useState(userDetails.fullName);
+    const [jobType, setJobType] = useState("");
+    const [qualification, setQualification] = useState("");
+    const [language, setLanguage] = useState("");
+    const [jobCategory_id, setJobCategory_id] = useState("");
+    const [experience, setExperience] = useState("");
+    const [currentSalary, setCurrentSalary] = useState("");
+    const [age, setAge] = useState("");
+    const [description, setDescription] = useState("");
+    const [user_id, setUser_id] = useState(userDetails._id);
+
+    useEffect(() => {
+        
+        const getUser = async () => {
+          let api_url = BASEURL + "/user/"+userDetails._id;
+          const headers = { Authorization: `Bearer ${token}` };
+          try {
+            const res = await axios.get(api_url,{headers});
+            console.log(res.data);
+           
+          } catch (err) {
+            console.log(err);
+          }
+        };
+        getUser();
+      }, []);
+    
+
     return (
         <div>
             {/* <!-- HEADER START --> */}
@@ -42,7 +81,9 @@ export default function UserProfile() {
                                                         <div class="form-group">
                                                             <label>Your Name</label>
                                                             <div class="ls-inputicon-box"> 
-                                                                <input class="form-control" name="company_name" type="text" placeholder="Devid Smith"/>
+                                                                <input class="form-control" name="company_name" type="text" 
+                                                                onChange={(e) => setFullName(e.target.value)}
+                                                                value={fullName} placeholder="Devid Smith"/>
                                                                 <i class="fs-input-icon fa fa-user "></i>
                                                             </div>
                                                         </div>
@@ -52,7 +93,10 @@ export default function UserProfile() {
                                                         <div class="form-group">
                                                             <label>Phone</label>
                                                             <div class="ls-inputicon-box"> 
-                                                                <input class="form-control" name="company_phone" type="text" placeholder="(251) 1234-456-7890"/>
+                                                                <input class="form-control" name="company_phone" 
+                                                                 onChange={(e) => setPhone(e.target.value)}
+                                                                 value={phone}
+                                                                type="text" placeholder="(251) 1234-456-7890"/>
                                                                 <i class="fs-input-icon fa fa-phone-alt"></i>
                                                             </div>
                                                         </div>
@@ -62,7 +106,10 @@ export default function UserProfile() {
                                                         <div class="form-group">
                                                             <label>Email Address</label>
                                                             <div class="ls-inputicon-box"> 
-                                                                <input class="form-control" name="company_Email" type="email" placeholder="Devid@example.com"/>
+                                                                <input class="form-control" name="company_Email"
+                                                                 onChange={(e) => setEmail(e.target.value)}
+                                                                 value={email}
+                                                                 type="email" placeholder="Devid@example.com"/>
                                                                 <i class="fs-input-icon fas fa-at"></i>
                                                             </div>
                                                         </div>
@@ -203,7 +250,7 @@ export default function UserProfile() {
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label>Description</label>
-                                                            <textarea class="form-control" rows="3">Greetings! when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.</textarea>
+                                                            <textarea class="form-control" rows="3"></textarea>
                                                         </div>
                                                     </div>
                                                     
@@ -220,106 +267,7 @@ export default function UserProfile() {
                                         </div>
                                     </div>
                 
-                                    {/* <!--Social Network--> */}
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading wt-panel-heading p-a20">
-                                            <h4 class="panel-tittle m-a0">Social Network</h4>
-                                        </div>
-                                        <div class="panel-body wt-panel-body p-a20 m-b30 ">
-                                            
-                                            <div class="row">
-                                                    
-                                                    <div class="col-xl-4 col-lg-6 col-md-12">
-                                                        <div class="form-group">
-                                                            <label>Facebook</label>
-                                                            <div class="ls-inputicon-box"> 
-                                                                <input class="form-control wt-form-control" name="company_name" type="text" placeholder="https://www.facebook.com/"/>
-                                                                <i class="fs-input-icon fab fa-facebook-f"></i>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    
-                                                    <div class="col-xl-4 col-lg-6 col-md-12">    
-                                                        <div class="form-group">
-                                                            <label>Twitter</label>
-                                                            <div class="ls-inputicon-box"> 
-                                                                <input class="form-control wt-form-control" name="company_name" type="text" placeholder="https://twitter.com/"/>
-                                                                <i class="fs-input-icon fab fa-twitter"></i>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    
-                                                    <div class="col-xl-4 col-lg-6 col-md-12">    
-                                                        <div class="form-group">
-                                                            <label>linkedin</label>
-                                                            <div class="ls-inputicon-box"> 
-                                                                <input class="form-control wt-form-control" name="company_name" type="text" placeholder="https://in.linkedin.com/"/>
-                                                                <i class="fs-input-icon fab fa-linkedin-in"></i>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    
-                                                    <div class="col-xl-4 col-lg-6 col-md-12">     
-                                                        <div class="form-group">
-                                                            <label>Whatsapp</label>
-                                                            <div class="ls-inputicon-box"> 
-                                                                <input class="form-control wt-form-control" name="company_name" type="text" placeholder="https://www.whatsapp.com/"/>
-                                                                <i class="fs-input-icon fab fa-whatsapp"></i>
-                                                            </div>
-                                                        </div>
-                                                    </div> 
-                                                    
-                                                    <div class="col-xl-4 col-lg-6 col-md-12">                               
-                                                        <div class="form-group">
-                                                            <label>Instagram</label>
-                                                            <div class="ls-inputicon-box"> 
-                                                                <input class="form-control wt-form-control" name="company_name" type="text" placeholder="https://www.instagram.com/"/>
-                                                                <i class="fs-input-icon fab fa-instagram"></i>
-                                                            </div>
-                                                        </div>
-                                                    </div>    
-                                                        
-                                                    <div class="col-xl-4 col-lg-6 col-md-12">    
-                                                        <div class="form-group">
-                                                            <label>Pinterest</label>
-                                                            <div class="ls-inputicon-box"> 
-                                                                <input class="form-control wt-form-control" name="company_name" type="text" placeholder="https://in.pinterest.com/"/>
-                                                                <i class="fs-input-icon fab fa-pinterest-p"></i>
-                                                            </div>
-                                                        </div>                 
-                                                    </div>
-                                                    
-                                                    <div class="col-xl-4 col-lg-6 col-md-12">    
-                                                        <div class="form-group">
-                                                            <label>Tumblr</label>
-                                                            <div class="ls-inputicon-box"> 
-                                                                <input class="form-control wt-form-control" name="company_name" type="text" placeholder="https://www.tumblr.com/"/>
-                                                                <i class="fs-input-icon fab fa-tumblr"></i>
-                                                            </div>
-                                                        </div>                                                                                          
-                                                    </div>
-                                                    
-                                                    <div class="col-xl-4 col-lg-6 col-md-12">    
-                                                        <div class="form-group">
-                                                            <label>Youtube</label>
-                                                            <div class="ls-inputicon-box"> 
-                                                                <input class="form-control wt-form-control" name="company_name" type="text" placeholder="https://www.youtube.com/"/>
-                                                                <i class="fs-input-icon fab fa-youtube"></i>
-                                                            </div>
-                                                        </div>                  
-                                                    </div> 
-                                                                                                                
-                                                <div class="col-lg-12 col-md-12">                                   
-                                                        <div class="text-left">
-                                                            <button type="submit" class="site-button">Save Changes</button>
-                                                        </div>
-                                                    </div> 
-                                                                                        
-                                                
-                                            </div>
-                                                    
-                                        </div>
-                                    </div>
+                                    
                                 </form>
                             </div>
                         </div>
