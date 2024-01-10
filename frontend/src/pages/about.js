@@ -1,5 +1,4 @@
 import banner_1 from "../assets/images/images/banner/1.jpg"
-import f_bg from "../assets/images/images/f-bg.jpg"
 import icon1 from "../assets/images/images/work-process/icon1.png"
 import icon4 from "../assets/images/images/work-process/icon4.png"
 import icon3 from "../assets/images/images/work-process/icon3.png"
@@ -447,7 +446,7 @@ export default function About() {
                 {/* <!-- CONTENT END -->
 
         <!-- FOOTER START --> */}
-                <footer className=" link-tag footer-dark" style={{ backgroundImage: `url(${f_bg})` }}>
+                <footer className=" link-tag footer-dark" >
                     <div className=" link-tag container">
 
                         {/* <!-- NEWS LETTER SECTION START --> */}
