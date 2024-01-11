@@ -4,7 +4,7 @@ const userSchema = new mongoose.Schema({
         type:String,
         default:""
     },
-    userName:{
+    fullName:{
         type:String,
         required: true 
     },
@@ -50,24 +50,20 @@ const userSchema = new mongoose.Schema({
     },
     experience:{
         type: String,
-        enum: ["Beginner", "One year", "two years", "three years", "four years", "five years"],
         default:""
     },
 
     currentSalary:{
         type: String,
-        enum: ["10 - 20k", "20 - 30k", "30 - 40k", "40 - 50k", ],
         default:""
     },
 
     expectedSalary:{
         type: String,
-        enum: ["10 - 20k", "20 - 30k", "30 - 40k", "40 - 50k", ],
         default:""
     },
     age:{
         type: String,
-        enum: ["20 year", "25+ years", "30+ years", "40+ years"],
         default:""
     },
     description:{
