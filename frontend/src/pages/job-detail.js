@@ -195,7 +195,7 @@ export default function JobDetail() {
 
                                             <h4 className="twm-s-title">Job Description:</h4>
 
-                                            <p>{jobDetail.description}
+                                            <p>{jobDetail.jobDescription}
                                             </p>
 
 
@@ -203,24 +203,9 @@ export default function JobDetail() {
                                             <ul className="description-list-2">
                                                 <li>
                                                     <i className="feather-check"></i>
-                                                    Must be able to communicate with others to convey information effectively.
+                                                    {jobDetail.requirement}
                                                 </li>
-                                                <li>
-                                                    <i className="feather-check"></i>
-                                                    Personally passionate and up to date with current trends and technologies, committed to quality and comfortable working with adult media.
-                                                </li>
-                                                <li>
-                                                    <i className="feather-check"></i>
-                                                    Rachelor or Master degree level educational background.
-                                                </li>
-                                                <li>
-                                                    <i className="feather-check"></i>
-                                                    4 years relevant PHP dev experience.
-                                                </li>
-                                                <li>
-                                                    <i className="feather-check"></i>
-                                                    Troubleshooting, testing and maintaining the core product software and databases.
-                                                </li>
+                                                
 
                                             </ul>
 
@@ -228,29 +213,9 @@ export default function JobDetail() {
                                             <ul className="description-list-2">
                                                 <li>
                                                     <i className="feather-check"></i>
-                                                    Establish and promote design guidelines, best practices and standards.
+                                                    {jobDetail.responsabilities}
                                                 </li>
-                                                <li>
-                                                    <i className="feather-check"></i>
-                                                    Accurately estimate design tickets during planning sessions.
-                                                </li>
-                                                <li>
-                                                    <i className="feather-check"></i>
-                                                    Partnering with product and engineering to translate business and user goals into elegant and practical designs. that can deliver on key business and user metrics.
-                                                </li>
-                                                <li>
-                                                    <i className="feather-check"></i>
-                                                    Create wireframes, storyboards, user flows, process flows and site maps to communicate interaction and design.
-                                                </li>
-                                                <li>
-                                                    <i className="feather-check"></i>
-                                                    Present and defend designs and key deliverables to peers and executive level stakeholders.
-                                                </li>
-                                                <li>
-                                                    <i className="feather-check"></i>
-                                                    Execute all visual design stages from concept to final hand-off to engineering.
-                                                </li>
-
+                                                 
                                             </ul>
 
 

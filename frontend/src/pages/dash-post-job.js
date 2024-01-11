@@ -397,7 +397,7 @@ export default function DashPostJob() {
                             </option>
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
-                            <option value="Other">Other</option>
+                            <option value="Both">Both</option>
                           </select>
                           <i className="fs-input-icon fa fa-venus-mars"></i>
                         </div>

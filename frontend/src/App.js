@@ -28,6 +28,7 @@ import ApplyJob from './pages/dash-apply-job';
 import UserDashboard from './pages/candidate/user-dashboard';
 import UserProfile from './pages/candidate/user-profile';
 import UserResume from './pages/candidate/user-resume';
+import UserApply from './pages/candidate/user-apply';
 
 function App() {
   return (
@@ -62,6 +63,7 @@ function App() {
           <Route path='/my-dashboard' element={<UserDashboard/>}/> 
           <Route path='/my-profile' element={<UserProfile/>}/> 
           <Route path='/my-resume' element={<UserResume/>}/> 
+          <Route path='/my-application' element={<UserApply/>}/> 
         </Routes>
       </BrowserRouter>
     </div>
