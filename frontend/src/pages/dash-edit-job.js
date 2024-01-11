@@ -23,10 +23,10 @@ export default function EditJob() {
   const [country, setCountry] = useState();
   const [city, setCity] = useState();
 //   const [location, setLocation] = useState();
-
-  const [Latitude, setLatitude] = useState();
-  const [longitude, setLongitude] = useState();
+ 
   const [description, setDescription] = useState();
+  const [requirement, setRequirement] = useState();
+  const [responsabilities, setResponsabilities] = useState();
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
   const [err, setErr] = useState(false);
@@ -37,7 +37,7 @@ export default function EditJob() {
 
 // Get Company 
   useEffect(() => {
-    fetch("http://localhost:7300/company", {
+    fetch(`${BASEURL}/company`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -59,7 +59,7 @@ export default function EditJob() {
 
 
   useEffect(() => {
-        fetch(`http://localhost:7300/job/${jobId}`, {
+        fetch(`${BASEURL}/job/${jobId}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -76,8 +76,7 @@ export default function EditJob() {
             setJobTitle(data.data.jobTitle)
             // setJobCategory(data.data.name)
             setJobType(data.data.jobType)
-            setLongitude(data.data.longitude)
-            setLatitude(data.data.latitude)
+             
             setSalary(data.data.offeredSalary)
             // setSelectedCompanyId(data.dats.company_id._id)
             setStartDate(data.data.startDate)
@@ -88,6 +87,11 @@ export default function EditJob() {
             setQualification(data.data.qualification)
             setExperience(data.data.experience)
             setGender(data.data.gender)
+
+            setRequirement(data.data.requirement)
+            setResponsabilities(data.data.responsabilities)
+            
+
             
           })
           .catch((error) => {
@@ -98,7 +102,7 @@ export default function EditJob() {
 
   // Job category
   useEffect(() => {
-    fetch("http://localhost:7300/job-categories", {
+    fetch(`${BASEURL}/job-categories`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -141,8 +145,7 @@ export default function EditJob() {
       country === undefined ||
       city === undefined ||
     //   location === undefined ||
-      Latitude === undefined ||
-      longitude === undefined ||
+      
       description === undefined ||
       startDate === undefined ||
       endDate === undefined
@@ -161,8 +164,8 @@ export default function EditJob() {
       gender: gender,
       country: country,
       city: city,
-      latitude: Latitude,
-      longitude: longitude,
+      requirement:requirement,
+      responsabilities:responsabilities,
       startDate: startDate,
       endDate: endDate,
       jobCategory_id: JobCategoryID,
@@ -177,7 +180,9 @@ export default function EditJob() {
       body: JSON.stringify(jobData),
     })
       .then((response) => response.json())
-      .then((data) => console.log(data))
+      .then((data) => {
+        alert("Job Updated")
+        console.log(data)})
       .catch((error) => console.error("Fetch error:", error.message));
   };
 
@@ -549,102 +554,6 @@ export default function EditJob() {
                       </div>
                     </div>
 
-                    {/* <!--Location-->  */}
-                    {/* <div className="col-xl-4 col-lg-6 col-md-12">
-                      <div className="form-group">
-                        <label>Location</label>
-                        <div className="ls-inputicon-box">
-                          <input
-                            className="form-control"
-                            name="company_Email"
-                            type="text"
-                            placeholder="Type Address"
-                            onChange={(e) => setLocation(e.target.value)}
-                            value={location}
-                          />
-                          <i className="fs-input-icon fa fa-map-marker-alt"></i>
-                        </div>
-                        <div>
-                          {err === true && location === undefined ? (
-                            <span>Enter location </span>
-                          ) : (
-                            location === null
-                          )}
-                        </div>
-                      </div>
-                    </div> */}
-
-                    {/* <!--Latitude-->  */}
-                    <div className="col-xl-4 col-lg-6 col-md-12">
-                      <div className="form-group">
-                        <label>Latitude</label>
-                        <div className="ls-inputicon-box">
-                          <input
-                            className="form-control"
-                            name="company_Email"
-                            type="text"
-                            placeholder="Los Angeles"
-                            onChange={(e) => setLatitude(e.target.value)}
-                            value={Latitude}
-                          />
-                          <i className="fs-input-icon fa fa-map-pin"></i>
-                        </div>
-                        <div>
-                          {err === true && Latitude === undefined ? (
-                            <span>Enter latitude</span>
-                          ) : (
-                            Latitude === null
-                          )}
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* <!--longitude-->  */}
-                    <div className="col-xl-4 col-lg-6 col-md-12">
-                      <div className="form-group">
-                        <label>Longitude</label>
-                        <div className="ls-inputicon-box">
-                          <input
-                            className="form-control"
-                            name="company_Email"
-                            type="text"
-                            placeholder="Los Angeles"
-                            onChange={(e) => setLongitude(e.target.value)}
-                            value={longitude}
-                          />
-                          <i className="fs-input-icon fa fa-map-pin"></i>
-                        </div>
-                        <div>
-                          {err === true && longitude === undefined ? (
-                            <span>Enter longitude</span>
-                          ) : (
-                            longitude === null
-                          )}
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* <!--Description--> */}
-                    <div className="col-md-12">
-                      <div className="form-group">
-                        <label>Description</label>
-                        <textarea
-                          className="form-control"
-                          rows="3"
-                          placeholder="Greetings! We are Galaxy Software Development Company. We hope you enjoy our services and quality."
-                          onChange={(e) => setDescription(e.target.value)}
-                          value={description}
-                        ></textarea>
-                      </div>
-                      <div>
-                        {err === true && description === undefined ? (
-                          <span>Enter description</span>
-                        ) : (
-                          description === null
-                        )}
-                      </div>
-                    </div>
-
                     {/* <!--Start Date--> */}
                     <div className="col-xl-4 col-lg-6 col-md-12">
                       <div className="form-group">
@@ -670,23 +579,7 @@ export default function EditJob() {
                       </div>
                     </div>
 
-                    {/* <div className="col-md-6">
-                      <div className="form-group">
-                        <label>Start Date</label>
-                        <div className="ls-inputicon-box">
-                          <input
-                            className="form-control datepicker"
-                            // data-provide="datepicker"
-                            // name="company_since"
-                            type="text"
-                            placeholder="mm/dd/yyyy"
-                            onChange={(e)=>setStartDate(e.target.value)}
-                            value={startDate}
-                          />
-                          <i className="fs-input-icon far fa-calendar"></i>
-                        </div>
-                      </div>
-                    </div> */}
+                    
 
                     {/* <!--End Date--> */}
                     <div className="col-xl-4 col-lg-6 col-md-12">
@@ -713,10 +606,78 @@ export default function EditJob() {
                       </div>
                     </div>
 
+                    
+
+                    
+
+                    {/* <!--Description--> */}
+                    <div className="col-md-12">
+                      <div className="form-group">
+                        <label>Description</label>
+                        <textarea
+                          className="form-control"
+                          rows="3"
+                          placeholder="Greetings! We are Galaxy Software Development Company. We hope you enjoy our services and quality."
+                          onChange={(e) => setDescription(e.target.value)}
+                          value={description}
+                        ></textarea>
+                      </div>
+                      <div>
+                        {err === true && description === undefined ? (
+                          <span>Enter description</span>
+                        ) : (
+                          description === null
+                        )}
+                      </div>
+                    </div>
+
+                    {/* <!--Description--> */}
+                    <div className="col-md-12">
+                      <div className="form-group">
+                        <label>Requirements</label>
+                        <textarea
+                          className="form-control"
+                          rows="3"
+                          placeholder="Greetings! We are Galaxy Software Development Company. We hope you enjoy our services and quality."
+                          onChange={(e) => setRequirement(e.target.value)}
+                          value={requirement}
+                        ></textarea>
+                      </div>
+                      <div>
+                        {err === true && requirement === undefined ? (
+                          <span>Enter Requirements</span>
+                        ) : (
+                          requirement === null
+                        )}
+                      </div>
+                    </div>
+                      {/* <!--Description--> */}
+                      <div className="col-md-12">
+                      <div className="form-group">
+                        <label>Responsabilities</label>
+                        <textarea
+                          className="form-control"
+                          rows="3"
+                          placeholder="Greetings! We are Galaxy Software Development Company. We hope you enjoy our services and quality."
+                          onChange={(e) => setResponsabilities(e.target.value)}
+                          value={responsabilities}
+                        ></textarea>
+                      </div>
+                      <div>
+                        {err === true && responsabilities === undefined ? (
+                          <span>Enter Responsabilities</span>
+                        ) : (
+                          responsabilities === null
+                        )}
+                      </div>
+                    </div>
+
+                    
+
                     <div className="col-lg-12 col-md-12">
                       <div className="text-left">
                         <button type="submit" className="site-button m-r5">
-                          Publish Job
+                          Update Job
                         </button>
                         {/* <button
                           type="submit"

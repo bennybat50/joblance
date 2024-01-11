@@ -9,7 +9,16 @@ const applySchema = new mongoose.Schema({
         type:String,
         ref: "user",
         required: true 
-    }
+    },
+    message: {
+        type:String,
+         
+    },
+    cv_link: {
+        type:String,
+        
+    },
+
 },
 {timestamps: true}
 )

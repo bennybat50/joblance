@@ -33,20 +33,21 @@ const jobSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    latitude: {
-        type: String,
-        required: true
-    },
-    longitude: {
-        type: String,
-        required: true
-    },
+     
     startDate: {
         type: Date,
         required: true
     },
     endDate : {
         type: Date,
+        required: true
+    },
+    requirement : {
+        type: String,
+        required: true
+    },
+    responsabilities : {
+        type: String,
         required: true
     },
     jobCategory_id:{

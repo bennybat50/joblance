@@ -66,6 +66,32 @@ export default function JobDetail() {
         };
         getJob();
     }, []);
+
+    const applyJob = (e) => {
+        e.preventdefault()
+
+        const application = {
+            job_id: job_id,
+            user_id: userDetails._id,
+            message: applyMessage,
+            cv_link: cvLink
+        };
+        console.log(application);
+
+        fetch(`${BASEURL}/apply`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(application),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data)
+                alert("Job Application sent")
+            })
+            .catch((error) => console.error("Fetch error:", error.message));
+    };
+
+
     return (
 
         <div>
@@ -533,7 +559,7 @@ export default function JobDetail() {
                                 <div className="apl-job-inpopup">
                                     {/* <!--Basic Information--> */}
                                     <div className="panel panel-default">
-
+<form onSubmit={applyJob}>
                                         <div className="panel-body wt-panel-body p-a20 ">
 
                                             <div className="twm-tabs-style-1">
@@ -544,8 +570,8 @@ export default function JobDetail() {
                                                             <label>Your Name</label>
                                                             <div className="ls-inputicon-box">
                                                                 <input className="form-control" name="company_name"
-                                                                    // onChange={(e) => setapplyName(e.target.value)}
-                                                                    // value={applyName}
+                                                                    onChange={(e) => setapplyName(e.target.value)}
+                                                                    value={applyName}
                                                                     type="text" placeholder="Devid Smith" />
                                                                 <i className="fs-input-icon fa fa-user "></i>
                                                             </div>
@@ -556,8 +582,8 @@ export default function JobDetail() {
                                                             <label>Email Address</label>
                                                             <div className="ls-inputicon-box">
                                                                 <input className="form-control" name="company_Email"
-                                                                    // onChange={(e) => setapplyEmail(e.target.value)}
-                                                                    // value={applyEmail}
+                                                                    onChange={(e) => setapplyEmail(e.target.value)}
+                                                                    value={applyEmail}
                                                                     type="email" placeholder="Devid@example.com" />
                                                                 <i className="fs-input-icon fas fa-at"></i>
                                                             </div>
@@ -568,8 +594,8 @@ export default function JobDetail() {
                                                         <div className="form-group">
                                                             <label>Message</label>
                                                             <textarea className="form-control" rows="3"
-                                                                // onChange={(e) => setapplyMessage(e.target.value)}
-                                                                // value={applyMessage}
+                                                                onChange={(e) => setapplyMessage(e.target.value)}
+                                                                value={applyMessage}
                                                                 placeholder="Message sent to the employer"></textarea>
                                                         </div>
                                                     </div>
@@ -578,8 +604,8 @@ export default function JobDetail() {
                                                         <div className="form-group">
                                                             <label>Upload Link</label>
                                                             <input className="form-control" name="company_Email"
-                                                                // onChange={(e) => setcvLink(e.target.value)}
-                                                                // value={cvLink}
+                                                                onChange={(e) => setcvLink(e.target.value)}
+                                                                value={cvLink}
                                                                 type="text" placeholder="Devid@example.com" />                                                            <small>If you do not have a resume document, you may write your brief professional profile <a className="site-text-primary" href="javascript:void(0);">here</a></small>
                                                         </div>
                                                     </div>
@@ -588,7 +614,7 @@ export default function JobDetail() {
 
                                                     <div className="col-xl-12 col-lg-12 col-md-12">
                                                         <div className="text-left">
-                                                            <button type="submit" className="site-button">Send Application</button>
+                                                            <button type="submit" className="site-button" data-bs-dismiss="modal"> Send Application</button>
                                                         </div>
                                                     </div>
 
@@ -599,6 +625,7 @@ export default function JobDetail() {
                                             </div>
 
                                         </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>

@@ -32,6 +32,7 @@ export default function Signup_Pop() {
             email: email,
             password: password,
             fullName: fullName,
+            userName: fullName,
             phone: phone,
             role: role,
         };

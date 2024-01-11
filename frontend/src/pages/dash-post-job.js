@@ -20,9 +20,9 @@ export default function DashPostJob() {
   const [country, setCountry] = useState();
   const [city, setCity] = useState();
   const [location, setLocation] = useState();
-  const [Latitude, setLatitude] = useState();
-  const [longitude, setLongitude] = useState();
   const [description, setDescription] = useState();
+  const [requirement, setRequirement] = useState();
+  const [responsabilities, setResponsabilities] = useState();
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
   const [err, setErr] = useState(false);
@@ -93,8 +93,7 @@ export default function DashPostJob() {
       country === undefined ||
       city === undefined ||
       location === undefined ||
-      Latitude === undefined ||
-      longitude === undefined ||
+       
       description === undefined ||
       startDate === undefined ||
       endDate === undefined
@@ -113,8 +112,9 @@ export default function DashPostJob() {
       gender: gender,
       country: country,
       city: city,
-      latitude: Latitude,
-      longitude: longitude,
+      requirement:requirement,
+      responsabilities:responsabilities,
+       
       startDate: startDate,
       endDate: endDate,
       jobCategory_id: JobCategoryID,
@@ -235,7 +235,7 @@ export default function DashPostJob() {
                             value={jobType}
                           >
                             <option className="bs-title-option" value="">
-                              Select Category
+                              Select Job Type
                             </option>
                             <option value="FUll time">Full Time</option>
                             <option value="Freelance">Freelance</option>
@@ -501,80 +501,61 @@ export default function DashPostJob() {
                       </div>
                     </div>
 
-                    {/* <!--Location-->  */}
-                    <div className="col-xl-4 col-lg-6 col-md-12">
+                      {/* <!--Start Date--> */}
+                      <div className="col-xl-4 col-lg-6 col-md-12">
                       <div className="form-group">
-                        <label>Location</label>
+                        <label>start Date</label>
                         <div className="ls-inputicon-box">
                           <input
                             className="form-control"
                             name="company_Email"
-                            type="text"
-                            placeholder="Type Address"
-                            onChange={(e) => setLocation(e.target.value)}
-                            value={location}
+                            type="date"
+                            placeholder="Los Angeles"
+                            onChange={(e) => setStartDate(e.target.value)}
+                            value={startDate}
                           />
-                          <i className="fs-input-icon fa fa-map-marker-alt"></i>
+                          <i className="fs-input-icon fa fa-map-pin"></i>
                         </div>
                         <div>
-                          {err === true && location === undefined ? (
-                            <span>Enter location </span>
+                          {err === true && startDate === undefined ? (
+                            <span>Enter start date </span>
                           ) : (
-                            location === null
+                            startDate === null
                           )}
                         </div>
                       </div>
                     </div>
 
-                    {/* <!--Latitude-->  */}
+                    
+
+                    {/* <!--End Date--> */}
                     <div className="col-xl-4 col-lg-6 col-md-12">
                       <div className="form-group">
-                        <label>Latitude</label>
+                        <label>End Date</label>
                         <div className="ls-inputicon-box">
                           <input
                             className="form-control"
                             name="company_Email"
-                            type="text"
+                            type="date"
                             placeholder="Los Angeles"
-                            onChange={(e) => setLatitude(e.target.value)}
-                            value={Latitude}
+                            onChange={(e) => setEndDate(e.target.value)}
+                            value={endDate}
                           />
                           <i className="fs-input-icon fa fa-map-pin"></i>
                         </div>
                         <div>
-                          {err === true && Latitude === undefined ? (
-                            <span>Enter latitude</span>
+                          {err === true && endDate === undefined ? (
+                            <span>Enter end date </span>
                           ) : (
-                            Latitude === null
+                            endDate === null
                           )}
                         </div>
                       </div>
                     </div>
 
-                    {/* <!--longitude-->  */}
-                    <div className="col-xl-4 col-lg-6 col-md-12">
-                      <div className="form-group">
-                        <label>Longitude</label>
-                        <div className="ls-inputicon-box">
-                          <input
-                            className="form-control"
-                            name="company_Email"
-                            type="text"
-                            placeholder="Los Angeles"
-                            onChange={(e) => setLongitude(e.target.value)}
-                            value={longitude}
-                          />
-                          <i className="fs-input-icon fa fa-map-pin"></i>
-                        </div>
-                        <div>
-                          {err === true && longitude === undefined ? (
-                            <span>Enter longitude</span>
-                          ) : (
-                            longitude === null
-                          )}
-                        </div>
-                      </div>
-                    </div>
+                   
+
+                    
 
                     {/* <!--Email Address--> */}
                     {/* <div className="col-xl-4 col-lg-6 col-md-12">
@@ -660,74 +641,49 @@ export default function DashPostJob() {
                         )}
                       </div>
                     </div>
-
-                    {/* <!--Start Date--> */}
-                    <div className="col-xl-4 col-lg-6 col-md-12">
+                    {/* <!--Description--> */}
+                    <div className="col-md-12">
                       <div className="form-group">
-                        <label>start Date</label>
-                        <div className="ls-inputicon-box">
-                          <input
-                            className="form-control"
-                            name="company_Email"
-                            type="date"
-                            placeholder="Los Angeles"
-                            onChange={(e) => setStartDate(e.target.value)}
-                            value={startDate}
-                          />
-                          <i className="fs-input-icon fa fa-map-pin"></i>
-                        </div>
-                        <div>
-                          {err === true && startDate === undefined ? (
-                            <span>Enter start date </span>
-                          ) : (
-                            startDate === null
-                          )}
-                        </div>
+                        <label>Requirements</label>
+                        <textarea
+                          className="form-control"
+                          rows="3"
+                          placeholder="Greetings! We are Galaxy Software Development Company. We hope you enjoy our services and quality."
+                          onChange={(e) => setRequirement(e.target.value)}
+                          value={requirement}
+                        ></textarea>
+                      </div>
+                      <div>
+                        {err === true && requirement === undefined ? (
+                          <span>Enter Requirements</span>
+                        ) : (
+                          requirement === null
+                        )}
+                      </div>
+                    </div>
+                      {/* <!--Description--> */}
+                      <div className="col-md-12">
+                      <div className="form-group">
+                        <label>Responsabilities</label>
+                        <textarea
+                          className="form-control"
+                          rows="3"
+                          placeholder="Greetings! We are Galaxy Software Development Company. We hope you enjoy our services and quality."
+                          onChange={(e) => setResponsabilities(e.target.value)}
+                          value={responsabilities}
+                        ></textarea>
+                      </div>
+                      <div>
+                        {err === true && responsabilities === undefined ? (
+                          <span>Enter Responsabilities</span>
+                        ) : (
+                          responsabilities === null
+                        )}
                       </div>
                     </div>
 
-                    {/* <div className="col-md-6">
-                      <div className="form-group">
-                        <label>Start Date</label>
-                        <div className="ls-inputicon-box">
-                          <input
-                            className="form-control datepicker"
-                            // data-provide="datepicker"
-                            // name="company_since"
-                            type="text"
-                            placeholder="mm/dd/yyyy"
-                            onChange={(e)=>setStartDate(e.target.value)}
-                            value={startDate}
-                          />
-                          <i className="fs-input-icon far fa-calendar"></i>
-                        </div>
-                      </div>
-                    </div> */}
 
-                    {/* <!--End Date--> */}
-                    <div className="col-xl-4 col-lg-6 col-md-12">
-                      <div className="form-group">
-                        <label>End Date</label>
-                        <div className="ls-inputicon-box">
-                          <input
-                            className="form-control"
-                            name="company_Email"
-                            type="date"
-                            placeholder="Los Angeles"
-                            onChange={(e) => setEndDate(e.target.value)}
-                            value={endDate}
-                          />
-                          <i className="fs-input-icon fa fa-map-pin"></i>
-                        </div>
-                        <div>
-                          {err === true && endDate === undefined ? (
-                            <span>Enter end date </span>
-                          ) : (
-                            endDate === null
-                          )}
-                        </div>
-                      </div>
-                    </div>
+                  
 
                     <div className="col-lg-12 col-md-12">
                       <div className="text-left">
