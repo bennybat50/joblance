@@ -4,6 +4,10 @@ const userSchema = new mongoose.Schema({
         type:String,
         default:""
     },
+    userName:{
+        type:String,
+        required: true 
+    },
     fullName:{
         type:String,
         required: true 
@@ -50,21 +54,21 @@ const userSchema = new mongoose.Schema({
     },
     experience:{
         type: String,
-        default:""
+         default:""
     },
 
     currentSalary:{
         type: String,
-        default:""
+         default:""
     },
 
     expectedSalary:{
         type: String,
-        default:""
+         default:""
     },
     age:{
         type: String,
-        default:""
+         default:""
     },
     description:{
         type:String,

@@ -49,7 +49,7 @@ router.post("/create-user", async function(req, res) {
               let mailOptions = {
                 from: "team@dellegroup.com",
                 to: req.body.email,
-                subject: `Welcome to Joblance`,
+                subject: `Welcome to Joblance – Your Gateway to Exciting Career Opportunities!`,
                 html: htmlToSend
               };
               transporter.sendMail(mailOptions, function (err, res) {
