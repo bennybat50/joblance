@@ -58,6 +58,27 @@ router.get("/jobs", async function (req, res){
     }
 })
 
+//GET  ALL JOBS 
+router.get("/jobs/company/:id", async function (req, res){
+    try{
+        let job = await Job.find({company_id:req.params.id}).populate("jobCategory_id application_id")
+
+        if(!job){
+            return handleError(res, 404, "No job")
+        }
+
+        return res.status(200).send({
+            status: "Status",
+            message: "jobs",
+            length: job.length,
+            data: job
+        })
+    }catch(err){
+        console.log(err);
+        return handleError(res, 500, "Internal server error")
+    }
+})
+
 
 // SINGLE JOB
 router.get("/job/:id", async function (req, res){

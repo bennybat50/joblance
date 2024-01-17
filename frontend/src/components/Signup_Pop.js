@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import { BASEURL } from "../common/config";
 
 export default function Signup_Pop() {
     const [role, setRole] = useState("candidate");
@@ -40,13 +41,17 @@ export default function Signup_Pop() {
         console.log(signupData);
 
 
-        axios.post("http://localhost:7300/create-user", signupData).then((res) => {
+        axios.post(`${BASEURL}/create-user`, signupData).then((res) => {
           
             if (res.data.message == null) {
                 alert("User Registered in");
                 localStorage.setItem("user-details", JSON.stringify(res.data.newUser))
                 localStorage.setItem("token", res.data.token)
-                window.location.href = "/my-dashboard"
+                if(res.data.newUser.role==="company"){
+                    window.location.href = "/com-dashboard";
+                  }else{
+                    window.location.href = "/my-dashboard"
+                  }
             } else {
                 alert(res.data.message);
             }
@@ -67,7 +72,7 @@ export default function Signup_Pop() {
 
                             <div className="modal-header">
                                 <h2 className="modal-title" id="sign_up_popupLabel">Sign Up</h2>
-                                <p>Sign Up and get access to all the features of Jobzilla</p>
+                                <p>Sign Up and get access to all the features of Joblance</p>
                                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
 

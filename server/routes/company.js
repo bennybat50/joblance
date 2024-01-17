@@ -110,6 +110,24 @@ router.get("/company/:id", async function (req, res){
     }
 })
 
+// GET USER COMPANY 
+router.get("/company/user/:id", async function (req, res){
+    try{
+        let { id } = req.params  
+        let company = await Company.findOne({user_id:id}).populate("job_id message_id")
+        if(!company){
+            return res.status(404).send({message: "company does not exist"})
+        }
+        res.status(200).send({
+            message: "companies",
+            length: company.length,
+            data: company
+        })
+    }catch(e){
+        res.status(500).send(e.message)
+    }
+})
+
 
 // UPDATE COMPANY 
 router.put("/company/update/:id", async function (req, res){

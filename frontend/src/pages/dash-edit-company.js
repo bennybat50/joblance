@@ -2,6 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import logo from "../assets/images/images/logo-dark.png";
 import Dash_Header from "../components/Dashheader";
 import { useEffect, useState } from "react";
+import { BASEURL } from "../common/config";
 
 export default function EditCompany() {
   const [compName, setCompName] = useState();
@@ -17,7 +18,7 @@ export default function EditCompany() {
   const { compId } = useParams();
 
   useEffect(() => {
-    fetch(`http://localhost:7300/company/${compId}`, {
+    fetch(`${BASEURL}/company/${compId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -72,7 +73,7 @@ export default function EditCompany() {
       bannerImage: formBanner,
     };
 
-    fetch(`http://localhost:7300/company/update/${compId}`, {
+    fetch(`${BASEURL}/company/update/${compId}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(compDetails),

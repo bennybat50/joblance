@@ -8,7 +8,8 @@ const nodemailer = require("nodemailer");
 const handlebars = require("handlebars")
 const fs = require("fs")
 const path = require("path")
-const verifyToken = require("../middlewares/verifyToken")
+const verifyToken = require("../middlewares/verifyToken");
+const companyModel = require("../models/company");
 
 
 
@@ -32,6 +33,11 @@ router.post("/create-user", async function(req, res) {
                     expiresIn: "24h"
                 }
             );
+           if(req.body.role=="company"){
+            const newCompany=new companyModel({user_id:newUser._id, email:newUser.email, })
+            await newCompany.save();
+           }
+    
 
             //SEND MAIL
             let transporter = nodemailer.createTransport({

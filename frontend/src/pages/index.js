@@ -752,7 +752,7 @@ export default function Index() {
             <div className="wt-small-separator site-text-primary">
               <div>Testimonials</div>
             </div>
-            <h2 className="wt-title">Jobseeker reviews through Jobzilla.</h2>
+            <h2 className="wt-title">Jobseeker reviews through Joblance.</h2>
           </div>
           {/* TITLE END */}
           <div className="twm-testimonial-page8-section">

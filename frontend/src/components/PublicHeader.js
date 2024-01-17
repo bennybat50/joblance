@@ -1,5 +1,5 @@
 import banner_1 from "../assets/images/images/banner/1.jpg"
- import icon1 from "../assets/images/images/work-process/icon1.png"
+import icon1 from "../assets/images/images/work-process/icon1.png"
 import icon4 from "../assets/images/images/work-process/icon4.png"
 import icon3 from "../assets/images/images/work-process/icon3.png"
 import gir_large from "../assets/images/images/gir-large.png"
@@ -15,7 +15,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
 import { Link } from "react-router-dom"
 import React, { useEffect, useState } from "react";
- import axios from "axios";
+import axios from "axios";
 import { BASEURL } from "../common/config";
 import { useParams } from "react-router-dom";
 
@@ -23,8 +23,8 @@ import { useParams } from "react-router-dom";
 
 
 export default function PublicHeader() {
-    const token=localStorage.getItem("token");
-    const userDetails=JSON.parse(localStorage.getItem("user-details"));
+    const token = localStorage.getItem("token");
+    const userDetails = JSON.parse(localStorage.getItem("user-details"));
     const settings = {
         dots: false,
         infinite: true,
@@ -119,28 +119,29 @@ export default function PublicHeader() {
                                 <div className="extra-cell">
                                     <div className="header-nav-btn-section">
                                         <div className="twm-nav-btn-left">
-                                            {token==null? <a
+                                            {token == null ? <a
                                                 className="twm-nav-sign-up"
                                                 data-bs-toggle="modal"
                                                 href="#sign_up_popup"
                                                 role="button"
                                             >
                                                 <i className="feather-log-in"></i> Sign Up
-                                            </a>: <Link
+                                            </a> : <Link
                                                 className="twm-nav-sign-up"
-                                                 to="/my-dashboard"
+                                                
+                                                to= {userDetails.role === "company" ?"/com-dashboard":"/my-dashboard"} 
                                                 role="button"
                                             >
-                                                <i className="feather-user"></i> My Profile
+                                                <i className="feather-user"></i> {userDetails.role === "company" ?<> Company Profile</>:<>My Profile</>}  
                                             </Link>}
-                                            
+
                                         </div>
-                                        {userDetails!=null && userDetails.role==="company"? <div className=" link-tag twm-nav-btn-right">
+                                        {userDetails != null && userDetails.role === "company" ? <div className=" link-tag twm-nav-btn-right">
                                             <Link to="/dash-post-job" className=" link-tag twm-nav-post-a-job">
                                                 <i className=" link-tag feather-briefcase"></i> Post a job
                                             </Link>
-                                        </div>:<></>}
-                                        
+                                        </div> : <></>}
+
                                     </div>
                                 </div>
                             </div>

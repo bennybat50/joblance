@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
+import { BASEURL } from "../common/config";
 
 export default function LoginPop() {
   const [role, setRole] = useState("");
@@ -24,13 +25,19 @@ export default function LoginPop() {
     console.log(loginData);
 
 
-    axios.post("http://localhost:7300/user-login", loginData).then((res) => {
+    axios.post(`${BASEURL}/user-login`, loginData).then((res) => {
       console.log(res.data)
       if (res.data.message == null) {
         alert("User logged in");
         localStorage.setItem("user-details", JSON.stringify(res.data.data))
         localStorage.setItem("token", res.data.token)
-        window.location.href = "/my-dashboard"
+        
+        if(res.data.data.role==="company"){
+          window.location.href = "/com-dashboard";
+        }else{
+          window.location.href = "/my-dashboard"
+        }
+       
       } else {
         alert(res.data.message);
       }
@@ -62,7 +69,7 @@ export default function LoginPop() {
               <h2 className="modal-title" id="sign_up_popupLabel2">
                 Login
               </h2>
-              <p>Login and get access to all the features of Jobzilla</p>
+              <p>Login and get access to all the features of Joblance</p>
               <button
                 type="button"
                 className="btn-close"
