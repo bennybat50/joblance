@@ -78,7 +78,7 @@ function App() {
           <Route path='/com-application' element={<CompanyApply/>}/> 
           <Route path='/com-jobs' element={<CompanyManageJob/>}/> 
           <Route path='/com-post-jobs' element={<CompanyPostJob/>}/> 
-          <Route path='/com-edit-jobs/:id' element={<CompanyEditJob/>}/> 
+          <Route path='/com-edit-jobs/:jobId' element={<CompanyEditJob/>}/> 
          
         </Routes>
       </BrowserRouter>

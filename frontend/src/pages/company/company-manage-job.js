@@ -62,9 +62,7 @@ export default function CompanyManageJob() {
             });
     }
 
-    const editCompany = (id) => {
-        navigate(`/com-edit-jobs/${id}`)
-    }
+
 
 
 
@@ -115,12 +113,12 @@ export default function CompanyManageJob() {
                                                     <tr>
 
                                                         <td>
-                                                            <a href="#" className="twm-job-title text-dark">
+                                                            <Link to={`/com-edit-jobs/${job._id}`} className="twm-job-title text-dark">
                                                                 <h4>{job.jobTitle}</h4>
                                                                 <p className="twm-bookmark-address">
                                                                     <i className="feather-map-pin"></i>{job.city}, {job.country}
                                                                 </p>
-                                                            </a>
+                                                            </Link>
                                                         </td>
                                                         <td>{job.jobCategory_id.name}</td>
                                                         <td><div className="twm-jobs-category"><span className="twm-bg-green">{job.jobType}</span></div></td>
@@ -134,14 +132,14 @@ export default function CompanyManageJob() {
                                                             <div className="twm-table-controls">
                                                                 <ul className="twm-DT-controls-icon list-unstyled">
                                                                     <li>
-                                                                        <button title="View profile" data-bs-toggle="tooltip" data-bs-placement="top">
+                                                                        <Link title="View profile" to={`/com-edit-jobs/${job._id}`} data-bs-toggle="tooltip" data-bs-placement="top">
                                                                             <span className="fa fa-eye"></span>
-                                                                        </button>
+                                                                        </Link>
                                                                     </li>
                                                                     <li>
-                                                                        <button onClick={() => editCompany(job._id)} title="Edit" data-bs-toggle="tooltip" data-bs-placement="top">
+                                                                        <Link to={`/com-edit-jobs/${job._id}`} title="Edit" data-bs-toggle="tooltip" data-bs-placement="top">
                                                                             <span className="far fa-edit"></span>
-                                                                        </button>
+                                                                        </Link>
                                                                     </li>
                                                                     <li>
                                                                         <button onClick={() => deleteData(job._id)} title="Delete" data-bs-toggle="tooltip" data-bs-placement="top">
