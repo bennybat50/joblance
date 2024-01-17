@@ -4,8 +4,78 @@ import Signup_Pop from "../components/Signup_Pop"
 import f_bg from "../assets/images/images/f-bg.jpg"
 import banner_1 from "../assets/images/images/banner/1.jpg"
 import candidateBG from "../assets/images/images/candidates/candidate-bg2.jpg";
+import { useEffect, useState } from "react"
+import { BASEURL } from "../common/config"
+import axios from "axios"
+import { useParams } from "react-router-dom"
 
 export default function ViewCandidate() {
+
+    const [userData, setUserData] = useState({});
+    const [skills, setSkills] = useState([]);
+    const [employments, setemployments] = useState([]);
+    const [educationList, seteducationList] = useState([]);
+    let user_id = useParams().id;
+    useEffect(() => {
+        const getUser = async () => {
+            let api_url = BASEURL + "/user/" + user_id;
+            try {
+
+                const res = await axios.get(api_url,);
+                console.log(res.data);
+                setUserData(res.data.data)
+
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        getUser();
+        getSkills();
+        getWork();
+        getEducation()
+    }, []);
+
+    const getSkills = async () => {
+        let api_url = `${BASEURL}/skill/user/${user_id}`;
+        try {
+
+            const res = await axios.get(api_url);
+            console.log(res.data.data);
+            setSkills(res.data.data)
+
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    const getWork = async () => {
+        console.log(`${BASEURL}/work/user/${user_id}`);
+        let api_url = `${BASEURL}/work/user/${user_id}`;
+         try {
+
+            const res = await axios.get(api_url);
+            console.log(res.data.data);
+            setemployments(res.data.data)
+
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    const getEducation = async () => {
+        console.log(`${BASEURL}/education/user/${user_id}`);
+        let api_url = `${BASEURL}/education/user/${user_id}`;
+         try {
+
+            const res = await axios.get(api_url);
+            console.log(res.data.data);
+            seteducationList(res.data.data)
+
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
     return (<>
         <div >
 
@@ -14,7 +84,7 @@ export default function ViewCandidate() {
             {/* CONTENT START */}
             <div className="page-content">
 
-                
+
 
 
                 {/* <!-- Employer List START --> */}
@@ -34,14 +104,14 @@ export default function ViewCandidate() {
                                             </div>
                                             <div class="twm-mid-content">
 
-                                                <h4 class="twm-job-title">Wanda Montgomery </h4>
+                                                <h4 class="twm-job-title">{userData.fullName}</h4>
 
-                                                <p>Senior UI / UX Designer and Developer at Google INC</p>
-                                                <p class="twm-candidate-address"><i class="feather-map-pin"></i>United States</p>
+                                                <p>{userData.experience}</p>
+                                                <p class="twm-candidate-address"><i class="feather-map-pin"></i>{userData.city} {userData.country}</p>
 
                                             </div>
                                         </div>
-                                       
+
                                         <div class="twm-candi-self-bottom">
                                             <a href="contact.html" class="site-button">Hire Now</a>
                                             <a href="files/pdf-sample.pdf" class="site-button secondry">Download CV</a>
@@ -65,56 +135,43 @@ export default function ViewCandidate() {
                                                     <div class="twm-s-info-4">
                                                         <div class="row">
 
-                                                            <div class="col-md-6">
-                                                                <div class="twm-s-info-inner">
-                                                                    <i class="fas fa-money-bill-wave"></i>
-                                                                    <span class="twm-title">Offered Salary</span>
-                                                                    <div class="twm-s-info-discription">$20 / Day</div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <div class="twm-s-info-inner">
-                                                                    <i class="fas fa-clock"></i>
-                                                                    <span class="twm-title">Experience</span>
-                                                                    <div class="twm-s-info-discription">6 Year</div>
-                                                                </div>
-                                                            </div>
+
                                                             <div class="col-md-6">
                                                                 <div class="twm-s-info-inner">
                                                                     <i class="fas fa-venus-mars"></i>
                                                                     <span class="twm-title">Gender</span>
-                                                                    <div class="twm-s-info-discription">Male</div>
+                                                                    <div class="twm-s-info-discription">{userData.gender}</div>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <div class="twm-s-info-inner">
                                                                     <i class="fas fa-mobile-alt"></i>
                                                                     <span class="twm-title">Phone</span>
-                                                                    <div class="twm-s-info-discription">+291  560 56456</div>
+                                                                    <div class="twm-s-info-discription">{userData.phone}</div>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <div class="twm-s-info-inner">
                                                                     <i class="fas fa-at"></i>
                                                                     <span class="twm-title">Email</span>
-                                                                    <div class="twm-s-info-discription">thewebmaxdemo@gmail.com</div>
+                                                                    <div class="twm-s-info-discription">{userData.email}</div>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <div class="twm-s-info-inner">
                                                                     <i class="fas fa-book-reader"></i>
                                                                     <span class="twm-title">Qualification</span>
-                                                                    <div class="twm-s-info-discription">MCA</div>
+                                                                    <div class="twm-s-info-discription">{userData.qualification}</div>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-12">
+                                                            <div class="col-md-6">
                                                                 <div class="twm-s-info-inner">
-
-                                                                    <i class="fas fa-map-marker-alt"></i>
-                                                                    <span class="twm-title">Address</span>
-                                                                    <div class="twm-s-info-discription">1363-1385 Sunset Blvd Angeles, CA 90026 ,USA</div>
+                                                                    <i class="fas fa-book-reader"></i>
+                                                                    <span class="twm-title">Experience</span>
+                                                                    <div class="twm-s-info-discription">{userData.experience}</div>
                                                                 </div>
                                                             </div>
+
 
                                                         </div>
 
@@ -122,31 +179,18 @@ export default function ViewCandidate() {
                                                 </div>
 
                                                 <h4 class="twm-s-title m-t0">About Me</h4>
+                                                <p>{userData.description}</p>
 
-                                                <p>Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur? </p>
 
-                                                <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi.</p>
-
-                                                <div>
-
-                                                    <p>Professional Business Developer with more than four years of experience in the business development processes. Involved in product testing, management, and development of new business opportunities.</p>
-
-                                                </div>
 
                                                 <h4 class="twm-s-title">Skills</h4>
 
                                                 <div class="tw-sidebar-tags-wrap">
                                                     <div class="tagcloud">
-                                                        <a href="javascript:void(0)">Finance</a>
-                                                        <a href="javascript:void(0)">Sales</a>
-                                                        <a href="javascript:void(0)">Part-time</a>
-                                                        <a href="javascript:void(0)">Administration</a>
-                                                        <a href="javascript:void(0)">Retail</a>
-                                                        <a href="javascript:void(0)">Engineering</a>
-                                                        <a href="javascript:void(0)">Developer</a>
-                                                        <a href="javascript:void(0)">Work from home</a>
-                                                        <a href="javascript:void(0)">IT Consulting</a>
-                                                        <a href="javascript:void(0)">Manufacturing</a>
+                                                       {skills.map((data)=>{
+                                                        return (<> <a href="javascript:void(0)">{data.name}</a></>)
+                                                       })}
+
                                                     </div>
                                                 </div>
 
@@ -226,11 +270,11 @@ export default function ViewCandidate() {
 
 
 
-                                            
 
 
 
-                                            
+
+
 
 
 

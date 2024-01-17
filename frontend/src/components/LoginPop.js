@@ -25,19 +25,26 @@ export default function LoginPop() {
     console.log(loginData);
 
 
-    axios.post(`${BASEURL}/user-login`, loginData).then((res) => {
+    axios.post(`${BASEURL}/user-login`, loginData).then(async (res) => {
       console.log(res.data)
       if (res.data.message == null) {
         alert("User logged in");
-        localStorage.setItem("user-details", JSON.stringify(res.data.data))
+
         localStorage.setItem("token", res.data.token)
-        
-        if(res.data.data.role==="company"){
+
+        if (res.data.data.role === "company") {
+          localStorage.setItem("user-details", JSON.stringify(res.data.data))
+
+          let companyData = await axios.get(`${BASEURL}/company/user/${res.data.data._id}`);
+          
+
+          localStorage.setItem("com-details", JSON.stringify(companyData.data.data))
           window.location.href = "/com-dashboard";
-        }else{
+        } else {
+          localStorage.setItem("user-details", JSON.stringify(res.data.data))
           window.location.href = "/my-dashboard"
         }
-       
+
       } else {
         alert(res.data.message);
       }

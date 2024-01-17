@@ -6,6 +6,7 @@ export default function Logout_Pop() {
 
         localStorage.removeItem("token");
         localStorage.removeItem("user-details");
+        localStorage.removeItem("com-details");
         window.location.href="/"
     }
 

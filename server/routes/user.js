@@ -160,10 +160,10 @@ router.post("/user-login", async (req, res) => {
         return handleError(res, 400, "Email and password are required");
 
     try {
-        const user = await User.findOne({ password });
+        const user = await User.findOne({ email,password });
         // console.log(admin.password)
 
-        if (user && user.password === password) {
+        if (user && user.email === email && user.password === password) {
             const { password: adminPassword, ...noPasswordAdmin } = user.toObject();
             const token = jwt.sign(
                 { noPasswordAdmin },
@@ -184,7 +184,7 @@ router.post("/user-login", async (req, res) => {
                 message: "User does not exist",
             });
         } else {
-            res.status(400).send({
+            res.status(200).send({
                 status: "error",
                 message: "Incorrect Password",
                 data: {},
