@@ -51,7 +51,7 @@ export default function ViewCandidate() {
     const getWork = async () => {
         console.log(`${BASEURL}/work/user/${user_id}`);
         let api_url = `${BASEURL}/work/user/${user_id}`;
-         try {
+        try {
 
             const res = await axios.get(api_url);
             console.log(res.data.data);
@@ -65,7 +65,7 @@ export default function ViewCandidate() {
     const getEducation = async () => {
         console.log(`${BASEURL}/education/user/${user_id}`);
         let api_url = `${BASEURL}/education/user/${user_id}`;
-         try {
+        try {
 
             const res = await axios.get(api_url);
             console.log(res.data.data);
@@ -100,7 +100,7 @@ export default function ViewCandidate() {
                                     <div class="twm-candi-self-info-2">
                                         <div class="twm-candi-self-top">
                                             <div class="twm-media">
-                                                <img src="images/candidates/pic-l1.jpg" alt="#" />
+                                                <img src={userData.profileImage} alt="#" />
                                             </div>
                                             <div class="twm-mid-content">
 
@@ -187,9 +187,9 @@ export default function ViewCandidate() {
 
                                                 <div class="tw-sidebar-tags-wrap">
                                                     <div class="tagcloud">
-                                                       {skills.map((data)=>{
-                                                        return (<> <a href="javascript:void(0)">{data.name}</a></>)
-                                                       })}
+                                                        {skills.map((data) => {
+                                                            return (<> <a href="javascript:void(0)">{data.name}</a></>)
+                                                        })}
 
                                                     </div>
                                                 </div>
@@ -197,70 +197,37 @@ export default function ViewCandidate() {
                                                 <h4 class="twm-s-title">Work Experience</h4>
                                                 <div class="twm-timing-list-wrap">
 
-                                                    <div class="twm-timing-list">
-                                                        <div class="twm-time-list-date">2012 to 2016</div>
-                                                        <div class="twm-time-list-title">Bluetech, Inc</div>
-                                                        <div class="twm-time-list-position">Senior PHP Developer</div>
-                                                        <div class="twm-time-list-discription">
-                                                            <p>One of the main areas that I work on with my clients is shedding these non-supportive beliefs and
-                                                                replacing them with beliefs that will help them to accomplish their desires.</p>
-                                                        </div>
-                                                    </div>
+                                                    {employments.map((data) => {
+                                                        return (<>
+                                                            <div class="twm-timing-list">
+                                                                <div class="twm-time-list-date">{data.startDate} to {data.endDate} </div>
+                                                                <div class="twm-time-list-title">{data.company}</div>
+                                                                <div class="twm-time-list-position">{data.jobTitle}</div>
+                                                                <div class="twm-time-list-discription">
+                                                                    <p>{data.notes}</p>
+                                                                </div>
+                                                            </div>
+                                                        </>)
+                                                    })}
 
-                                                    <div class="twm-timing-list">
-                                                        <div class="twm-time-list-date">2016 to 2020</div>
-                                                        <div class="twm-time-list-title">Amazon, Inc</div>
-                                                        <div class="twm-time-list-position">IT & Development</div>
-                                                        <div class="twm-time-list-discription">
-                                                            <p>One of the main areas that I work on with my clients is shedding these non-supportive beliefs and
-                                                                replacing them with beliefs that will help them to accomplish their desires.</p>
-                                                        </div>
-                                                    </div>
 
-                                                    <div class="twm-timing-list">
-                                                        <div class="twm-time-list-date">2020 to 2023</div>
-                                                        <div class="twm-time-list-title">BGoogle, Inc</div>
-                                                        <div class="twm-time-list-position">Senior UI / UX Designer and Developer </div>
-                                                        <div class="twm-time-list-discription">
-                                                            <p>One of the main areas that I work on with my clients is shedding these non-supportive beliefs and
-                                                                replacing them with beliefs that will help them to accomplish their desires.</p>
-                                                        </div>
-                                                    </div>
 
                                                 </div>
 
                                                 <h4 class="twm-s-title">Education & Training</h4>
                                                 <div class="twm-timing-list-wrap">
 
-                                                    <div class="twm-timing-list">
-                                                        <div class="twm-time-list-date">2004 to 2006</div>
-                                                        <div class="twm-time-list-title">BCA - Bachelor of Computer Applications</div>
-                                                        <div class="twm-time-list-position">International University</div>
-                                                        <div class="twm-time-list-discription">
-                                                            <p>One of the main areas that I work on with my clients is shedding these non-supportive beliefs and
-                                                                replacing them with beliefs that will help them to accomplish their desires.</p>
-                                                        </div>
-                                                    </div>
+                                                    {educationList.map((data) => {
+                                                        return (<>
+                                                            <div class="twm-timing-list">
+                                                                <div class="twm-time-list-date">{data.startDate} to {data.endDate} </div>
+                                                                <div class="twm-time-list-title"> {data.education_level}  </div>
+                                                                <div class="twm-time-list-position"> {data.school}</div>
+                                                                 
+                                                            </div></>)
+                                                    })}
 
-                                                    <div class="twm-timing-list">
-                                                        <div class="twm-time-list-date">2006 to 2008</div>
-                                                        <div class="twm-time-list-title">MCA - Master of Computer Application</div>
-                                                        <div class="twm-time-list-position">Middle East Technical University</div>
-                                                        <div class="twm-time-list-discription">
-                                                            <p>One of the main areas that I work on with my clients is shedding these non-supportive beliefs and
-                                                                replacing them with beliefs that will help them to accomplish their desires.</p>
-                                                        </div>
-                                                    </div>
 
-                                                    <div class="twm-timing-list">
-                                                        <div class="twm-time-list-date">2008 to 2011</div>
-                                                        <div class="twm-time-list-title">Design Communication Visual</div>
-                                                        <div class="twm-time-list-position">Design at Massachusetts Institute of Technology & Marketing</div>
-                                                        <div class="twm-time-list-discription">
-                                                            <p>One of the main areas that I work on with my clients is shedding these non-supportive beliefs and
-                                                                replacing them with beliefs that will help them to accomplish their desires.</p>
-                                                        </div>
-                                                    </div>
 
                                                 </div>
 

@@ -15,19 +15,21 @@ export default function UserProfile() {
     const [userData, setUserData] = useState({});
     const [website, setWebsite] = useState("");
     const [fullName, setFullName] = useState("");
+    const [profileLink, setprofileLink] = useState("");
     const [city, setCity] = useState("");
     const [jobtype, setJobtype] = useState("");
     const [country, setCountry] = useState("");
     const [qualification, setQualification] = useState("");
     const [language, setLanguage] = useState("");
-    const [jobCategory_id, setJobCategory_id] = useState("");
     const [experience, setExperience] = useState("");
+    const [gender, setGender] = useState("");
     const [currentSalary, setCurrentSalary] = useState("");
     const [age, setAge] = useState("");
     const [description, setDescription] = useState("");
     const [user_id, setUser_id] = useState(userDetails._id);
     const [jobCategory, setJobCategory] = useState();
-    const [JobCategoryID, setJobCategoryId] = useState();
+    const [JobCategoryID, setJobCategoryId] = useState("");
+    const [err, setErr] = useState(false);
     const [refresh, setRefresh] = useState(0);
 
 
@@ -36,7 +38,7 @@ export default function UserProfile() {
             let api_url = BASEURL + "/user/" + userDetails._id;
             const headers = { Authorization: `Bearer ${token}` };
             try {
-                
+
                 const res = await axios.get(api_url, { headers });
                 console.log(res.data);
                 setUserData(res.data.data)
@@ -45,10 +47,12 @@ export default function UserProfile() {
                 setEmail(res.data.data.email)
                 setPhone(res.data.data.phone)
                 setQualification(res.data.data.qualification)
-                setJobCategory_id(res.data.data.jobCategory_id)
+                setJobCategoryId(res.data.data.jobCategory_id)
                 setExperience(res.data.data.experience)
                 setCurrentSalary(res.data.data.currentSalary)
                 setAge(res.data.data.age)
+                setprofileLink(res.data.data.profileImage)
+                setGender(res.data.data.gender)
                 setDescription(res.data.data.description)
                 setLanguage(res.data.data.language)
                 setWebsite(res.data.data.website)
@@ -86,11 +90,11 @@ export default function UserProfile() {
     }, []);
 
     const handleJobCategory = (event) => {
-        setJobCategoryId(event.target.options[event.target.selectedIndex].value);
+        setJobCategoryId(event.target.value);
     };
 
 
-    const updateProfile = async(event) => {
+    const updateProfile = async (event) => {
         event.preventDefault();
         let userData = {
             website: website,
@@ -102,13 +106,16 @@ export default function UserProfile() {
             experience: experience,
             currentSalary: currentSalary,
             age: age,
+            jobCategory_id: JobCategoryID,
             description: description,
             jobtype: jobtype,
+            gender: gender,
+            profileImage:profileLink
         }
         let api_url = BASEURL + "/user/update/" + userDetails._id;
         await axios.put(api_url, userData);
         alert("Update Profile updated")
-        setRefresh(refresh+1)
+        setRefresh(refresh + 1)
     }
 
 
@@ -147,8 +154,23 @@ export default function UserProfile() {
                                             <div class="panel-body wt-panel-body p-a20 m-b30 ">
 
                                                 <div class="row">
-
-                                                    <div class="col-xl-6 col-lg-6 col-md-12">
+                                                    <div class="col-xl-1 col-lg-1 col-md-12">
+                                                        <figure className="h-75 w-100 ">
+                                                            <img src={profileLink} alt=""  className="h-100 w-100"  style={{ objectFit:"cover", borderRadius:200 }}/>
+                                                        </figure>
+                                                    </div>
+                                                    <div class="col-xl-3 col-lg-3 col-md-12">
+                                                        <div class="form-group">
+                                                            <label>Profile Link</label>
+                                                            <div class="ls-inputicon-box">
+                                                                <input class="form-control" name="company_name" type="text"
+                                                                    onChange={(e) => setprofileLink(e.target.value)}
+                                                                    value={profileLink} placeholder="https://image.png" />
+                                                                <i class="fs-input-icon fa fa-user "></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-4 col-lg-4 col-md-12">
                                                         <div class="form-group">
                                                             <label>Your Name</label>
                                                             <div class="ls-inputicon-box">
@@ -160,7 +182,7 @@ export default function UserProfile() {
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-xl-6 col-lg-6 col-md-12">
+                                                    <div class="col-xl-4 col-lg-4 col-md-12">
                                                         <div class="form-group">
                                                             <label>Phone</label>
                                                             <div class="ls-inputicon-box">
@@ -173,7 +195,7 @@ export default function UserProfile() {
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-xl-6 col-lg-6 col-md-12">
+                                                    <div class="col-xl-4 col-lg-4 col-md-12">
                                                         <div class="form-group">
                                                             <label>Email Address</label>
                                                             <div class="ls-inputicon-box">
@@ -186,7 +208,7 @@ export default function UserProfile() {
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-xl-6 col-lg-6 col-md-12">
+                                                    <div class="col-xl-4 col-lg-4 col-md-12">
                                                         <div class="form-group">
                                                             <label>Website</label>
                                                             <div class="ls-inputicon-box">
@@ -195,6 +217,37 @@ export default function UserProfile() {
                                                                     value={website}
                                                                     name="company_website" type="text" placeholder="https://devsmith.net/" />
                                                                 <i class="fs-input-icon fa fa-globe-americas"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-xl-4 col-lg-4 col-md-12">
+                                                        <div className="form-group">
+                                                            <label>Gender</label>
+                                                            <div className="ls-inputicon-box">
+                                                                <select
+                                                                    className="wt-select-box selectpicker  form-select form-select-lg mb-3"
+                                                                    data-live-search="true"
+                                                                    title=""
+                                                                    id="gender"
+                                                                    data-bv-field="size"
+                                                                    onChange={(e) => setGender(e.target.value)}
+                                                                    value={gender}
+                                                                >
+                                                                    <option className="bs-title-option" value="">
+                                                                        Select Gender
+                                                                    </option>
+                                                                    <option value="Male">Male</option>
+                                                                    <option value="Female">Female</option>
+
+                                                                </select>
+                                                                <i className="fs-input-icon fa fa-map-marker-alt"></i>
+                                                            </div>
+                                                            <div>
+                                                                {err === true && gender === undefined ? (
+                                                                    <span>Enter city</span>
+                                                                ) : (
+                                                                    gender === null
+                                                                )}
                                                             </div>
                                                         </div>
                                                     </div>
