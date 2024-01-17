@@ -68,13 +68,15 @@ export default function JobDetail() {
     }, []);
 
     const applyJob = (e) => {
-        e.preventdefault()
-
+        e.preventDefault();
+        alert("Hele")
         const application = {
             job_id: job_id,
             user_id: userDetails._id,
+            company_id: comDetail._id,
             message: applyMessage,
-            cv_link: cvLink
+            cv_link: cvLink,
+            
         };
         console.log(application);
 
@@ -86,7 +88,7 @@ export default function JobDetail() {
             .then((response) => response.json())
             .then((data) => {
                 console.log(data)
-                alert("Job Application sent")
+                alert("Job Application sent.... Please wait for Approval or keep applying to other roles")
             })
             .catch((error) => console.error("Fetch error:", error.message));
     };
@@ -205,7 +207,7 @@ export default function JobDetail() {
                                                     <i className="feather-check"></i>
                                                     {jobDetail.requirement}
                                                 </li>
-                                                
+
 
                                             </ul>
 
@@ -215,7 +217,7 @@ export default function JobDetail() {
                                                     <i className="feather-check"></i>
                                                     {jobDetail.responsabilities}
                                                 </li>
-                                                 
+
                                             </ul>
 
 
@@ -524,72 +526,72 @@ export default function JobDetail() {
                                 <div className="apl-job-inpopup">
                                     {/* <!--Basic Information--> */}
                                     <div className="panel panel-default">
-<form onSubmit={applyJob}>
-                                        <div className="panel-body wt-panel-body p-a20 ">
+                                        <form onSubmit={applyJob}>
+                                            <div className="panel-body wt-panel-body p-a20 ">
 
-                                            <div className="twm-tabs-style-1">
+                                                <div className="twm-tabs-style-1">
 
-                                                <div className="row">
-                                                    <div className="col-xl-12 col-lg-12 col-md-12">
-                                                        <div className="form-group">
-                                                            <label>Your Name</label>
-                                                            <div className="ls-inputicon-box">
-                                                                <input className="form-control" name="company_name"
-                                                                    onChange={(e) => setapplyName(e.target.value)}
-                                                                    value={applyName}
-                                                                    type="text" placeholder="Devid Smith" />
-                                                                <i className="fs-input-icon fa fa-user "></i>
+                                                    <div className="row">
+                                                        <div className="col-xl-12 col-lg-12 col-md-12">
+                                                            <div className="form-group">
+                                                                <label>Your Name</label>
+                                                                <div className="ls-inputicon-box">
+                                                                    <input className="form-control" name="company_name"
+                                                                        onChange={(e) => setapplyName(e.target.value)}
+                                                                        value={applyName}
+                                                                        type="text" placeholder="Devid Smith" />
+                                                                    <i className="fs-input-icon fa fa-user "></i>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div className="col-xl-12 col-lg-12 col-md-12">
-                                                        <div className="form-group">
-                                                            <label>Email Address</label>
-                                                            <div className="ls-inputicon-box">
+                                                        <div className="col-xl-12 col-lg-12 col-md-12">
+                                                            <div className="form-group">
+                                                                <label>Email Address</label>
+                                                                <div className="ls-inputicon-box">
+                                                                    <input className="form-control" name="company_Email"
+                                                                        onChange={(e) => setapplyEmail(e.target.value)}
+                                                                        value={applyEmail}
+                                                                        type="email" placeholder="Devid@example.com" />
+                                                                    <i className="fs-input-icon fas fa-at"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="col-md-12">
+                                                            <div className="form-group">
+                                                                <label>Message</label>
+                                                                <textarea className="form-control" rows="3"
+                                                                    onChange={(e) => setapplyMessage(e.target.value)}
+                                                                    value={applyMessage}
+                                                                    placeholder="Message sent to the employer"></textarea>
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="col-lg-12 col-md-12">
+                                                            <div className="form-group">
+                                                                <label>Upload Link</label>
                                                                 <input className="form-control" name="company_Email"
-                                                                    onChange={(e) => setapplyEmail(e.target.value)}
-                                                                    value={applyEmail}
-                                                                    type="email" placeholder="Devid@example.com" />
-                                                                <i className="fs-input-icon fas fa-at"></i>
+                                                                    onChange={(e) => setcvLink(e.target.value)}
+                                                                    value={cvLink}
+                                                                    type="text" placeholder="Devid@example.com" />                                                            <small>If you do not have a resume document, you may write your brief professional profile <a className="site-text-primary" href="javascript:void(0);">here</a></small>
                                                             </div>
                                                         </div>
-                                                    </div>
 
-                                                    <div className="col-md-12">
-                                                        <div className="form-group">
-                                                            <label>Message</label>
-                                                            <textarea className="form-control" rows="3"
-                                                                onChange={(e) => setapplyMessage(e.target.value)}
-                                                                value={applyMessage}
-                                                                placeholder="Message sent to the employer"></textarea>
+
+
+                                                        <div className="col-xl-12 col-lg-12 col-md-12">
+                                                            <div className="text-left">
+                                                                <button type="submit" className="site-button" > Send Application</button>
+                                                            </div>
                                                         </div>
+
+
+
                                                     </div>
-
-                                                    <div className="col-lg-12 col-md-12">
-                                                        <div className="form-group">
-                                                            <label>Upload Link</label>
-                                                            <input className="form-control" name="company_Email"
-                                                                onChange={(e) => setcvLink(e.target.value)}
-                                                                value={cvLink}
-                                                                type="text" placeholder="Devid@example.com" />                                                            <small>If you do not have a resume document, you may write your brief professional profile <a className="site-text-primary" href="javascript:void(0);">here</a></small>
-                                                        </div>
-                                                    </div>
-
-
-
-                                                    <div className="col-xl-12 col-lg-12 col-md-12">
-                                                        <div className="text-left">
-                                                            <button type="submit" className="site-button" data-bs-dismiss="modal"> Send Application</button>
-                                                        </div>
-                                                    </div>
-
-
 
                                                 </div>
 
                                             </div>
-
-                                        </div>
                                         </form>
                                     </div>
                                 </div>

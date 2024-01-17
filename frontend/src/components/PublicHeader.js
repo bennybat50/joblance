@@ -137,7 +137,7 @@ export default function PublicHeader() {
 
                                         </div>
                                         {userDetails != null && userDetails.role === "company" ? <div className=" link-tag twm-nav-btn-right">
-                                            <Link to="/dash-post-job" className=" link-tag twm-nav-post-a-job">
+                                            <Link to="/com-post-jobs" className=" link-tag twm-nav-post-a-job">
                                                 <i className=" link-tag feather-briefcase"></i> Post a job
                                             </Link>
                                         </div> : <></>}

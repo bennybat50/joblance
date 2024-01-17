@@ -10,6 +10,11 @@ const applySchema = new mongoose.Schema({
         ref: "user",
         required: true 
     },
+    company_id: {
+        type:String,
+        ref: "company",
+        required: true 
+    },
     message: {
         type:String,
          
@@ -17,6 +22,10 @@ const applySchema = new mongoose.Schema({
     cv_link: {
         type:String,
         
+    },
+    approved: {
+        type:String,
+        default:"pending"
     },
 
 },

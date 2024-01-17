@@ -4,6 +4,7 @@ import Logout_Pop from "./Logout";
 export default function ComapnyNav() {
     const token=localStorage.getItem("token");
     const userDetails=JSON.parse(localStorage.getItem("user-details"));
+    const comDetails = JSON.parse(localStorage.getItem("com-details"));
 
     return <div>
         <Logout_Pop/>
@@ -20,7 +21,7 @@ export default function ComapnyNav() {
             </div>
             <div class="twm-mid-content text-center">
                 <Link to="candidate-detail.html" class="twm-job-title">
-                    <h4>{userDetails.fullName}</h4>
+                    <h4>{comDetails.companyName}</h4>
                 </Link>
                 <p>{userDetails.jobtype??""} </p>
                 <p><b>Employer</b></p>

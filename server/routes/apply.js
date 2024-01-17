@@ -44,6 +44,39 @@ router.post("/apply", async function (req, res){
 
 router.get("/applications", async function (req, res){
     try{
+        let application = await Apply.find().populate("user_id job_id company_id")
+        if(!application){
+            return handleError(res, 500, "No appliation")
+        }
+
+        return res.status(200).send({
+            status: "Success",
+            length: application.length,
+            data: application 
+        })
+    }catch(err){
+        return handleError(res, 500, "Internal server error")
+    }
+})
+router.get("/applications/company/:id", async function (req, res){
+    try{
+        let application = await Apply.find({company_id:req.params.id}).populate("user_id job_id")
+        if(!application){
+            return handleError(res, 500, "No appliation")
+        }
+
+        return res.status(200).send({
+            status: "Success",
+            length: application.length,
+            data: application 
+        })
+    }catch(err){
+        return handleError(res, 500, "Internal server error")
+    }
+})
+
+router.get("/applications", async function (req, res){
+    try{
         let application = await Apply.find().populate("user_id job_id")
         if(!application){
             return handleError(res, 500, "No appliation")

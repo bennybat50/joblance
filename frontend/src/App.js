@@ -36,6 +36,7 @@ import CompanyApply from './pages/company/company-apply';
 import CompanyPostJob from './pages/company/company-post-job';
 import CompanyEditJob from './pages/company/company-edit-job';
 import CompanyManageJob from './pages/company/company-manage-job';
+import ViewCandidate from './pages/view-candidate';
 
 function App() {
   return (
@@ -61,6 +62,7 @@ function App() {
           <Route path='/employer-detail/:id' element={<EmployerDetail/>}/>
           <Route path='/job-detail/:id' element={<JobDetail/>}/>
           <Route path='/job-detail' element={<JobDetail/>}/>
+          <Route path='/view-candidate/:id' element={<ViewCandidate/>}/>
           <Route path='/edit-company/:compId' element={<EditCompany/>}/>
           <Route path='/edit-job/:jobId' element={<EditJob/>}/>
           <Route path='/dash-create-user' element={<CreateUser/>}/>

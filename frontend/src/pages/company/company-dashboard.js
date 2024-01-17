@@ -2,15 +2,65 @@ import { Link } from "react-router-dom"
 import PublicHeader from "../../components/PublicHeader"
 import ComapnyNav from "../../components/CompanyNav"
 import { BASEURL } from "../../common/config";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 export default function CompanyDashboard() {
     const userDetails = JSON.parse(localStorage.getItem("user-details"));
     const token = localStorage.getItem("token");
+    const [comDetails, setcomDetails] = useState({})
+    const [jobs, setJobs] = useState([])
+    const [candidate, setCandidate] = useState([])
     useEffect(() => {
         loadCompany()
+        
     }, []);
 
-    const loadCompany=(e)=>{
+    const loadJobs = (company_id) => {
+        fetch(`${BASEURL}/jobs/company/${company_id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data.data);
+                setJobs(data.data)
+
+            })
+            .catch(error => {
+                console.error('Fetch error:', error.message);
+            });
+    }
+
+    const loadApplication=(company_id)=>{
+        fetch(`${BASEURL}/applications/company/${company_id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data.data);
+                setCandidate(data.data)
+
+            })
+            .catch(error => {
+                console.error('Fetch error:', error.message);
+            });
+    }
+
+    const loadCompany = (e) => {
         fetch(`${BASEURL}/company/user/${userDetails._id}`, {
             method: "GET",
             headers: {
@@ -26,7 +76,10 @@ export default function CompanyDashboard() {
             .then((data) => {
                 console.log(data.data);
                 localStorage.setItem("com-details", JSON.stringify(data.data))
-                 
+                setcomDetails(data.data)
+                loadJobs(data.data._id)
+                loadApplication(data.data._id)
+
             })
             .catch((error) => {
                 console.error("Fetch error:", error.message);
@@ -49,7 +102,7 @@ export default function CompanyDashboard() {
 
                             <div class="col-xl-3 col-lg-4 col-md-12 rightSidebar m-b30">
 
-                               <ComapnyNav/>
+                                <ComapnyNav />
 
                             </div>
 
@@ -57,8 +110,8 @@ export default function CompanyDashboard() {
                                 {/* <!--Filter Short By--> */}
                                 <div class="twm-right-section-panel site-bg-gray">
                                     <div class="wt-admin-right-page-header">
-                                        <h2>Randall Henderson</h2>
-                                        <p>IT Contractor</p>
+                                        <h2>{comDetails.companyName}</h2>
+                                        <p>{userDetails.fullName}</p>
                                     </div>
 
                                     <div class="twm-dash-b-blocks mb-5">
@@ -66,26 +119,30 @@ export default function CompanyDashboard() {
                                             <div class="col-xl-4 col-lg-4 col-md-12 mb-3">
                                                 <div class="panel panel-default">
                                                     <div class="panel-body wt-panel-body dashboard-card-2 block-gradient">
+                                                        <Link to="/com-jobs">
                                                         <div class="wt-card-wrap-2">
                                                             <div class="wt-card-icon-2"><i class="flaticon-job"></i></div>
-                                                            <div class="wt-card-right wt-total-active-listing counter ">25</div>
+                                                            <div class="wt-card-right wt-total-active-listing counter ">{jobs.length}</div>
                                                             <div class="wt-card-bottom-2 ">
                                                                 <h4 class="m-b0">Job Posted</h4>
                                                             </div>
                                                         </div>
+                                                        </Link>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-xl-4 col-lg-4 col-md-12 mb-3">
                                                 <div class="panel panel-default">
                                                     <div class="panel-body wt-panel-body dashboard-card-2 block-gradient-2">
-                                                        <div class="wt-card-wrap-2">
+                                                       <Link to="/com-application">
+                                                       <div class="wt-card-wrap-2">
                                                             <div class="wt-card-icon-2"><i class="flaticon-resume"></i></div>
-                                                            <div class="wt-card-right  wt-total-listing-view counter ">435</div>
+                                                            <div class="wt-card-right  wt-total-listing-view counter ">{candidate.length}</div>
                                                             <div class="wt-card-bottom-2">
                                                                 <h4 class="m-b0">Total Applications</h4>
                                                             </div>
                                                         </div>
+                                                       </Link>
                                                     </div>
                                                 </div>
                                             </div>
@@ -108,7 +165,7 @@ export default function CompanyDashboard() {
 
                                     <div class="twm-pro-view-chart-wrap">
                                         <div class="row">
-                                            
+
 
                                             <div class="col-xl-12 col-lg-12 col-md-12 mb-4">
                                                 <div class="panel panel-default">

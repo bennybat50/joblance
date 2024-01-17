@@ -497,9 +497,9 @@ export default function CompanyEditJob() {
                         <label>start Date</label>
                         <div className="ls-inputicon-box">
                           <input
-                            className="form-control"
+                            className="form-control date-picker"
                             name="company_Email"
-                            type="date"
+                            type="text"
                             placeholder="Los Angeles"
                             onChange={(e) => setStartDate(e.target.value)}
                             value={startDate}
@@ -524,9 +524,9 @@ export default function CompanyEditJob() {
                         <label>End Date</label>
                         <div className="ls-inputicon-box">
                           <input
-                            className="form-control"
+                            className="form-control date-picker"
                             name="company_Email"
-                            type="date"
+                            type="text"
                             placeholder="Los Angeles"
                             onChange={(e) => setEndDate(e.target.value)}
                             value={endDate}
