@@ -21933,7 +21933,7 @@ strong {
 Home page 11 banner
 --------------------------------------------------------------*/
 .twm-home-11-banner-section {
-  height: 950px;
+  height: auto !important;
   background-color: #f7f7f7;
   overflow: hidden;
   display: flex;

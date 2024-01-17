@@ -106,7 +106,7 @@ export default function Index() {
       {/* CONTENT START */}
       <div className="page-content">
         {/* BANNER START */}
-        <div className="twm-home-11-banner-section">
+        <div className="twm-home-11-banner-section" style={{ height:'auto' }}>
           <div className="container">
             <div className="row">
               {/* Left Section */}
@@ -165,36 +165,7 @@ export default function Index() {
                     </form>
                   </div>
 
-                  <div className="twm-bnr-5-blocks">
-                    <span className="twm-title">Our More Candidates</span>
-                    <div className="twm-bnr-5-blocks-inner">
-                      <div className="twm-pics">
-                        <span>
-                          <img src={u_1} alt="" />
-                        </span>
-                        <span>
-                          <img src={u_2} alt="" />
-                        </span>
-                        <span>
-                          <img src={u_3} alt="" />
-                        </span>
-                        <span>
-                          <img src={u_4} alt="" />
-                        </span>
-                        <span>
-                          <img src={u_5} alt="" />
-                        </span>
-                        <span>
-                          <img src={u_6} alt="" />
-                        </span>
-                      </div>
-                      <div className="twm-content">
-                        <div className="tw-count-number text-clr-green">
-                          <span className="counter">5000</span>+
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                 
                 </div>
               </div>
 
