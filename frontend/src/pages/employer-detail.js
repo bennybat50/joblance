@@ -30,9 +30,10 @@ import { useParams } from "react-router-dom";
 
 
 export default function EmployerDetail() {
-    const token=localStorage.getItem("token");
+    const token = localStorage.getItem("token");
 
-    const [company, setCompany] = useState([]);
+    const [company, setCompany] = useState({});
+    const [jobs, setJobs] = useState([])
     const [isLoading, setIsLoading] = useState(false);
     let com_id = useParams().id;
 
@@ -40,18 +41,43 @@ export default function EmployerDetail() {
         setIsLoading(true);
         const getJob = async () => {
             let api_url = BASEURL + `/company/${com_id}`;
-          const headers = { Authorization: `Bearer ${token}` };
-          try {
-            const res = await axios.get(api_url,{headers});
-            console.log(res.data);
-            setCompany(res.data.data);
-          } catch (err) {
-            console.log(err);
-          }
-          setIsLoading(false);
+            const headers = { Authorization: `Bearer ${token}` };
+            try {
+                const res = await axios.get(api_url, { headers });
+                
+                setCompany(res.data.data);
+            } catch (err) {
+                console.log(err);
+            }
+            setIsLoading(false);
         };
         getJob();
-      }, []);
+    }, []);
+
+
+
+    useEffect(() => {
+        fetch(`${BASEURL}/jobs/company/${com_id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data.data);
+                setJobs(data.data)
+
+            })
+            .catch(error => {
+                console.error('Fetch error:', error.message);
+            });
+    }, []);
 
     return (
 
@@ -72,7 +98,7 @@ export default function EmployerDetail() {
             <div className="page-wraper">
 
                 {/* <!-- HEADER START --> */}
-                <PublicHeader/>
+                <PublicHeader />
                 {/* <!-- HEADER END --> */}
 
 
@@ -119,7 +145,7 @@ export default function EmployerDetail() {
                                                 <div className="twm-employer-self-info">
                                                     <div className="twm-employer-self-top">
                                                         <div className="twm-media-bg">
-                                                            <img src={company.bannerImage}  className="bannerSize" alt="#" />
+                                                            <img src={company.bannerImage} className="bannerSize" alt="#" />
                                                         </div>
 
 
@@ -130,9 +156,8 @@ export default function EmployerDetail() {
                                                             </div>
 
                                                             <h4 className="twm-job-title">{company.companyName}</h4>
-                                                            <p className="twm-employer-address"><i className="feather-map-pin"></i>{company.email}</p>
-                                                            <a href="https://themeforest.net/user/thewebmax/portfolio" className="twm-employer-websites site-text-primary">https://thewebmax.com</a>
-                                                           
+                                                             <a href={company.website} className="twm-employer-websites site-text-primary">{company.website}</a>
+
                                                         </div>
                                                     </div>
 
@@ -143,72 +168,37 @@ export default function EmployerDetail() {
 
                                             <p>{company.Description} </p>
 
-                                           
-                                            
 
-                                            
-                                            <h4 className="twm-s-title">Available Jobs</h4>
+
+
+
+                                            <h4 className="twm-s-title">Available Jobs ({jobs.length})</h4>
                                             <div className="twm-jobs-list-wrap">
                                                 <ul>
-                                                    <li>
-                                                        <div className="twm-jobs-list-style1 mb-5">
-                                                            <div className="twm-media">
-                                                                <img src={compIc1} alt="#" />
+                                                    {jobs.map((e) => {
+                                                        return (<li>
+                                                            <div className="twm-jobs-list-style1 mb-5">
+                                                                <div className="twm-content">
+                                                                <Link to={`/job-detail/${e._id}`} className="twm-job-title text-dark">
+                                                                        <h4>{e.jobTitle}<span className="twm-job-post-duration"></span></h4>
+                                                                        <p className="twm-job-address">Expreience: {e.experience}</p>
+                                                                    </Link>
+                                                                 </div>
+                                                                <div className="twm-mind-content">
+                                                                <div className="twm-jobs-amount">{e.offeredSalary} <span>/ Annualy</span></div>
+                                                                    <p className="twm-job-address">{e.city} {e.country}</p>
+                                                                </div>
+                                                                <div className="twm-right-content">
+                                                                    <div className="twm-jobs-category green"><span className="twm-bg-green">{e.jobType}</span></div>
+                                                                    <p className="twm-job-address">Gender: {e.gender}</p>
+                                                                    <Link to={`/job-detail/${e._id}`} className="twm-jobs-browse site-text-primary">Browse Job</Link>
+                                                                </div>
                                                             </div>
-                                                            <div className="twm-mid-content">
-                                                                <a href="job-detail.html" className="twm-job-title">
-                                                                    <h4>Senior Web Designer<span className="twm-job-post-duration">/ 1 days ago</span></h4>
-                                                                </a>
-                                                                <p className="twm-job-address">1363-1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
-                                                                <a href="https://themeforest.net/user/thewebmax/portfolio" className="twm-job-websites site-text-primary">https://thewebmax.com</a>
-                                                            </div>
-                                                            <div className="twm-right-content">
-                                                                <div className="twm-jobs-category green"><span className="twm-bg-green">New</span></div>
-                                                                <div className="twm-jobs-amount">$1000 <span>/ Month</span></div>
-                                                                <a href="job-detail.html" className="twm-jobs-browse site-text-primary">Browse Job</a>
-                                                            </div>
-                                                        </div>
-                                                    </li>
+                                                        </li>)
+                                                    })}
 
-                                                    <li>
-                                                        <div className="twm-jobs-list-style1 mb-5">
-                                                            <div className="twm-media">
-                                                                <img src={compIc2} alt="#" />
-                                                            </div>
-                                                            <div className="twm-mid-content">
-                                                                <a href="job-detail.html" className="twm-job-title">
-                                                                    <h4>Senior Stock Technician<span className="twm-job-post-duration">/ 15 days ago</span></h4>
-                                                                </a>
-                                                                <p className="twm-job-address">1363-1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
-                                                                <a href="https://themeforest.net/user/thewebmax/portfolio" className="twm-job-websites site-text-primary">https://thewebmax.com</a>
-                                                            </div>
-                                                            <div className="twm-right-content">
-                                                                <div className="twm-jobs-category green"><span className="twm-bg-brown">Intership</span></div>
-                                                                <div className="twm-jobs-amount">$1000 <span>/ Month</span></div>
-                                                                <a href="job-detail.html" className="twm-jobs-browse site-text-primary">Browse Job</a>
-                                                            </div>
-                                                        </div>
-                                                    </li>
 
-                                                    <li>
-                                                        <div className="twm-jobs-list-style1 mb-5">
-                                                            <div className="twm-media">
-                                                                <img src={compIc3} alt="#" />
-                                                            </div>
-                                                            <div className="twm-mid-content">
-                                                                <a href="job-detail.html" className="twm-job-title">
-                                                                    <h4 className="twm-job-title">IT Department Manager<span className="twm-job-post-duration">/ 6 Month ago</span></h4>
-                                                                </a>
-                                                                <p className="twm-job-address">1363-1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
-                                                                <a href="https://themeforest.net/user/thewebmax/portfolio" className="twm-job-websites site-text-primary">https://thewebmax.com</a>
-                                                            </div>
-                                                            <div className="twm-right-content">
-                                                                <div className="twm-jobs-category green"><span className="twm-bg-purple">Fulltime</span></div>
-                                                                <div className="twm-jobs-amount">$1000 <span>/ Month</span></div>
-                                                                <a href="job-detail.html" className="twm-jobs-browse site-text-primary">Browse Job</a>
-                                                            </div>
-                                                        </div>
-                                                    </li>
+
                                                 </ul>
                                             </div>
                                         </div>
@@ -218,7 +208,7 @@ export default function EmployerDetail() {
 
                                         <div className="side-bar-2">
 
-                                            
+
 
 
                                             <div className="twm-s-info-wrap mb-5">
@@ -228,61 +218,33 @@ export default function EmployerDetail() {
 
                                                         <li>
                                                             <div className="twm-s-info-inner">
-                                                                <i className="fas fa-money-bill-wave"></i>
-                                                                <span className="twm-title">Offered Salary</span>
-                                                                <div className="twm-s-info-discription">$20 / Day</div>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div className="twm-s-info-inner">
-                                                                <i className="fas fa-clock"></i>
-                                                                <span className="twm-title">Experience</span>
-                                                                <div className="twm-s-info-discription">6 Year</div>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div className="twm-s-info-inner">
-                                                                <i className="fas fa-venus-mars"></i>
-                                                                <span className="twm-title">Gender</span>
-                                                                <div className="twm-s-info-discription">Male</div>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div className="twm-s-info-inner">
                                                                 <i className="fas fa-mobile-alt"></i>
                                                                 <span className="twm-title">Phone</span>
-                                                                <div className="twm-s-info-discription">+291  560 56456</div>
+                                                                <div className="twm-s-info-discription">{company.phone}</div>
                                                             </div>
                                                         </li>
                                                         <li>
                                                             <div className="twm-s-info-inner">
                                                                 <i className="fas fa-at"></i>
                                                                 <span className="twm-title">Email</span>
-                                                                <div className="twm-s-info-discription">thewebmaxdemo@gmail.com</div>
+                                                                <div className="twm-s-info-discription">{company.email}</div>
                                                             </div>
                                                         </li>
                                                         <li>
                                                             <div className="twm-s-info-inner">
                                                                 <i className="fas fa-book-reader"></i>
-                                                                <span className="twm-title">Qualification</span>
-                                                                <div className="twm-s-info-discription">Developer</div>
+                                                                <span className="twm-title">Website</span>
+                                                                <div className="twm-s-info-discription">{company.website}</div>
                                                             </div>
                                                         </li>
-                                                        <li>
-                                                            <div className="twm-s-info-inner">
 
-                                                                <i className="fas fa-map-marker-alt"></i>
-                                                                <span className="twm-title">Address</span>
-                                                                <div className="twm-s-info-discription">1363-1385 Sunset Blvd Angeles, CA 90026 ,USA</div>
-                                                            </div>
-                                                        </li>
 
                                                     </ul>
 
                                                 </div>
                                             </div>
 
-                                            <div className="twm-s-contact-wrap mb-5">
+                                            {token == null ? <></> : <div className="twm-s-contact-wrap mb-5">
                                                 <h4 className="section-head-small mb-4">Contact us</h4>
                                                 <div className="twm-s-contact">
                                                     <div className="row">
@@ -319,7 +281,7 @@ export default function EmployerDetail() {
                                                     </div>
 
                                                 </div>
-                                            </div>
+                                            </div>}
 
 
                                         </div>

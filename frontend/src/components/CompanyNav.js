@@ -2,12 +2,12 @@ import { Link } from "react-router-dom";
 import Logout_Pop from "./Logout";
 
 export default function ComapnyNav() {
-    const token=localStorage.getItem("token");
-    const userDetails=JSON.parse(localStorage.getItem("user-details"));
+    const token = localStorage.getItem("token");
+    const userDetails = JSON.parse(localStorage.getItem("user-details"));
     const comDetails = JSON.parse(localStorage.getItem("com-details"));
 
     return <div>
-        <Logout_Pop/>
+        <Logout_Pop />
         <div class="side-bar-st-1">
 
             <div class="twm-candidate-profile-pic">
@@ -16,14 +16,14 @@ export default function ComapnyNav() {
                 <div class="upload-btn-wrapper">
 
                     <div id="upload-image-grid"></div>
-                  </div>
+                </div>
 
             </div>
             <div class="twm-mid-content text-center">
                 <Link to="candidate-detail.html" class="twm-job-title">
                     <h4>{comDetails.companyName}</h4>
                 </Link>
-                <p>{userDetails.jobtype??""} </p>
+                <p>{userDetails.jobtype ?? ""} </p>
                 <p><b>Employer</b></p>
             </div>
 
@@ -36,14 +36,14 @@ export default function ComapnyNav() {
                     <li><Link to="candidate-chat.html"><i class="fa fa-comments"></i>Messages</Link></li>
                     <li><Link to="candidate-change-password.html"><i class="fa fa-fingerprint"></i> Change Password</Link></li>
                     <li>
-                                <Link to="/javascript:;"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#logout-dash-profile"
-                                >
-                                    <i className="fa fa-share-square"></i>
-                                    <span className="admin-nav-text">Logout</span>
-                                </Link>
-                            </li>
+                        <Link to="/javascript:0;"
+                            data-bs-toggle="modal"
+                            data-bs-target="#logout-dash-profile"
+                        >
+                            <i className="fa fa-share-square"></i>
+                            <span className="admin-nav-text">Logout</span>
+                        </Link>
+                    </li>
                 </ul>
             </div>
 

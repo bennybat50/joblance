@@ -36,7 +36,7 @@ export default function UserNav() {
                     <li><Link to="candidate-change-password.html"><i class="fa fa-fingerprint"></i> Change Password</Link></li>
                     <li><Link to="candidate-chat.html"><i class="fa fa-comments"></i>Chat</Link></li>
                     <li>
-                                <Link to="/javascript:;"
+                                <Link to="/javascript:0;"
                                     data-bs-toggle="modal"
                                     data-bs-target="#logout-dash-profile"
                                 >

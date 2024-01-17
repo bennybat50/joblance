@@ -111,7 +111,7 @@ export default function CompanyApply() {
                                                                 <td>
                                                                     <div className="twm-mid-content">
                                                                         <a href="#" className="twm-job-title text-dark">
-                                                                            <h4>{cand.user_id.userName}</h4>
+                                                                            <h4>{cand.user_id.fullName}</h4>
                                                                          
                                                                         </a>
 

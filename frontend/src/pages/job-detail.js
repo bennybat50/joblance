@@ -76,7 +76,7 @@ export default function JobDetail() {
             company_id: comDetail._id,
             message: applyMessage,
             cv_link: cvLink,
-            
+
         };
         console.log(application);
 
@@ -184,11 +184,20 @@ export default function JobDetail() {
                                                                 </div>
                                                             </div>
 
-                                                            <div className="twm-job-self-bottom">
+                                                            {token == null ? <div className="twm-job-self-bottom">
+                                                                <a
+                                                                    className="twm-nav-sign-up site-button"
+                                                                    data-bs-toggle="modal"
+                                                                    href="#sign_up_popup"
+                                                                    role="button"
+                                                                >
+                                                                    Signup To Apply
+                                                                </a>
+                                                            </div> : <div className="twm-job-self-bottom">
                                                                 <a className="site-button" data-bs-toggle="modal" href="#apply_job_popup" role="button">
                                                                     Apply Now
                                                                 </a>
-                                                            </div>
+                                                            </div>}
                                                         </div>
                                                     </div>
 
