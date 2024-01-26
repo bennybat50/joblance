@@ -28,6 +28,7 @@ import ApplyJob from './pages/dash-apply-job';
 import UserDashboard from './pages/candidate/user-dashboard';
 import UserProfile from './pages/candidate/user-profile';
 import UserResume from './pages/candidate/user-resume';
+import Dash_Header from './components/Dashheader';
 
 function App() {
   return (
