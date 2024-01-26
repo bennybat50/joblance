@@ -10,9 +10,14 @@ const user = require("./routes/user")
 const apply = require("./routes/apply")
 const message = require("./routes/message")
 const response = require("./routes/message-response")
+<<<<<<< Updated upstream
 const work = require("./routes/work")
 const skill = require("./routes/skills")
 const education = require("./routes/education")
+=======
+const interest = require("./routes/interest")
+const article = require("./routes/article")
+>>>>>>> Stashed changes
 
 const cors = require("cors");
 const PORT = process.env.PORT || 7300;
@@ -33,9 +38,14 @@ app.use("/", user)
 app.use("/", apply)
 app.use("/", message)
 app.use("/", response)
+<<<<<<< Updated upstream
 app.use("/", work)
 app.use("/", skill)
 app.use("/", education)
+=======
+app.use("/", interest)
+app.use("/", article)
+>>>>>>> Stashed changes
 
 
 const URI = process.env.MONGO_URL;

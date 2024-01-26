@@ -92,7 +92,7 @@ router.delete("/job-category/delete/:id", verifyToken, async function (req, res)
         let category = await Category.findByIdAndDelete(id)
 
         if(!category){
-            return handleError(res, 500, "Category does not exist ")
+            return handleError(res, 404, "Category does not exist ")
         }
 
         return res.status(200).send({

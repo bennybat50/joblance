@@ -20,6 +20,11 @@ const articleSchema = new mongoose.Schema({
         type:String,
         ref: "user",
         required: true 
+    },
+    interest_id:{
+        type: String,
+        ref: "interest",
+        required: true
     }
 },
 {timestamps: true}
