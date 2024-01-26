@@ -15,68 +15,30 @@ const companySchema = new mongoose.Schema({
     },
     phone: {
         type: String, 
-        required: true
+        default:""
     },
     email: {
         type: String,
-        required: true
+        default:""
     },
     website: {
         type: String,
+        default:""
      },
     estSince: {
         type: String,
+        default:""
      },
     teamSize: {
         type: String,
+        default:""
      },
     Description: {
         type: String,
+        default:""
      },
-    youTube: {
-        type:String,
-    },
-    vimeo: {
-        type: String 
-    },
-    customVideo:{
-        type:String
-    },
-    facebook:{
-        type:String
-    },
-    twitter:{
-        type:String
-    },
-    linkedin:{
-        type:String
-    },
-    whatsapp:{
-        type:String
-    },
-    instagram:{
-        type:String
-    },
-    pinterest:{
-        type:String
-    },
-    instagram:{
-        type:String
-    },
-    pinterest:{
-        type:String
-    },
-    tumblr:{
-        type:String
-    },
-    youtube:{
-        type:String
-    },
-    password:{
-        type:String,
-        // required: true 
-    },
-    user_id:[{type:mongoose.Schema.Types.ObjectId, ref:"user"}],
+   
+    user_id:{type:mongoose.Schema.Types.ObjectId, ref:"user"},
     job_id:[{type:mongoose.Schema.Types.ObjectId, ref:"job"}],
     message_id:[{type:mongoose.Schema.Types.ObjectId, ref:"message"}],
 

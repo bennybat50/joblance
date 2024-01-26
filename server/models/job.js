@@ -22,7 +22,7 @@ const jobSchema = new mongoose.Schema({
     },
     gender: {
         type: String,
-        enum: ["Male", "Female", "Others"],
+        enum: ["Male", "Female", "Both"],
         required: true
     },
     country: {
@@ -33,28 +33,30 @@ const jobSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    latitude: {
-        type: String,
-        required: true
-    },
-    longitude: {
-        type: String,
-        required: true
-    },
+
     startDate: {
         type: Date,
         required: true
     },
-    endDate : {
+    endDate: {
         type: Date,
         required: true
     },
-    jobCategory_id:{
-        type:String,
-        required:true,
-       ref:"jobCategory"
+    requirement: {
+        type: String,
+        required: true
     },
-    company_id: {type: String,
+    responsabilities: {
+        type: String,
+        required: true
+    },
+    jobCategory_id: {
+        type: String,
+        required: true,
+        ref: "jobCategory"
+    },
+    company_id: {
+        type: String,
         required: true,
         ref: "company"
     },
@@ -62,10 +64,10 @@ const jobSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    application_id:[{type:mongoose.Schema.Types.ObjectId, ref:"apply"}],
+    application_id: [{ type: mongoose.Schema.Types.ObjectId, ref: "apply" }],
 
 },
-{timestamps:true})
+    { timestamps: true })
 
 const jobModel = mongoose.model("job", jobSchema)
 module.exports = jobModel

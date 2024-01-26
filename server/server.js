@@ -10,6 +10,9 @@ const user = require("./routes/user")
 const apply = require("./routes/apply")
 const message = require("./routes/message")
 const response = require("./routes/message-response")
+const work = require("./routes/work")
+const skill = require("./routes/skills")
+const education = require("./routes/education")
 
 const cors = require("cors");
 const PORT = process.env.PORT || 7300;
@@ -30,6 +33,10 @@ app.use("/", user)
 app.use("/", apply)
 app.use("/", message)
 app.use("/", response)
+app.use("/", work)
+app.use("/", skill)
+app.use("/", education)
+
 
 const URI = process.env.MONGO_URL;
 

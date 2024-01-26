@@ -1,9 +1,8 @@
 const express = require('express')
 const dotenv = require("dotenv")
+const router = express.Router()
 dotenv.config()
-const { useAsync, utils, errorHandle, } = require('../core');
-const ModelPerson = require('../models/model.person');
-const ModelSkill = require('../models/model.skill');
+  const ModelSkill = require('../models/cv-models/skills');
 
 
 
@@ -15,7 +14,7 @@ router.put('/skill/edit', async function (req, res) {
         const body = req.body
         await ModelSkill.updateOne({ _id: id }, body).then(async () => {
             const skill = await ModelSkill.find({ _id: id });
-            return res.json(utils.JParser('Skill Update Successfully', !!skill, skill));
+             res.status(200).send({ message: "Skill Edits successfully",data: skill });
         })
 
     } catch (e) {
@@ -28,7 +27,7 @@ router.post('/skill', async function (req, res) {
     try{
 
         const skill = await ModelSkill.create(req.body)
-        return res.json(utils.JParser('Skill created successfully', !!skill, skill));
+         res.status(200).send({ message: "Skill created successfully",data: skill });
 
     } catch (e) {
         throw new errorHandle(e.message, 400)
@@ -40,7 +39,7 @@ router.get('/skill/:id', async function (req, res) {
 
     try {
         const skill = await ModelSkill.findOne({ _id: req.params.id });
-        return res.json(utils.JParser('Skill fetch successfully', !!skill, skill));
+         res.status(200).send({ message: "Skill fetch successfully",data: skill });
     } catch (e) {
         throw new errorHandle(e.message, 400)
     }
@@ -50,7 +49,7 @@ router.get('/skill/all',  async function (req, res) {
 
     try {
         const skill = await ModelSkill.find();
-        return res.json(utils.JParser('Skill fetch successfully', !!skill, skill));
+         res.status(200).send({ message: "Skill fetch successfully",data: skill });
     } catch (e) {
         throw new errorHandle(e.message, 400)
     }
@@ -60,21 +59,23 @@ router.get('/skill/user/:id',  async function (req, res) {
 
     try {
         const skill = await ModelSkill.find({ user_id: req.params.id });
-        return res.json(utils.JParser('User Skill fetch successfully', !!skill, skill));
+         res.status(200).send({ message: "Skill fetch successfully",data: skill });
     } catch (e) {
         throw new errorHandle(e.message, 400)
     }
 })
 
-router.delete('/skill/deletes', async function (req, res) {
+router.post('/skill/deletes', async function (req, res) {
     try {
         if (!req.body.id) return res.status(402).json({ msg: 'provide the id ' })
 
         await ModelSkill.deleteOne({ _id: req.body.id })
-        return res.json(utils.JParser('Skill deleted successfully', true, []));
+         res.status(200).send({ message: "Skill deleted successfully" });
 
     } catch (e) {
         throw new errorHandle(e.message, 400)
     }
 
 });
+
+module.exports = router

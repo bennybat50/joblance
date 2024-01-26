@@ -10,25 +10,11 @@ const verifyToken = require("../middlewares/verifyToken")
 router.post("/message", verifyToken, async function (req, res){
     
     try{
-        let { user_id, company_id } = req.body 
+        let { sender_id, receiver_id, text } = req.body 
     
-        let user = await User.findById(user_id)
-        let company = await Company.findById(company_id)
-    
-    
-        if(!user || !company){
-            return handleError(res, 403, "No user or company")
-        }
-
+        
         let message = new Message(req.body)
         await message.save()
-
-        user.message_id.push(message._id)
-        await user.save()
-
-        company.message_id.push(message._id)
-        await company.save()
-
         res.status(200).send({
             message: "message sent",
             data: message
@@ -42,6 +28,28 @@ router.post("/message", verifyToken, async function (req, res){
 router.get("/messages", verifyToken, async function (req, res){
     try{
         let message = await Message.find().populate("user_id company_id")
+        if(!message){
+            return handleError(res, 403, "No messaage")
+        }
+
+        return res.status(200).send({
+            Status: "Success",
+            length: message.length,
+            data: message
+        })
+    }catch(err){
+        console.log(err)
+
+        return handleError(res, 500, "Internal server error")
+    }
+})
+
+router.get("/messages/user/:id", verifyToken, async function (req, res){
+    try{
+        let message = await Message.find( { $or: [
+            {sender_id: req.params.id},
+            {receiver_id: req.params.id},
+        ], }).populate("sender_id receiver_id")
         if(!message){
             return handleError(res, 403, "No messaage")
         }

@@ -4,7 +4,12 @@ const User = require("../models/user")
 require("dotenv").config();
 const handleError =  require("../middlewares/error")
 const jwt = require("jsonwebtoken")
-const verifyToken = require("../middlewares/verifyToken")
+const nodemailer = require("nodemailer");
+const handlebars = require("handlebars")
+const fs = require("fs")
+const path = require("path")
+const verifyToken = require("../middlewares/verifyToken");
+const companyModel = require("../models/company");
 
 
 
@@ -28,6 +33,38 @@ router.post("/create-user", async function(req, res) {
                     expiresIn: "24h"
                 }
             );
+           if(req.body.role=="company"){
+            const newCompany=new companyModel({user_id:newUser._id, email:newUser.email, })
+            await newCompany.save();
+           }
+    
+
+            //SEND MAIL
+            let transporter = nodemailer.createTransport({
+                host: "smtp.zeptomail.eu",
+                port: 465,
+                secure: true,
+                auth: {
+                  user: process.env.EMAIL,
+                  pass: process.env.PASSWORD,
+                },
+              });
+              const emailTemplateSource = fs.readFileSync(path.join(__dirname, "../views/register-mail.hbs"), "utf8")
+              const template = handlebars.compile(emailTemplateSource)
+              const htmlToSend = template({ name: req.body.fullName })
+              let mailOptions = {
+                from: "team@dellegroup.com",
+                to: req.body.email,
+                subject: `Welcome to Joblance – Your Gateway to Exciting Career Opportunities!`,
+                html: htmlToSend
+              };
+              transporter.sendMail(mailOptions, function (err, res) {
+                if (err) {
+                  console.log(err);
+                } else {
+                  console.log(`(${index}) Email sent to ${req.body.email}`);
+                }
+              });
 
         res.status(200).send({newUser, token});
     } catch (e) {
@@ -123,10 +160,10 @@ router.post("/user-login", async (req, res) => {
         return handleError(res, 400, "Email and password are required");
 
     try {
-        const user = await User.findOne({ password });
+        const user = await User.findOne({ email,password });
         // console.log(admin.password)
 
-        if (user && user.password === password) {
+        if (user && user.email === email && user.password === password) {
             const { password: adminPassword, ...noPasswordAdmin } = user.toObject();
             const token = jwt.sign(
                 { noPasswordAdmin },
@@ -147,7 +184,7 @@ router.post("/user-login", async (req, res) => {
                 message: "User does not exist",
             });
         } else {
-            res.status(400).send({
+            res.status(200).send({
                 status: "error",
                 message: "Incorrect Password",
                 data: {},

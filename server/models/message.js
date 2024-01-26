@@ -1,27 +1,21 @@
 const mongoose = require("mongoose")
 const messageSchema = new mongoose.Schema({
-    user_id: {
-        type:String,
+    sender_id: {
+        type: String,
         ref: "user",
-        required: true 
+        required: true
     },
-    company_id: {
-        type:String,
-        ref: "company",
-        required: true 
+    receiver_id: {
+        type: String,
+        ref: "user",
+        required: true
     },
-    text:{
-        type:String,
+    text: {
+        type: String,
         // required: true
     },
-    reply:{
-        type:String,
-        // required: true
-    },
-    // response_id:[{type:mongoose.Schema.Types.ObjectId, ref:"response"}],
-
 },
-{timestamps: true }
+    { timestamps: true }
 )
 
 const messageModel = mongoose.model("message", messageSchema)
