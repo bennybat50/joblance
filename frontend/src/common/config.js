@@ -1,4 +1,6 @@
 
+//https://joblance-server.onrender.com/
 module.exports={
-    BASEURL:"https://joblance-server.onrender.com",
+    BASEURL:"http://localhost:7300",
+
 }
