@@ -42,6 +42,7 @@ export default function LoginPop() {
           window.location.href = "/com-dashboard";
         } else {
           localStorage.setItem("user-details", JSON.stringify(res.data.data))
+          
           window.location.href = "/my-dashboard"
         }
 

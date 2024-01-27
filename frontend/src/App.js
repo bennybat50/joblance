@@ -39,6 +39,8 @@ import CompanyEditJob from './pages/company/company-edit-job';
 import CompanyManageJob from './pages/company/company-manage-job';
 import ViewCandidate from './pages/view-candidate';
 import UserChat from './pages/candidate/user-chat';
+import CreateAticle from './pages/candidate/create-article';
+import UserArticle from './pages/candidate/user-article';
 
 function App() {
   return (
@@ -76,6 +78,8 @@ function App() {
           <Route path='/my-resume' element={<UserResume/>}/> 
           <Route path='/my-application' element={<UserApply/>}/> 
           <Route path='/my-chat' element={<UserChat/>}/>
+          <Route path='/create-article' element={<CreateAticle/>}/>
+          <Route path='/my-article' element={<UserArticle/>}/>
 
           <Route path='/com-dashboard' element={<CompanyDashboard/>}/> 
           <Route path='/com-profile' element={<CompanyProfile/>}/> 

@@ -32,7 +32,7 @@ export default function UserNav() {
                     <li><Link to="/my-profile"><i class="fa fa-user"></i> My Profile</Link></li>
                     <li><Link to="/my-resume"><i class="fa fa-receipt"></i> My Resume</Link></li>
                     <li><Link to="/my-chat"><i class="fa fa-comments"></i>Chat</Link></li>
-                    <li><Link to="/my-chat"><i class="fa fa-comments"></i>Article</Link></li>
+                    <li><Link to="/my-article"><i class="fa fa-comments"></i>My Article</Link></li>
                     <li><Link to="/my-application"><i class="fa fa-suitcase"></i> Applied Jobs</Link></li>
                     <li><Link to="candidate-saved-jobs.html"><i class="fa fa-file-download"></i> Saved Jobs</Link></li>  
                     <li><Link to="candidate-change-password.html"><i class="fa fa-fingerprint"></i> Change Password</Link></li>
