@@ -21,9 +21,9 @@ const articleSchema = new mongoose.Schema({
         ref: "user",
         required: true 
     },
-    interest_id:{
+    jobCategory_id:{
         type: String,
-        ref: "interest",
+        ref: "jobCategory",
         required: true
     }
 },

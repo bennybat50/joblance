@@ -104,6 +104,9 @@ export default function PublicHeader() {
                                     <li>
                                         <Link to="/contact" className="link-tag">Contact</Link>
                                     </li>
+                                    <li>
+                                        <Link to="/blog" className="link-tag">Blog</Link>
+                                    </li>
                                 </ul>
                             </div>
 

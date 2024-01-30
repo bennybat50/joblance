@@ -2,18 +2,18 @@ const express = require("express")
 const router = express.Router()
 const Article = require("../models/article")
 const User = require("../models/user")
-const Interest = require("../models/interest")
+const JobCategory = require("../models/job-category")
 const handleError = require("../middlewares/error")
 
 router.post("/create-article", async function (req, res){
     try{
-        let {user_id, interest_id} = req.body
+        let {user_id, jobCategory_id} = req.body
 
         let user = await User.findById(user_id)
-        let interest = await Interest.findById(interest_id)
+        let jobCategory = await JobCategory.findById(jobCategory_id)
 
-        if(!user || !interest){
-            return handleError(re, 403, "User or interest dors not exist")
+        if(!user || !jobCategory){
+            return handleError(res, 403, "User or interest does not exist")
         }
 
         let article = new Article(req.body)
@@ -26,9 +26,26 @@ router.post("/create-article", async function (req, res){
     }
 })
 
+router.get("/article/user/:id", async function (req, res){
+    try{
+
+        let { id } = req.params 
+        let article = await  Article.find({user_id: id })
+        if(!article){
+            return handleError(res, 404, "Article not found")
+        }
+        return res.status(200).send({
+            message:"Your article",
+            data: article 
+        })
+    }catch(e){
+        return handleError(res, 500, "Internal server error ")
+    }
+})
+
 router.get("/articles", async function (req, res){
     try{
-        let article = await Article.find().populate("user_id interest_id")
+        let article = await Article.find().populate("user_id jobCategory_id")
         if(!article){
             return handleError(res, 404, "Article not avalible ")
         }
@@ -47,7 +64,7 @@ router.get("/articles", async function (req, res){
 router.get("/articles/:id", async function (req, res){
     try{
         let { id } = req.params
-        let article = await Article.findById(id).populate("user_id interest_id")
+        let article = await Article.findById(id).populate("user_id jobCategory_id")
         if(!article){
             return handleError(res, 404, "Article not avalible ")
         }
@@ -57,6 +74,7 @@ router.get("/articles/:id", async function (req, res){
             data: article
         })
     }catch(e){
+        console.log(e)
         return handleError(res, 500, "Internal server error ")
     }
 })

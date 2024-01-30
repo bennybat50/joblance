@@ -4,6 +4,8 @@ import UserNav from "../../components/UserNav"
 import { useEffect, useState } from "react";
 import { BASEURL } from "../../common/config";
 import axios from "axios";
+import { IoTrashOutline } from "react-icons/io5";
+import { MdOutlineEdit } from "react-icons/md";
 export default function UserArticle() {
     const navigate = useNavigate()
     const userDetails = JSON.parse(localStorage.getItem("user-details"));
@@ -11,10 +13,11 @@ export default function UserArticle() {
     const [jobs, setJobs] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
+
     useEffect(() => {
         setIsLoading(true);
         const getJob = async () => {
-            let api_url = BASEURL + "/applications/user/" + userDetails._id;
+            let api_url = BASEURL + "/article/user/" + userDetails._id;
             const headers = { Authorization: `Bearer ${token}` };
             try {
                 const res = await axios.get(api_url, { headers });
@@ -28,7 +31,24 @@ export default function UserArticle() {
         getJob();
     }, []);
 
-
+    const handleDelete = async (id) => {
+        const shouldDelete = window.confirm("Are you sure you want to delete this article?");
+        
+        if (shouldDelete) {
+            let api_url = BASEURL + "/article/delete/" + id;
+            const headers = { Authorization: `Bearer ${token}` };
+    
+            try {
+                const res = await axios.delete(api_url, { headers });
+                console.log(res.data);
+                alert("Article deleted");
+                setJobs((previousJobs) => previousJobs.filter(job => job._id !== id));
+            } catch (err) {
+                console.log(err);
+            }
+        }
+    }
+    
 
     return (
         <div>
@@ -66,19 +86,29 @@ export default function UserArticle() {
                                             {jobs.map((data) => {
                                                 return (<>
                                                     <li>
-                                                        <div class="twm-jobs-list-style1 mb-5">
-                                                            <div class="twm-mid-content">
-                                                            <Link to={`/job-detail/${data.job_id._id}`} class="twm-job-title">
-                                                                    <h4>{data.job_id.jobTitle}<span class="twm-job-post-duration"> <br />{data.job_id.createdAt}</span></h4>
-                                                                </Link>
-                                                                <p class="twm-job-address">{data.job_id.city} {data.job_id.country}</p>
-                                                                <Link to={`/employer-detail/${data.job_id.company_id}`} class="twm-job-websites site-text-primary">View Company</Link>
+                                                        <div  className="d-flex align-items-start justify-content-between gap-5 mb-5">
+                                                            <div className="d-flex align-items-center justify-content-start gap-5">
+                                                                <figure style={{height:"100px", width: "100px"}}>
+                                                                    <img src={data.image} alt="" style={{height:"100%", width: "100%", objectFit:"cover"}} />
+                                                                </figure>
+                                                                <div class="twm-mid-content">
+                                                                <Link to={`/blog/${data._id}`} class="twm-job-title">
+                                                                        <h4>{data.title}</h4>
+                                                                    </Link>
+                                                                    <p class="twm-job-address">{data.content} </p>
+                                                                
+                                                                </div>
+
                                                             </div>
-                                                            <div class="twm-right-content">
+                                                            <div  className="d-flex align-items-start  gap-2 ">
+                                                                <button style={{border:"none", background:"transparent"}} onClick={()=>navigate(`/edit-my-article/${data._id}`)}><MdOutlineEdit /></button>
+                                                                <button style={{border:"none", background:"transparent"}} onClick={()=>handleDelete(data._id)}><IoTrashOutline /></button>
+                                                            </div>
+                                                            {/* <div class="twm-right-content">
                                                                 <div class="twm-jobs-category green"><span class="twm-bg-green">{data.job_id.jobType}</span></div>
                                                                 <div class="twm-jobs-amount">{data.job_id.offeredSalary}  <span>/ Annually</span></div>
                                                                 <Link to={`/job-detail/${data.job_id._id}`} class="twm-jobs-browse site-text-primary">View Job Details</Link>
-                                                            </div>
+                                                            </div> */}
                                                         </div>
                                                     </li></>)
                                             })}

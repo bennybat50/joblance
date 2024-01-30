@@ -41,6 +41,9 @@ import ViewCandidate from './pages/view-candidate';
 import UserChat from './pages/candidate/user-chat';
 import CreateAticle from './pages/candidate/create-article';
 import UserArticle from './pages/candidate/user-article';
+import UserEditAticle from './pages/candidate/user-edit-article';
+import Blog from './pages/Blog';
+import BlogSingle from './pages/blog-single';
 
 function App() {
   return (
@@ -80,6 +83,9 @@ function App() {
           <Route path='/my-chat' element={<UserChat/>}/>
           <Route path='/create-article' element={<CreateAticle/>}/>
           <Route path='/my-article' element={<UserArticle/>}/>
+          <Route path='/edit-my-article/:articleID' element={<UserEditAticle/>}/>
+          <Route path='/blog' element={<Blog/>}/>
+          <Route path='/blog/:blogID' element={<BlogSingle/>}/>
 
           <Route path='/com-dashboard' element={<CompanyDashboard/>}/> 
           <Route path='/com-profile' element={<CompanyProfile/>}/> 
@@ -88,6 +94,7 @@ function App() {
           <Route path='/com-jobs' element={<CompanyManageJob/>}/> 
           <Route path='/com-post-jobs' element={<CompanyPostJob/>}/> 
           <Route path='/com-edit-jobs/:jobId' element={<CompanyEditJob/>}/> 
+          
          
         </Routes>
       </BrowserRouter>
