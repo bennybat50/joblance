@@ -44,6 +44,9 @@ import UserArticle from './pages/candidate/user-article';
 import UserEditAticle from './pages/candidate/user-edit-article';
 import Blog from './pages/Blog';
 import BlogSingle from './pages/blog-single';
+import Job_Category from './pages/dash-job-category';
+import DashPostJobCategory from './pages/dash-post-job-category';
+import DashEditJobCategory from './pages/dash-edit-job-category';
 
 function App() {
   return (
@@ -61,10 +64,13 @@ function App() {
           <Route path='/dash-create-company' element={<DashCreateCompany/>}/>
           <Route path='/dash-company-profile' element={<DashCompanyProfile/>}/>
           <Route path='/dash-manage-job' element={<DashManageJob/>}/>
+          <Route path='/dash-job-category' element={<Job_Category/>}/>
           <Route path='/dash-manage-company' element={<DashManageCompany/>}/>
           <Route path='/dash-messages' element={<DashMessages/>}/>
           <Route path='/dash-my-profile' element={<DashMyProfile/>}/>
           <Route path='/dash-post-job' element={<DashPostJob/>}/>
+          <Route path='/dash-post-job-category' element={<DashPostJobCategory/>}/>
+          <Route path='/dash-edit-job-category/:jobCategoryId' element={<DashEditJobCategory/>}/>
           <Route path='/dashboard' element={<Dashboard/>}/>
           <Route path='/employer-detail/:id' element={<EmployerDetail/>}/>
           <Route path='/job-detail/:id' element={<JobDetail/>}/>

@@ -100,7 +100,7 @@ export default function Blog(){
                                                     <div class="wt-post-meta ">
                                                         <ul>
                                                             <li class="post-date">{data.createdAt.slice(0,10)}</li>
-                                                            <li class="post-author">By <a href="candidate-detail.html">{data.user_id.userName}</a></li>
+                                                            <li class="post-author">By <a href="candidate-detail.html">{data.user_id.fullName}</a></li>
                                                         </ul>
                                                     </div>
                                                     <div class="wt-post-title ">

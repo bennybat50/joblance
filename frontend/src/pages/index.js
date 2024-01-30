@@ -34,6 +34,9 @@ import "slick-carousel/slick/slick-theme.css";
 import Signup_Pop from "../components/Signup_Pop";
 import LoginPop from "../components/LoginPop";
 import PublicHeader from "../components/PublicHeader";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { BASEURL } from "../common/config";
 export default function Index() {
   const NextArrow = (props) => <div {...props} className="slick-next"></div>;
   const PrevArrow = (props) => <div {...props} className="slick-prev"></div>;
@@ -98,6 +101,25 @@ export default function Index() {
       },
     ],
   };
+
+  const [recentArticle, setResentArticle] = useState()
+
+
+  useEffect(()=>{
+      const getArticle = async () => {
+          let api_url = BASEURL + "/articles/" 
+          console.log(api_url)
+          // const headers = { Authorization: `Bearer ${token}` };
+          try {
+              const res = await axios.get(api_url);
+              console.log(res.data.data)
+              setResentArticle(res.data.data.slice(0, 3))
+          } catch (err) {
+              console.log(err);
+          }
+      };
+      getArticle()
+  },[])
 
   return (
     <div>
@@ -625,36 +647,40 @@ export default function Index() {
           <div className="section-content">
             <div className="twm-blog-post-3-outer-wrap">
               <div className="row d-flex justify-content-center">
-                <div className="col-lg-4 col-md-6 col-sm-12">
-                  {/* Block one */}
-                  <div className="blog-post twm-blog-post-3-outer">
-                    <div className="wt-post-media">
-                      <Link to="/blog-single">
-                        <img src={bg10} alt="" />
-                      </Link >
-                    </div>
-                    <div className="wt-post-info">
-                      <div className="wt-post-meta ">
-                        <ul>
-                          <li className="post-date">March 05, 2023</li>
-                          <li className="post-author">
-                            By <Link to="/candidate-detail">Mark Petter</Link >
-                          </li>
-                        </ul>
-                      </div>
-                      <div className="wt-post-title ">
-                        <h4 className="post-title">
-                          <Link to="/blog-single">
-                            How to convince recruiters.
-                          </Link >
-                        </h4>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                {
+                  recentArticle && recentArticle.map((data)=>(
 
-                <div className="col-lg-4 col-md-6 col-sm-12">
-                  {/* Block two */}
+                    <Link  to={`/blog/${data._id}`} className="col-lg-4 col-md-6 col-sm-12">
+                      {/* Block one */}
+                      <div className="blog-post twm-blog-post-3-outer">
+                        <div className="wt-post-media">
+                          <figure to="" style={{height:"300px", width: "100%"}}>
+                            <img src={data.image} alt="" style={{height:"100%", width:"100%", objectFit:"cover"}} />
+                          </figure >
+                        </div>
+                        <div className="wt-post-info">
+                          <div className="wt-post-meta ">
+                            <ul>
+                              <li className="post-date">{data.createdAt.slice(0,10)}</li>
+                              <li className="post-author">
+                                By <>{data.user_id.fullName}</ >
+                              </li>
+                            </ul>
+                          </div>
+                          <div className="wt-post-title ">
+                            <h4 className="post-title">
+                              <>
+                               {data.title}
+                              </>
+                            </h4>
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
+                  ))
+                }
+
+                {/* <div className="col-lg-4 col-md-6 col-sm-12">
                   <div className="blog-post twm-blog-post-3-outer">
                     <div className="wt-post-media">
                       <Link to="/blog-single">
@@ -679,10 +705,9 @@ export default function Index() {
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> */}
 
-                <div className="col-lg-4 col-md-6 col-sm-12">
-                  {/* Block three */}
+                {/* <div className="col-lg-4 col-md-6 col-sm-12">
                   <div className="blog-post twm-blog-post-3-outer">
                     <div className="wt-post-media">
                       <Link to="/blog-single">
@@ -707,7 +732,7 @@ export default function Index() {
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

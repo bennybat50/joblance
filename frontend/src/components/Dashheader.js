@@ -230,6 +230,13 @@ export default function Dash_Header() {
                                     <span className="admin-nav-text">Manage Jobs</span>
                                 </Link>
                             </li>
+
+                            <li>
+                                <Link to="/dash-job-category">
+                                    <i className="fa fa-suitcase"></i>
+                                    <span className="admin-nav-text">Job Category</span>
+                                </Link>
+                            </li>
                              
                             <li>
                                 <Link to="/dash-candidate">
@@ -313,6 +320,13 @@ export default function Dash_Header() {
                   <span className="admin-nav-text">Manage Jobs</span>
                 </Link>
               </li>
+
+              <li>
+                    <Link to="/dash-job-category">
+                        <i className="fa fa-suitcase"></i>
+                        <span className="admin-nav-text">Job Category</span>
+                    </Link>
+                </li>
               
               <li>
                 <Link to="/dash-candidate">
