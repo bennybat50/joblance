@@ -655,7 +655,7 @@ export default function Index() {
                       <div className="blog-post twm-blog-post-3-outer">
                         <div className="wt-post-media">
                           <figure to="" style={{height:"300px", width: "100%"}}>
-                            <img src={data.image} alt="" style={{height:"100%", width:"100%", objectFit:"cover"}} />
+                            <img src={data.image} alt="" style={{height:"100%", width:"100%", objectFit:"cover", aspectRatio:"4/3"}} />
                           </figure >
                         </div>
                         <div className="wt-post-info">
