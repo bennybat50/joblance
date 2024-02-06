@@ -7,8 +7,57 @@ import pic5 from "../assets/images/images/candidates/pic5.jpg"
 import logo_white from "../assets/images/images/logo-white.png"
 import logo from "../assets/images/images/logo-dark.png"
 import Dash_Header from "../components/Dashheader";
+import { useEffect, useState } from "react";
+import { BASEURL } from "../common/config";
+import axios from "axios";
 
 export default function Dashboard() {
+    const token = localStorage.getItem("token");
+
+    const [jobs, setJobs] = useState([]);
+    const [application , setApplication] = useState()
+    const [isLoading, setIsLoading] = useState(false);
+
+    // TOTAL JOBS
+    useEffect(() => {
+        setIsLoading(true);
+        const getJob = async () => {
+            let api_url = BASEURL + "/jobs";
+            const headers = { Authorization: `Bearer ${token}` };
+            try {
+                const res = await axios.get(api_url, { headers });
+                console.log(res.data.data);
+                
+              
+                setJobs(res.data.data);
+            } catch (err) {
+                console.log(err);
+            }
+            setIsLoading(false);
+        };
+        getJob();
+    }, []);
+
+       // TOTAL Applications
+       useEffect(() => {
+        setIsLoading(true);
+        const getApplications = async () => {
+            let api_url = BASEURL + "/applications";
+            const headers = { Authorization: `Bearer ${token}` };
+            try {
+                const res = await axios.get(api_url, { headers });
+                console.log(res.data.data);
+                
+              
+                setApplication(res.data.data);
+            } catch (err) {
+                console.log(err);
+            }
+            setIsLoading(false);
+        };
+        getApplications();
+    }, []);
+
     return (
         <div>
 
@@ -37,7 +86,7 @@ export default function Dashboard() {
                                         <div className="link-tag panel-body wt-panel-body gradi-1 dashboard-card ">
                                             <div className="link-tag wt-card-wrap">
                                                 <div className="link-tag wt-card-icon"><i className="link-tag far fa-address-book"></i></div>
-                                                <div className="link-tag wt-card-right wt-total-active-listing counter ">25</div>
+                                                <div className="link-tag wt-card-right wt-total-active-listing counter ">{jobs? jobs.length : null  }</div>
                                                 <div className="link-tag wt-card-bottom ">
                                                     <h4 className="link-tag m-b0">Posted Jobs</h4>
                                                 </div>
@@ -50,7 +99,7 @@ export default function Dashboard() {
                                         <div className="link-tag panel-body wt-panel-body gradi-2 dashboard-card ">
                                             <div className="link-tag wt-card-wrap">
                                                 <div className="link-tag wt-card-icon"><i className="link-tag far fa-file-alt"></i></div>
-                                                <div className="link-tag wt-card-right  wt-total-listing-view counter ">435</div>
+                                                <div className="link-tag wt-card-right  wt-total-listing-view counter ">{application? application.length : null}</div>
                                                 <div className="link-tag wt-card-bottom">
                                                     <h4 className="link-tag m-b0">Total Applications</h4>
                                                 </div>

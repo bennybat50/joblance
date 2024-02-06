@@ -28,6 +28,10 @@ const applySchema = new mongoose.Schema({
         default:"pending"
     },
 
+    is_hired:{
+        type:Boolean,
+        dafault:false
+    }
 },
 {timestamps: true}
 )

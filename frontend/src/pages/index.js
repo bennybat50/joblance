@@ -121,6 +121,47 @@ export default function Index() {
       getArticle()
   },[])
 
+  const [jobCategory, setJobCategory] = useState();
+  const [JobCategoryID, setJobCategoryId] = useState();
+  const [location, setLocation] = useState()
+
+  
+  // Job category
+  useEffect(() => {
+    fetch("http://localhost:7300/job-categories", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setJobCategory(data.data);
+        console.log(data.data);
+      })
+      .catch((error) => {
+        console.error("Fetch error:", error.message);
+      });
+  }, []);
+
+
+  const handleJobCategory = (event) => {
+    setJobCategoryId(event.target.options[event.target.selectedIndex].value);
+  };
+
+
+
+  const handleSearch = (e) => {
+    e.preventDefault()
+
+
+}
+
   return (
     <div>
      <PublicHeader/>
@@ -142,7 +183,7 @@ export default function Index() {
                     Your dream job is waiting for you.
                   </div>
                   <div className="twm-bnr-search-bar">
-                    <form>
+                    <form onSubmit={handleSearch}>
                       <div className="row">
                         {/* All Category */}
                         <div className="form-group col-xl-4 col-lg-12 col-md-12">
@@ -153,12 +194,16 @@ export default function Index() {
                             title=""
                             id="j-All_Category"
                             data-bv-field="size"
+                            onChange={handleJobCategory}
+                            value={JobCategoryID}
                           >
                             <option>Select Category</option>
-                            <option>All Category</option>
-                            <option>Web Designer</option>
-                            <option>Developer</option>
-                            <option>Accountant</option>
+                            {jobCategory &&
+                              jobCategory.map((cat) => (
+                                <option key={cat._id} value={cat._id}>
+                                  {cat.name}
+                                </option>
+                              ))}
                           </select>
                         </div>
 
@@ -171,7 +216,9 @@ export default function Index() {
                               type="text"
                               required
                               className="form-control"
-                              placeholder="Search..."
+                              placeholder="Enter country..."
+                              onChange={(e)=>setLocation(e.target.value)}
+                              value={location}
                             />
                             <i className="twm-input-icon fas fa-map-marker-alt"></i>
                           </div>
@@ -179,9 +226,9 @@ export default function Index() {
 
                         {/* Find job btn */}
                         <div className="form-group col-xl-3 col-lg-6 col-md-6 col-sm-6">
-                          <button type="button" className="site-button">
+                          <Link to={`/searched-job-list/${JobCategoryID}?location_id=${location}`} type="" className="site-button">
                             Find Job
-                          </button>
+                          </Link>
                         </div>
                       </div>
                     </form>

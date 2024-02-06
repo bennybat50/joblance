@@ -7,7 +7,8 @@ import candidateBG from "../assets/images/images/candidates/candidate-bg2.jpg";
 import { useEffect, useState } from "react"
 import { BASEURL } from "../common/config"
 import axios from "axios"
-import { useParams } from "react-router-dom"
+import { useParams, useLocation } from "react-router-dom"
+
 
 export default function ViewCandidate() {
 
@@ -16,13 +17,20 @@ export default function ViewCandidate() {
     const [employments, setemployments] = useState([]);
     const [educationList, seteducationList] = useState([]);
     let user_id = useParams().id;
+    
+    const search = useLocation().search;
+    const app_id = new URLSearchParams(search).get('app_id');
+
+    
+
     useEffect(() => {
+        // console.log(app_id, "User id " + user_id)
         const getUser = async () => {
             let api_url = BASEURL + "/user/" + user_id;
             try {
 
                 const res = await axios.get(api_url,);
-                console.log(res.data);
+                console.log(res.data.data);
                 setUserData(res.data.data)
 
             } catch (err) {
@@ -76,6 +84,20 @@ export default function ViewCandidate() {
         }
     };
 
+
+    const applicationData = {
+        user_id: user_id,
+        app_id: app_id
+    }
+    console.log(applicationData)
+
+    const hireApplicant = () => {
+        const api_url = BASEURL + "/applicant/hire/" 
+        axios.post(api_url, applicationData)
+        .then((res)=> console.log(res.data))
+        .catch((err)=> console.log(err))
+    }
+
     return (<>
         <div >
 
@@ -113,7 +135,7 @@ export default function ViewCandidate() {
                                         </div>
 
                                         <div class="twm-candi-self-bottom">
-                                            <a href="contact.html" class="site-button">Hire Now</a>
+                                            <button onClick={hireApplicant} class="site-button">Hire Now</button>
                                             <a href="files/pdf-sample.pdf" class="site-button secondry">Download CV</a>
                                         </div>
                                     </div>

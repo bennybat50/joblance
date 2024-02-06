@@ -36,6 +36,35 @@ router.post("/post-job", async function (req, res) {
     }
 });
 
+router.post("/search-job", async function (req, res){
+    try{
+        const { jobCategory_id, location_id } = req.body;
+      
+    //    const jobCategory = await JobCategory.findById(jobCategory_id);
+    //    if (!jobCategory) {
+    //        return res.status(404).send({ message: "Job category not found" });
+    //    }
+
+      
+       const jobs = await Job.find({ country: location_id, jobCategory_id}).populate("jobCategory_id company_id")
+       console.log(jobs)
+       console.log(jobCategory_id);
+       console.log(location_id);
+       if (!jobs) {
+           return res.status(404).send({ message: "No jobs found in the specified location" });
+       }
+
+       // Filter jobs by the selected job category
+    //    const filteredJobs = jobs.filter(job => job.jobCategory === jobCategory_id);
+
+       return res.status(200).send(jobs);
+      
+    }catch(e){
+        console.log(e)
+        return handleError(res, 500, "Internal server error ")
+    }
+})
+
 
 //GET  ALL JOBS 
 router.get("/jobs", async function (req, res){

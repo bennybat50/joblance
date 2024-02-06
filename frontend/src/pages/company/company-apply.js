@@ -10,6 +10,9 @@ export default function CompanyApply() {
 
     const token = localStorage.getItem("token");
     const [candidate, setCandidate] = useState([])
+
+
+
     const navigate = useNavigate()
     useEffect(() => {
         fetch(`${BASEURL}/applications/company/${comDetails._id}`, {
@@ -25,13 +28,16 @@ export default function CompanyApply() {
                 return response.json();
             })
             .then(data => {
-                console.log(data.data);
+                
                 setCandidate(data.data)
+                console.log(data.data);
 
             })
             .catch(error => {
                 console.error('Fetch error:', error.message);
             });
+    
+            
     }, []);
 
     const deleteData = (id) => {
@@ -100,6 +106,7 @@ export default function CompanyApply() {
                                                         <th>Applied for</th>
                                                         <th>Date</th>
                                                         <th>Status</th>
+                                                        <th>Applicant Status</th>
                                                         <th></th>
                                                     </tr>
                                                 </thead>
@@ -122,11 +129,16 @@ export default function CompanyApply() {
                                                                 <td><div className="twm-jobs-category">
                                                                     {cand.approved=="pending"?<span className="bg-warning">{cand.approved}</span>:<span className="twm-bg-green">{cand.approved}</span>}
                                                                     </div></td>
+                                                                    <td><div className="twm-jobs-category">
+                                                                    {cand.is_hired ?<span className=" twm-bg-green">Hired</span>:<span  className="bg-warning">Not hired </span>}
+                                                                    </div></td>
                                                                 <td>
+
+
                                                                     <div className="twm-table-controls">
                                                                         <ul className="twm-DT-controls-icon list-unstyled">
                                                                             <li>
-                                                                                <Link to={`/view-candidate/${cand.user_id._id}`} title="View profile" data-bs-toggle="tooltip" data-bs-placement="top">
+                                                                                <Link to={`/view-candidate/${cand.user_id._id}?app_id=${cand._id}`} title="View profile" data-bs-toggle="tooltip" data-bs-placement="top">
                                                                                     <span className="fa fa-eye"></span>
                                                                                 </Link>
                                                                             </li>
@@ -154,6 +166,7 @@ export default function CompanyApply() {
                                                         <th>Applied for</th>
                                                         <th>Date</th>
                                                         <th>Status</th>
+                                                        <th>Applicant Status</th>
                                                         <th></th>
                                                     </tr>
                                                 </tfoot>

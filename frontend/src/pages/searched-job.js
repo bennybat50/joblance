@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import bgImage from "../assets/images/images/banner/1.jpg";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 
 import f_bg from "../assets/images/images/f-bg.jpg"
 import banner_1 from "../assets/images/images/banner/1.jpg"
@@ -12,32 +12,63 @@ import LoginPop from "../components/LoginPop";
 import { BASEURL } from "../common/config";
 
 
-export default function JobList() {
+export default function Searched_JobList() {
 
     const token = localStorage.getItem("token");
 
     const [jobs, setJobs] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
-    useEffect(() => {
-        setIsLoading(true);
-        const getJob = async () => {
-            let api_url = BASEURL + "/jobs";
-            const headers = { Authorization: `Bearer ${token}` };
-            try {
-                const res = await axios.get(api_url, { headers });
-                console.log(res.data.data);
+    const search = useLocation().search
+    const location_id = new URLSearchParams(search).get("location_id")
+
+    const { jobCategoryID } = useParams();
+
+    const serachData = {
+        jobCategory_id:jobCategoryID,
+        location_id: location_id
+      }
+      console.log(serachData)
+
+    const getPost = () => {
+        const  api_url = BASEURL + "/search-job/" 
+        axios.post(api_url, serachData)
+        .then((res)=>{
+            console.log(res.data)
+            const filteredJobs = res.data.filter(job => !job.is_hired);
+            console.log(filteredJobs)
+            setJobs(filteredJobs)
+        })
+   
+        .catch((err)=> console.log(err))
+
+
+    }
+
+    useEffect(()=> {
+        getPost()
+    },[])
+
+
+    // useEffect(() => {
+    //     setIsLoading(true);
+    //     const getJob = async () => {
+    //         let api_url = BASEURL + "/jobs";
+    //         const headers = { Authorization: `Bearer ${token}` };
+    //         try {
+    //             const res = await axios.get(api_url, { headers });
+    //             console.log(res.data.data);
                 
-                const filteredJobs = res.data.data.filter(job => !job.is_hired);
-                console.log(filteredJobs)
-                setJobs(filteredJobs);
-            } catch (err) {
-                console.log(err);
-            }
-            setIsLoading(false);
-        };
-        getJob();
-    }, []);
+    //             const filteredJobs = res.data.data.filter(job => !job.is_hired);
+    //             console.log(filteredJobs)
+    //             setJobs(filteredJobs);
+    //         } catch (err) {
+    //             console.log(err);
+    //         }
+    //         setIsLoading(false);
+    //     };
+    //     getJob();
+    // }, []);
 
     return (
         <div >

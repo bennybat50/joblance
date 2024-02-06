@@ -47,6 +47,8 @@ import BlogSingle from './pages/blog-single';
 import Job_Category from './pages/dash-job-category';
 import DashPostJobCategory from './pages/dash-post-job-category';
 import DashEditJobCategory from './pages/dash-edit-job-category';
+import VerifyAdmin from './pages/verify-admin';
+import Searched_JobList from './pages/searched-job';
 
 function App() {
   return (
@@ -55,9 +57,40 @@ function App() {
         <Routes>
           <Route path='/' element={<Index/>}/>
           <Route path='/job-list' element={<JobList/>}/>
+          <Route path='/searched-job-list/:jobCategoryID' element={<Searched_JobList/>}/>
           <Route path='/employer-list' element={<EmployerList/>}/>
           <Route path='/about' element={<About/>}/>
           <Route path='/contact' element={<Contact/>}/>
+          <Route path='/employer-detail/:id' element={<EmployerDetail/>}/>
+          <Route path='/job-detail/:id' element={<JobDetail/>}/>
+          <Route path='/job-detail' element={<JobDetail/>}/>
+          <Route path='/view-candidate/:id' element={<ViewCandidate/>}/>
+          <Route path='/my-dashboard' element={<UserDashboard/>}/> 
+          <Route path='/my-profile' element={<UserProfile/>}/> 
+          <Route path='/my-resume' element={<UserResume/>}/> 
+          <Route path='/my-application' element={<UserApply/>}/> 
+          <Route path='/my-chat' element={<UserChat/>}/>
+          <Route path='/create-article' element={<CreateAticle/>}/>
+          <Route path='/my-article' element={<UserArticle/>}/>
+          <Route path='/edit-my-article/:articleID' element={<UserEditAticle/>}/>
+          <Route path='/blog' element={<Blog/>}/>
+          <Route path='/blog/:blogID' element={<BlogSingle/>}/>
+
+
+
+          <Route path='/com-dashboard' element={<CompanyDashboard/>}/> 
+          <Route path='/com-profile' element={<CompanyProfile/>}/> 
+          <Route path='/com-resume' element={<CompanyResume/>}/> 
+          <Route path='/com-application' element={<CompanyApply/>}/> 
+          <Route path='/com-jobs' element={<CompanyManageJob/>}/> 
+          <Route path='/com-post-jobs' element={<CompanyPostJob/>}/> 
+          <Route path='/com-edit-jobs/:jobId' element={<CompanyEditJob/>}/> 
+
+          
+          
+          <Route path='/verify-admin' element={<VerifyAdmin/>}/>
+          <Route path='/edit-company/:compId' element={<EditCompany/>}/>
+          <Route path='/edit-job/:jobId' element={<EditJob/>}/>
           <Route path='/dash-bookmark' element={<DashBookmark/>}/>
           <Route path='/dash-candidate' element={<DashCandidates/>}/>
           <Route path='/dash-change-password' element={<DashChangePassword/>}/>
@@ -72,34 +105,10 @@ function App() {
           <Route path='/dash-post-job-category' element={<DashPostJobCategory/>}/>
           <Route path='/dash-edit-job-category/:jobCategoryId' element={<DashEditJobCategory/>}/>
           <Route path='/dashboard' element={<Dashboard/>}/>
-          <Route path='/employer-detail/:id' element={<EmployerDetail/>}/>
-          <Route path='/job-detail/:id' element={<JobDetail/>}/>
-          <Route path='/job-detail' element={<JobDetail/>}/>
-          <Route path='/view-candidate/:id' element={<ViewCandidate/>}/>
-          <Route path='/edit-company/:compId' element={<EditCompany/>}/>
-          <Route path='/edit-job/:jobId' element={<EditJob/>}/>
           <Route path='/dash-create-user' element={<CreateUser/>}/>
           <Route path='/dash-manage-user' element={<ManageUsers/>}/>
           <Route path='/dash-edit-user/:userId' element={<EditUser/>}/>
           <Route path='/dash-apply' element={<ApplyJob/>}/>
-          <Route path='/my-dashboard' element={<UserDashboard/>}/> 
-          <Route path='/my-profile' element={<UserProfile/>}/> 
-          <Route path='/my-resume' element={<UserResume/>}/> 
-          <Route path='/my-application' element={<UserApply/>}/> 
-          <Route path='/my-chat' element={<UserChat/>}/>
-          <Route path='/create-article' element={<CreateAticle/>}/>
-          <Route path='/my-article' element={<UserArticle/>}/>
-          <Route path='/edit-my-article/:articleID' element={<UserEditAticle/>}/>
-          <Route path='/blog' element={<Blog/>}/>
-          <Route path='/blog/:blogID' element={<BlogSingle/>}/>
-
-          <Route path='/com-dashboard' element={<CompanyDashboard/>}/> 
-          <Route path='/com-profile' element={<CompanyProfile/>}/> 
-          <Route path='/com-resume' element={<CompanyResume/>}/> 
-          <Route path='/com-application' element={<CompanyApply/>}/> 
-          <Route path='/com-jobs' element={<CompanyManageJob/>}/> 
-          <Route path='/com-post-jobs' element={<CompanyPostJob/>}/> 
-          <Route path='/com-edit-jobs/:jobId' element={<CompanyEditJob/>}/> 
           
          
         </Routes>

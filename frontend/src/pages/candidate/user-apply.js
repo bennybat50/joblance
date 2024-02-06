@@ -75,6 +75,7 @@ export default function UserApply() {
                                                             </div>
                                                             <div class="twm-right-content">
                                                                 <div class="twm-jobs-category green"><span class="twm-bg-green">{data.job_id.jobType}</span></div>
+                                                                <div class="twm-jobs-category green mb-4 mt-4"><span class="twm-bg-green">{data.job_id.is_hired?<span> Hired</span>: null }</span></div>
                                                                 <div class="twm-jobs-amount">{data.job_id.offeredSalary}  <span>/ Annually</span></div>
                                                                 <Link to={`/job-detail/${data.job_id._id}`} class="twm-jobs-browse site-text-primary">View Job Details</Link>
                                                             </div>

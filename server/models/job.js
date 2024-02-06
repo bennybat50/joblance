@@ -56,15 +56,21 @@ const jobSchema = new mongoose.Schema({
         ref: "jobCategory"
     },
     company_id: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: "company"
+        ref: "company",
     },
     jobDescription: {
         type: String,
         required: true
     },
     application_id: [{ type: mongoose.Schema.Types.ObjectId, ref: "apply" }],
+    is_hired:{
+        type:Boolean,
+        dafault:false
+    }
+
+
 
 },
     { timestamps: true })

@@ -1,0 +1,13 @@
+.verify-admin-modal{
+    /* background-color: blue; */
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 767px) {
+    .verify-admin-modal form {
+      width: 100%;
+    }
+  }
