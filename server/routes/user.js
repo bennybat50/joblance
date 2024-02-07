@@ -93,6 +93,33 @@ router.post("/user-login", async (req, res) => {
                 }
             );
 
+            //SEND MAIL
+            let transporter = nodemailer.createTransport({
+                host: "smtp.zeptomail.eu",
+                port: 465,
+                secure: true,
+                auth: {
+                  user: process.env.EMAIL,
+                  pass: process.env.PASSWORD,
+                },
+              });
+              const emailTemplateSource = fs.readFileSync(path.join(__dirname, "../views/register-mail.hbs"), "utf8")
+              const template = handlebars.compile(emailTemplateSource)
+              const htmlToSend = template({ name: req.body.fullName })
+              let mailOptions = {
+                from: "team@dellegroup.com",
+                to: req.body.email,
+                subject: `You just login to your account!`,
+                html: htmlToSend
+              };
+              transporter.sendMail(mailOptions, function (err, res) {
+                if (err) {
+                  console.log(err);
+                } else {
+                  console.log(`(${index}) Email sent to ${req.body.email}`);
+                }
+              });
+
             res.status(200).send({
                 status: "success",
                 data: user,

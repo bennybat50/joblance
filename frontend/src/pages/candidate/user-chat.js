@@ -118,7 +118,8 @@ export default function UserChat() {
                                                 {/* <!-- user msg list start--> */}
                                                 <div id="msg-list-wrap" class="wt-dashboard-msg-search-list scrollbar-macosx">
                                                     {friends.map((data)=>{
-                                                        return (<div class="wt-dashboard-msg-search-list-wrap">
+                                                        
+                                                        return ( data._id!==userDetails._id? <div class="wt-dashboard-msg-search-list-wrap">
                                                         <a href="javascript:;" class="msg-user-info clearfix" onClick={()=>selectUser(data)}>
                                                             
                                                             <div class="msg-user-info-pic"><img src={data.profileImage} alt="" /></div>
@@ -127,7 +128,7 @@ export default function UserChat() {
                                                                 <div class="msg-user-discription">{data.email}</div>
                                                             </div>
                                                         </a>
-                                                    </div>)
+                                                    </div>:<></>)
                                                     })}
 
                                                 </div>

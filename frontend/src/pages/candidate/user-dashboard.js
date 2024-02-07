@@ -2,6 +2,7 @@ import { Link } from "react-router-dom"
 import PublicHeader from "../../components/PublicHeader"
 import UserNav from "../../components/UserNav"
 export default function UserDashboard() {
+    const userDetails=JSON.parse(localStorage.getItem("user-details"));
     return (
         <div>
             {/* <!-- HEADER START --> */}
@@ -27,8 +28,8 @@ export default function UserDashboard() {
                                 {/* <!--Filter Short By--> */}
                                 <div class="twm-right-section-panel site-bg-gray">
                                     <div class="wt-admin-right-page-header">
-                                        <h2>Randall Henderson</h2>
-                                        <p>IT Contractor</p>
+                                        <h2>{userDetails.fullName}</h2>
+                                        <p>{userDetails.jobtype??""}</p>
                                     </div>
 
                                     <div class="twm-dash-b-blocks mb-5">
