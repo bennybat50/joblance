@@ -103,7 +103,7 @@ router.post("/user-login", async (req, res) => {
                   pass: process.env.PASSWORD,
                 },
               });
-              const emailTemplateSource = fs.readFileSync(path.join(__dirname, "../views/register-mail.hbs"), "utf8")
+              const emailTemplateSource = fs.readFileSync(path.join(__dirname, "../views/login-mail.hbs"), "utf8")
               const template = handlebars.compile(emailTemplateSource)
               const htmlToSend = template({ name: req.body.fullName })
               let mailOptions = {
