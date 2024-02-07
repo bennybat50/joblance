@@ -413,7 +413,7 @@ export default function EmployerDetail() {
                             <div className="footer-bottom-info">
 
                                 <div className="footer-copy-right">
-                                    <span className="copyrights-text">Copyright © 2023 by thewebmax All Rights Reserved.</span>
+                                    <span className="copyrights-text">Copyright © 2023 by Joblance All Rights Reserved.</span>
                                 </div>
                                 <ul className="social-icons">
                                     <li><a href="javascript:void(0);" className="fab fa-facebook-f"></a></li>

@@ -41,7 +41,7 @@ export default function Signup_Pop() {
         console.log(signupData);
 
 
-        axios.post(`${BASEURL}/create-user`, signupData).then((res) => {
+        axios.post(`${BASEURL}/register`, signupData).then((res) => {
           
             if (res.data.message == null) {
                 alert("User Registered in");

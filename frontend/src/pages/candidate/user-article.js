@@ -4,8 +4,8 @@ import UserNav from "../../components/UserNav"
 import { useEffect, useState } from "react";
 import { BASEURL } from "../../common/config";
 import axios from "axios";
-import { IoTrashOutline } from "react-icons/io5";
-import { MdOutlineEdit } from "react-icons/md";
+// import { IoTrashOutline } from "react-icons/io5";
+// import { MdOutlineEdit } from "react-icons/md";
 export default function UserArticle() {
     const navigate = useNavigate()
     const userDetails = JSON.parse(localStorage.getItem("user-details"));
@@ -101,8 +101,8 @@ export default function UserArticle() {
 
                                                             </div>
                                                             <div  className="d-flex align-items-start  gap-2 ">
-                                                                <button style={{border:"none", background:"transparent"}} onClick={()=>navigate(`/edit-my-article/${data._id}`)}><MdOutlineEdit /></button>
-                                                                <button style={{border:"none", background:"transparent"}} onClick={()=>handleDelete(data._id)}><IoTrashOutline /></button>
+                                                                <button style={{border:"none", background:"transparent"}} onClick={()=>navigate(`/edit-my-article/${data._id}`)}>Edit</button>
+                                                                <button style={{border:"none", background:"transparent"}} onClick={()=>handleDelete(data._id)}>Delete</button>
                                                             </div>
                                                             {/* <div class="twm-right-content">
                                                                 <div class="twm-jobs-category green"><span class="twm-bg-green">{data.job_id.jobType}</span></div>

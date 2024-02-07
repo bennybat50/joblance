@@ -63,7 +63,7 @@ export default function EditUser() {
     console.log(userDetails)
 
     
-    // fetch("http://localhost:7300/create-user", {
+    // fetch("http://localhost:7300/register", {
     //     method:"POST",
     //     headers:{"Content-Type": "Application/json"},
     //     body:JSON.stringify(userDetails)

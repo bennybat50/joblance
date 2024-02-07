@@ -50,25 +50,7 @@ export default function Searched_JobList() {
     },[])
 
 
-    // useEffect(() => {
-    //     setIsLoading(true);
-    //     const getJob = async () => {
-    //         let api_url = BASEURL + "/jobs";
-    //         const headers = { Authorization: `Bearer ${token}` };
-    //         try {
-    //             const res = await axios.get(api_url, { headers });
-    //             console.log(res.data.data);
-                
-    //             const filteredJobs = res.data.data.filter(job => !job.is_hired);
-    //             console.log(filteredJobs)
-    //             setJobs(filteredJobs);
-    //         } catch (err) {
-    //             console.log(err);
-    //         }
-    //         setIsLoading(false);
-    //     };
-    //     getJob();
-    // }, []);
+     
 
     return (
         <div >
@@ -378,22 +360,7 @@ export default function Searched_JobList() {
 
                                 </div>
 
-                                <div class="pagination-outer">
-                                    <div class="pagination-style1">
-                                        <ul class="clearfix">
-                                            <li class="prev"><a href="javascript:;"><span> <i class="fa fa-angle-left"></i>
-                                            </span></a></li>
-                                            <li><a href="javascript:;">1</a></li>
-                                            <li class="active"><a href="javascript:;">2</a></li>
-                                            <li><a href="javascript:;">3</a></li>
-                                            <li><a class="javascript:;" href="javascript:;"><i
-                                                class="fa fa-ellipsis-h"></i></a></li>
-                                            <li><a href="javascript:;">5</a></li>
-                                            <li class="next"><a href="javascript:;"><span> <i class="fa fa-angle-right"></i>
-                                            </span></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
+                                
 
                             </div>
 
@@ -519,7 +486,7 @@ export default function Searched_JobList() {
                         <div className="footer-bottom-info">
 
                             <div className="footer-copy-right">
-                                <span className="copyrights-text">Copyright © 2023 by thewebmax All Rights Reserved.</span>
+                                <span className="copyrights-text">Copyright © 2023 by Joblance All Rights Reserved.</span>
                             </div>
                             <ul className="social-icons">
                                 <li><a href="javascript:void(0);" className="fab fa-facebook-f"></a></li>

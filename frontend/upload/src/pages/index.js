@@ -969,7 +969,7 @@ export default function Index() {
             <div className="footer-bottom-info">
               <div className="footer-copy-right">
                 <span className="copyrights-text">
-                  Copyright © 2023 by thewebmax All Rights Reserved.
+                  Copyright © 2023 by Joblance All Rights Reserved.
                 </span>
               </div>
               <ul className="social-icons">

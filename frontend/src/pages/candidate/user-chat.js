@@ -8,9 +8,11 @@ export default function UserChat() {
     const userDetails = JSON.parse(localStorage.getItem("user-details"));
     const token = localStorage.getItem("token");
     const [messages, setMessages] = useState([]);
+    const [friends, setFriends] = useState([]);
     const [chat, setChat] = useState("");
     const [refresh, setRefresh] = useState(0);
     const [selectedUser, setSelectedUser] = useState({});
+    const [userId, setUserId] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
@@ -25,26 +27,46 @@ export default function UserChat() {
             } catch (err) {
                 console.log(err);
             }
+        
             setIsLoading(false);
         };
         getMessages();
-    }, refresh);
+        getFriends() 
+    }, [refresh]);
 
+    
+    const getFriends = async () => {
+        let api_url = BASEURL + "/users/interest/" + userDetails.jobCategory_id;
+        const headers = { Authorization: `Bearer ${token}` };
+            try {
+                const res = await axios.get(api_url, { headers });
+                
+                setFriends(res.data.data);
+            } catch (err) {
+                console.log(err);
+            }
+            setIsLoading(false);
+
+
+    };
+
+    const selectUser = async (user_data) => {
+        setSelectedUser(user_data)
+        setUserId(user_data._id)
+    }
 
     const sendMessage = async (event) => {
         event.preventDefault();
-        alert("hello")
+        
         let userData = {
-            sender_id: "659ad6af441aff27ab0701e0",
-            receiver_id:userDetails._id ,
+            sender_id: userDetails._id,
+            receiver_id: selectedUser._id ,
             text: chat
         }
         let api_url = BASEURL + "/message"
         const headers = { Authorization: `Bearer ${token}` };
         await axios.post(api_url, userData, { headers });
-        alert("Message Sent")
         setChat("")
-        setRefresh(refresh + 1)
         setRefresh(refresh + 1)
     }
 
@@ -91,55 +113,22 @@ export default function UserChat() {
                                                 </div>
                                                 {/* <!-- Search Section End--> */}
 
-                                                {/* <!-- Search Section End--> */}
-                                                <div class="msg-find-list">
-                                                    <select class="wt-select-box bs-select-hidden">
-                                                        <option>Recent Chats</option>
-                                                        <option>Short by Time</option>
-                                                        <option>Short by Unread</option>
-                                                    </select>
-                                                </div>
-                                                {/* <!-- Search Section End--> */}
+                                                 
 
                                                 {/* <!-- user msg list start--> */}
                                                 <div id="msg-list-wrap" class="wt-dashboard-msg-search-list scrollbar-macosx">
-
-                                                    <div class="wt-dashboard-msg-search-list-wrap">
-                                                        <a href="javascript:;" class="msg-user-info clearfix">
-                                                            <div class="msg-user-timing">Thu</div>
-                                                            <div class="msg-user-info-pic"><img src="images/user-avtar/pic4.jpg" alt="" /></div>
+                                                    {friends.map((data)=>{
+                                                        return (<div class="wt-dashboard-msg-search-list-wrap">
+                                                        <a href="javascript:;" class="msg-user-info clearfix" onClick={()=>selectUser(data)}>
+                                                            
+                                                            <div class="msg-user-info-pic"><img src={data.profileImage} alt="" /></div>
                                                             <div class="msg-user-info-text">
-                                                                <div class="msg-user-name">Randall Henderson</div>
-                                                                <div class="msg-user-discription">All created by our Global</div>
+                                                                <div class="msg-user-name">{data.fullName}</div>
+                                                                <div class="msg-user-discription">{data.email}</div>
                                                             </div>
                                                         </a>
-                                                    </div>
-
-                                                    <div class="wt-dashboard-msg-search-list-wrap">
-                                                        <a href="javascript:;" class="msg-user-info clearfix">
-                                                            <div class="msg-user-timing">2 hours ago</div>
-                                                            <div class="msg-user-info-pic"><img src="images/user-avtar/pic1.jpg" alt="" /></div>
-                                                            <div class="msg-user-info-text">
-                                                                <div class="msg-user-name">Rustin Duza</div>
-                                                                <div class="msg-user-discription">All created by our Global</div>
-                                                            </div>
-                                                        </a>
-                                                    </div>
-
-                                                    <div class="wt-dashboard-msg-search-list-wrap">
-                                                        <a href="javascript:;" class="msg-user-info clearfix">
-                                                            <div class="msg-user-timing">4 hours ago</div>
-                                                            <div class="msg-user-info-pic"><img src="images/user-avtar/pic2.jpg" alt="" /></div>
-                                                            <div class="msg-user-info-text">
-                                                                <div class="msg-user-name">Peter Hawkins</div>
-                                                                <div class="msg-user-discription">All created by our Global</div>
-                                                            </div>
-                                                        </a>
-                                                    </div>
-
-
-
-
+                                                    </div>)
+                                                    })}
 
                                                 </div>
                                                 {/* <!-- user msg list End--> */}
@@ -147,13 +136,14 @@ export default function UserChat() {
                                             </div>
 
                                             {/* <!--Right Msg section--> */}
-                                            <div class="wt-dashboard-msg-box">
+
+                                            { userId!=="" ? <div class="wt-dashboard-msg-box">
                                                 <div class="single-msg-user-name-box">
                                                     <div class="single-msg-short-discription">
-                                                        <h4 class="single-msg-user-name">Randall Henderson </h4>
-                                                        IT Contractor
+                                                        <h4 class="single-msg-user-name">{selectedUser.fullName} </h4>
+                                                        {selectedUser.email}
                                                     </div>
-                                                    <a href="#" class="message-action"><i class="far fa-trash-alt"></i> Delete Conversation</a>
+                                                    {/* <a href="#" class="message-action"><i class="far fa-trash-alt"></i> Delete Conversation</a> */}
                                                 </div>
                                                 <div id="msg-chat-wrap" class="single-user-msg-conversation scrollbar-macosx">
 
@@ -187,31 +177,7 @@ export default function UserChat() {
                                                         </>)
                                                     })}
 
-                                                    {/* <div class="single-user-comment-wrap">
-                                                        <div class="row">
-                                                            <div class="col-xl-9 col-lg-12">
-                                                                <div class="single-user-comment-block clearfix">
-                                                                    <div class="single-user-com-pic"><img src="images/user-avtar/pic4.jpg" alt="" /></div>
-                                                                    <div class="single-user-com-text">Breaking the endless cycle of meaningless text message conversations starts with only talking to someone who offers interesting topics opinions.</div>
-                                                                    <div class="single-user-msg-time">12:13 PM</div>
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-
-                                                    </div>
-
-                                                    <div class="single-user-comment-wrap sigle-user-reply">
-                                                        <div class="row justify-content-end">
-                                                            <div class="col-xl-9 col-lg-12">
-                                                                <div class="single-user-comment-block clearfix">
-                                                                    <div class="single-user-com-pic"><img src="images/user-avtar/pic1.jpg" alt="" /></div>
-                                                                    <div class="single-user-com-text">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour.</div>
-                                                                    <div class="single-user-msg-time">12:37 PM</div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div> */}
+                                                    
 
 
                                                 </div>
@@ -224,7 +190,14 @@ export default function UserChat() {
                                                         </form>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div>:<><div className="text-center">
+                                                <br />
+                                                <br />
+                                                <br />
+                                                <h5 className="text-center">Click on a user to start chat</h5>
+                                                </div></>}
+
+                                           
 
                                         </div>
                                     </div>

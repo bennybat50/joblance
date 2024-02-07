@@ -14,7 +14,7 @@ const companyModel = require("../models/company");
 
 
 
-router.post("/create-user", async function(req, res) {
+router.post("/register", async function(req, res) {
     const existingUser = await User.findOne({ email: req.body.email });
 
     if (existingUser) {
@@ -73,10 +73,66 @@ router.post("/create-user", async function(req, res) {
     }
 });
 
+router.post("/user-login", async (req, res) => {
+    const { email, password } = req.body;
+
+    if (!email || !password)
+        return handleError(res, 400, "Email and password are required");
+
+    try {
+        const user = await User.findOne({ email,password });
+        // console.log(admin.password)
+
+        if (user && user.email === email && user.password === password) {
+            const { password: adminPassword, ...noPasswordAdmin } = user.toObject();
+            const token = jwt.sign(
+                { noPasswordAdmin },
+                process.env.NODE_APP_JWT_SECRET,
+                {
+                    expiresIn: "24h"
+                }
+            );
+
+            res.status(200).send({
+                status: "success",
+                data: user,
+                token,
+            });
+        } else if (!user) {
+            res.status(200).send({
+                status: "error",
+                message: "User does not exist",
+            });
+        } else {
+            res.status(200).send({
+                status: "error",
+                message: "Incorrect Password",
+                data: {},
+            });
+        }
+    } catch (err) {
+        console.log(err);
+        return handleError(res, 500, "Internal error occurred");
+    }
+});
+
 
 router.get("/users", async function(req, res){
     try{
         let user = await User.find().populate("message_id")
+        res.status(200).send({
+            message: "All users",
+            length: user.length,
+            data: user 
+        })
+    }catch(e){
+        res.status(500).send({message:e.message})
+    }
+})
+
+router.get("/users/interest/:id", async function(req, res){
+    try{
+        let user = await User.find({"jobCategory_id":req.params.id})
         res.status(200).send({
             message: "All users",
             length: user.length,
@@ -153,47 +209,6 @@ router.delete("/user/delete/:id",  async function(req, res){
     }
 })
 
-router.post("/user-login", async (req, res) => {
-    const { email, password } = req.body;
 
-    if (!email || !password)
-        return handleError(res, 400, "Email and password are required");
-
-    try {
-        const user = await User.findOne({ email,password });
-        // console.log(admin.password)
-
-        if (user && user.email === email && user.password === password) {
-            const { password: adminPassword, ...noPasswordAdmin } = user.toObject();
-            const token = jwt.sign(
-                { noPasswordAdmin },
-                process.env.NODE_APP_JWT_SECRET,
-                {
-                    expiresIn: "24h"
-                }
-            );
-
-            res.status(200).send({
-                status: "success",
-                data: user,
-                token,
-            });
-        } else if (!user) {
-            res.status(200).send({
-                status: "error",
-                message: "User does not exist",
-            });
-        } else {
-            res.status(200).send({
-                status: "error",
-                message: "Incorrect Password",
-                data: {},
-            });
-        }
-    } catch (err) {
-        console.log(err);
-        return handleError(res, 500, "Internal error occurred");
-    }
-});
 
 module.exports = router

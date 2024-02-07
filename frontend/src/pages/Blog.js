@@ -348,7 +348,7 @@ export default function Blog(){
                         <div class="footer-bottom-info">
                         
                             <div class="footer-copy-right">
-                                <span class="copyrights-text">Copyright © 2023 by thewebmax All Rights Reserved.</span>
+                                <span class="copyrights-text">Copyright © 2023 by Joblance All Rights Reserved.</span>
                             </div>
                             <ul class="social-icons">
                                 <li><a href="javascript:void(0);" class="fab fa-facebook-f"></a></li>

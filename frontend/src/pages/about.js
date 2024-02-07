@@ -556,7 +556,7 @@ export default function About() {
                             <div className=" link-tag footer-bottom-info">
 
                                 <div className=" link-tag footer-copy-right">
-                                    <span className=" link-tag copyrights-text">Copyright © 2023 by thewebmax All Rights Reserved.</span>
+                                    <span className=" link-tag copyrights-text">Copyright © 2023 by Joblance All Rights Reserved.</span>
                                 </div>
                                 <ul className=" link-tag social-icons">
                                     <li><a href="javascript:void(0);" className=" link-tag fab fa-facebook-f"></a></li>
